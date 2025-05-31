@@ -15,4 +15,16 @@ public class GiornaleService {
 	public Iterable<Giornale> getAllGiornali() {
 		return giornaleRepository.findAll();
 	}
+
+	public Giornale getGiornaleById(Long id) {
+		return giornaleRepository.findById(id).get();
+	}
+
+	public void save(Giornale giornale) {
+		giornaleRepository.save(giornale);
+	}
+
+	public void deleteById(Long id) {
+		giornaleRepository.deleteById(id);
+	}
 }
