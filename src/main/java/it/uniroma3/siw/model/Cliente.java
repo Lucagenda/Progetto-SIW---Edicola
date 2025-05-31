@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 @Entity
 public class Cliente {
 	
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -81,6 +80,5 @@ public class Cliente {
 				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
 				&& Objects.equals(password, other.password);
 	}
-	
 	
 }

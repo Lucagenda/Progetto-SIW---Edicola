@@ -26,7 +26,7 @@ public class Giornale {
 	private Integer anno;
 	
 	@OneToOne
-	private String direttore;
+	private Giornalista direttore;
 	
 	@ManyToMany
 	private List<Giornalista> editorialisti;
@@ -63,11 +63,11 @@ public class Giornale {
 		this.anno = anno;
 	}
 
-	public String getDirettore() {
+	public Giornalista getDirettore() {
 		return direttore;
 	}
 
-	public void setDirettore(String direttore) {
+	public void setDirettore(Giornalista direttore) {
 		this.direttore = direttore;
 	}
 

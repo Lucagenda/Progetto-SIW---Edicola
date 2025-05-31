@@ -4,5 +4,5 @@ import org.springframework.data.repository.CrudRepository;
 import it.uniroma3.siw.model.Giornale;
 
 public interface GiornaleRepository extends CrudRepository<Giornale, Long> {
-
+	
 }
