@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Cliente {
+public class Utente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,7 +75,7 @@ public class Cliente {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Utente other = (Utente) obj;
 		return Objects.equals(cognome, other.cognome) && Objects.equals(email, other.email)
 				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
 				&& Objects.equals(password, other.password);
