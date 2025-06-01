@@ -2,6 +2,7 @@ package it.uniroma3.siw.model;
 
 import java.util.Objects;
 
+import it.uniroma3.siw.constants.Ruolo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +22,16 @@ public class Utente {
 	private String email;
 	
 	private String password;
+	
+	private Ruolo ruolo;
+	
+	public Ruolo getRuolo() {
+		return ruolo;
+	}
+
+	public void setRuolo(Ruolo ruolo) {
+		this.ruolo = ruolo;
+	}
 
 	public Long getId() {
 		return id;
