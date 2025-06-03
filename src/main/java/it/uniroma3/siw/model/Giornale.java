@@ -25,6 +25,8 @@ public class Giornale {
 	@NotNull
 	private Integer anno;
 	
+	private String urlImage;
+	
 	@OneToOne
 	private Giornalista direttore;
 	
@@ -96,6 +98,14 @@ public class Giornale {
 		return Objects.equals(anno, other.anno) && Objects.equals(direttore, other.direttore)
 				&& Objects.equals(editorialisti, other.editorialisti) && Objects.equals(id, other.id)
 				&& Objects.equals(nome, other.nome) && Objects.equals(periodicita, other.periodicita);
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 	
 }

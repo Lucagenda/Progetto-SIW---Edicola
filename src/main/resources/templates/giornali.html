@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Giornali</title>
+    <link rel="stylesheet" href="/style.css?version=2" />
+  </head>
+
+  <body>
+    <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
+    <h1>Giornali</h1>
+    <div th:if="${giornali.isEmpty()}">Non ci sono giornali nel sistema</div>
+    <ul>
+      <li th:each="giornale: ${giornali}">
+        <a th:href="@{'/giornale' + '/' + ${giornale.id}}"
+          th:text="${giornale.nome} + ' - ' + ${giornale.periodicita} + ' (' + ${giornale.anno} + ')'">Up! (2000)</a>
+      </li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+!DOCTYPE html>
+<html>
+    <head>
+        <title>Giornale</title>
+        <link rel="stylesheet" href="/stile.css?version=2" />
+    </head>
+
+    <body>
+        <div><a href="/"><img src="/logo-siw.png" width="50%"></a></div>
+        <div th:if="${giornale}">
+        <h1 th:text="${giornale.nome}">Nome giornale</h1>
+            <div>Periodicità: <span th:text="'(' + ${giornale.periodicita} + ')'">2000</span></div>
+            <span><img width="30%" th:src="${giornale.urlImage}" /></span>
+        </div>
+        <div th:unless="${giornale}">Non esiste</div>
+    </body>
+</html>

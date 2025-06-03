@@ -1,0 +1,1 @@
+INSERT INTO giornale (id, nome, anno, periodicita) VALUES (1, 'La Repubblica', 1974, 'quotidiano');
