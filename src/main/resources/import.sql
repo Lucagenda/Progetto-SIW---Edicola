@@ -1,1 +1,1 @@
-INSERT INTO giornale (id, nome, anno, periodicita) VALUES (1, 'La Repubblica', 1974, 'quotidiano');
+INSERT INTO giornale (id, nome, anno, periodicita, direttore, url_image) VALUES (1, 'La Repubblica', 1976, 'quotidiano', 'Mario Orfeo', 'https://odg.roma.it/wp-content/uploads/2024/09/la-repubblica-1024x537-1.png');

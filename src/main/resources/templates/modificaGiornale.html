@@ -6,11 +6,12 @@
     </head>
 
     <body>
-        <div><a href="/"><img src="/logo-siw.png" width="50%"></a></div>
+        <div><a href="/"><img src="/logo-siw.png" width="20%"></a></div>
         <div th:if="${giornale}">
         <h1 th:text="${giornale.nome}">Nome giornale</h1>
-            <div>Periodicità: <span th:text="'(' + ${giornale.periodicita} + ')'">2000</span></div>
-			<div>Direttore: <span th:text="'(' + ${giornale.direttore} + ')'">2000</span></div>
+		    <div>Periodicità: <span th:text="'(' + ${giornale.periodicita} + ')'">quotidiano</span></div>
+			<div>Direttore: <span th:text="'(' + ${giornale.direttore} + ')'">Gino Paoli</span></div>
+            <div>Anno: <span th:text="'(' + ${giornale.anno} + ')'">2000</span></div>
             <span><img width="30%" th:src="${giornale.urlImage}" /></span>
         </div>
         <div th:unless="${giornale}">Non esiste</div>

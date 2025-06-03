@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nuovo Giornale</title>
+    <link rel="stylesheet" href="/stile.css?version=3" />
+  </head>
+  <body>
+    <div><a href="/"><img src="/logo-siw.png" width="20%"/></a></div>
+    <h1>Aggiungi un giornale</h1>
+    <form th:action="@{/giornale}" method="POST" th:object="${giornale}">
+      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+      <div>
+        <label>Titolo:</label> <span><input required type="text" th:field="${giornale.nome}"/></span>
+        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      </div>
+	  <div>
+	    <label>Periodicità:</label><span><input required type="text" th:field="${giornale.periodicita}"/></span>
+	    <span th:if="${#fields.hasErrors('periodicita')}" th:errors="*{periodicita}"></span>
+	  </div>
+	  <div>
+	    <label>Direttore:</label><span><input required type="text" th:field="${giornale.direttore}"/></span>
+	    <span th:if="${#fields.hasErrors('direttore')}" th:errors="*{direttore}"></span>
+	  </div>
+	  <div>
+      <div>
+        <label>Anno:</label><span><input required type="text" th:field="${giornale.anno}"/></span>
+        <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+      </div>
+      <div>
+        <label>URL immagine:</label><span><input type="url" th:field="${giornale.urlImage}" /></span>
+      </div>
+      <div>
+        <span><button type="submit">Conferma</button></span>
+      </div>
+    </form>
+  </body>
+</html>

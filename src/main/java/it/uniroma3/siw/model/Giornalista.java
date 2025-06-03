@@ -27,8 +27,8 @@ public class Giornalista {
 	@NotNull
 	private LocalDate data;
 
-	@OneToOne(mappedBy = "direttore")
-	private Giornale giornale;
+	//@OneToOne(mappedBy = "direttore")
+	//private Giornale giornale;
 	
 	@ManyToMany(mappedBy = "editorialisti")
 	private List<Giornale> giornali;
@@ -65,13 +65,13 @@ public class Giornalista {
 		this.data = data;
 	}
 
-	public Giornale getGiornale() {
-		return giornale;
-	}
-
-	public void setGiornale(Giornale giornale) {
-		this.giornale = giornale;
-	}
+//	public Giornale getGiornale() {
+//		return giornale;
+//	}
+//
+//	public void setGiornale(Giornale giornale) {
+//		this.giornale = giornale;
+//	}
 
 	public List<Giornale> getGiornali() {
 		return giornali;
@@ -83,7 +83,7 @@ public class Giornalista {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cogname, data, giornale, giornali, id, nome);
+		return Objects.hash(cogname, data, giornali, id, nome);
 	}
 
 	@Override
@@ -96,7 +96,8 @@ public class Giornalista {
 			return false;
 		Giornalista other = (Giornalista) obj;
 		return Objects.equals(cogname, other.cogname) && Objects.equals(data, other.data)
-				&& Objects.equals(giornale, other.giornale) && Objects.equals(giornali, other.giornali)
+				//&& Objects.equals(giornale, other.giornale)
+				&& Objects.equals(giornali, other.giornali)
 				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
 	}
 }
