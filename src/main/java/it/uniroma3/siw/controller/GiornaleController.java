@@ -42,7 +42,7 @@ public class GiornaleController {
 	}
 
 	@PostMapping("/giornale")
-	public String newGiornale(@Valid @ModelAttribute("movie") Giornale giornale,BindingResult bindingResult, Model model) {
+	public String newGiornale(@Valid @ModelAttribute("giornale") Giornale giornale,BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()) {         //Sono emersi errori nel binding
 			model.addAttribute("messaggioErroreTitolo", "Campo obbligatorio");
 			return "formNewGiornale.html";
