@@ -18,8 +18,8 @@ public class VoceCarrello {
     @ManyToOne
     private Carrello carrello;
 
-    //@ManyToOne
-    //private Articolo articolo; //ragioniamo su questo: conviene mettere una classe per ogni articolo o una calsse che generalizza gli articoli??
+    @ManyToOne
+    Prodotto prodotto; // superclasse astratta
 
     private int quantita;
 
@@ -29,6 +29,14 @@ public class VoceCarrello {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public Prodotto getProdotto() {
+		return prodotto;
+	}
+
+	public void setProdotto(Prodotto prodotto) {
+		this.prodotto = prodotto;
 	}
 
 	public Carrello getCarrello() {

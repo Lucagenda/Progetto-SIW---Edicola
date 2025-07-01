@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-public class Giocattolo {
+public class Giocattolo extends Prodotto {
 
 	@NotBlank
     private String tipologia;
