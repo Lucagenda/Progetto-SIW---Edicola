@@ -7,7 +7,7 @@
 
   <body>
     <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
-    <h1>Giornale</h1>
+    <h1>Giornali</h1>
     <div th:if="${giornali.isEmpty()}">Non ci sono giornali nel sistema</div>
     <ul>
       <li th:each="giornale: ${giornali}">

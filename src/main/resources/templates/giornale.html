@@ -12,6 +12,7 @@
             <div>Periodicità: <span th:text="${giornale.periodicita}">2000</span></div>
 			<div>Fondazione: <span th:text="${giornale.anno}">2000</span></div>
 			<div>Direttore: <span th:text="${giornale.direttore}">2000</span></div>
+			<div>Prezzo: <span th:text="${giornale.prezzo}">2000</span></div>
             <span><img width="30%" th:src="${giornale.urlImage}" /></span>
         </div>
         <div th:unless="${giornale}">Non esiste</div>

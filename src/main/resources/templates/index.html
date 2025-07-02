@@ -1,42 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
   <head>
     <meta charset="UTF-8" />
     <title>Edicola del Faro</title>
-    <link rel="stylesheet" href="/index.css?version=1" />
+    <link rel="stylesheet" href="/index.css?version=3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
   </head>
   <body>
-	
-	<!-- Icona carrello in alto a destra -->
-	<a href="/carrello" class="cart-icon" title="Vai al carrello">
-	  <img src="/images/carrello.png" alt="Carrello" />
-	</a>
-	
+
+    <!-- Icone fisse in alto a destra -->
+    <div class="top-icons">
+      <a href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a href="/login" title="Accedi o registrati">
+        <img src="/images/login.png" alt="Login" />
+      </a>
+    </div>
+
     <!-- Sezione Parallax -->
     <div class="parallax">
       <div class="overlay">
         <h1>Benvenuto sull'Edicola del Faro</h1>
+        <p>Scopri giornali, riviste e piccoli tesori da collezione</p>
       </div>
     </div>
 
     <!-- Contenuto della homepage -->
     <div class="content">
-      <h2>Giornali</h2>
-      <ul>
-        <li><a href="/giornali">Lista Giornali</a></li>
-        <li><a href="/formNewGiornale">Aggiungi Giornale</a></li>
-        <li><a href="/aggiornaGiornale">Gestisci Giornali</a></li>
-      </ul>
+      <section>
+        <h2>🗞️ Giornali</h2>
+        <ul>
+          <li><a href="/giornali">📄 Lista Giornali</a></li>
+          <li><a href="/formNewGiornale">➕ Aggiungi Giornale</a></li>
+          <li><a href="/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
+        </ul>
+      </section>
 
-      <h2>Giornalisti</h2>
-      <ul>
-        <li><a href="/giornalisti">Lista Giornalisti</a></li>
-        <li><a href="/formNewGiornalista">Aggiungi Giornalista</a></li>
-        <li><a href="/aggiornaGiornalista">Gestisci Giornalisti</a></li>
-      </ul>
+      <section>
+        <h2>🎲 Giocattoli</h2>
+        <ul>
+          <li><a href="/giornalisti">📄 Lista Giocattoli</a></li>
+          <li><a href="/formNewGiornalista">➕ Aggiungi Giocattolo</a></li>
+          <li><a href="/aggiornaGiornalista">🛠️ Gestisci Giocattoli</a></li>
+        </ul>
+      </section>
     </div>
-	<div style="height: 1000px; background-color: #f0f0f0;">
-	  <h2 style="padding-top: 20px; text-align: center;">Contenuto di prova sotto l'immagine</h2>
-	</div>
+
+    <!-- Spazio di scorrimento finale -->
+    <div class="footer-space">
+      <h2>📚 Altri contenuti in arrivo...</h2>
+    </div>
+
   </body>
 </html>

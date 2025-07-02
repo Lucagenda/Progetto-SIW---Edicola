@@ -26,6 +26,10 @@
         <label>Anno:</label><span><input required type="text" th:field="${giornale.anno}"/></span>
         <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
       </div>
+	  <div>
+	   	<label>Prezzo:</label><span><input required type="text" th:field="${giornale.prezzo}"/></span>
+        <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+      </div>
       <div>
         <label>URL immagine:</label><span><input type="url" th:field="${giornale.urlImage}" /></span>
       </div>
