@@ -1,8 +1,6 @@
 package it.uniroma3.siw.model;
 
-import java.util.List;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,9 +14,6 @@ public class Giornale extends Prodotto {
     private Integer anno;
 
     private String direttore;
-
-    @ManyToMany
-    private List<String> editorialisti;
 
 	public String getPeriodicita() {
 		return periodicita;
@@ -43,14 +38,5 @@ public class Giornale extends Prodotto {
 	public void setDirettore(String direttore) {
 		this.direttore = direttore;
 	}
-
-	public List<String> getEditorialisti() {
-		return editorialisti;
-	}
-
-	public void setEditorialisti(List<String> editorialisti) {
-		this.editorialisti = editorialisti;
-	}
-
    
 }

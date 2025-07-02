@@ -1,10 +1,12 @@
 package it.uniroma3.siw.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Giocattolo;
 import it.uniroma3.siw.repository.GiocattoloRepository;
 
+@Service
 public class GiocattoloService {
 
 	@Autowired

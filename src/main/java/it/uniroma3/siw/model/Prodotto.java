@@ -18,6 +18,8 @@ public abstract class Prodotto {
 
     @NotBlank
     private String nome;
+    
+    private Integer prezzo;
 
     private String urlImage;
 
@@ -43,6 +45,14 @@ public abstract class Prodotto {
 
 	public void setUrlImage(String urlImage) {
 		this.urlImage = urlImage;
+	}
+
+	public Integer getPrezzo() {
+		return prezzo;
+	}
+
+	public void setPrezzo(Integer prezzo) {
+		this.prezzo = prezzo;
 	}
 
 }

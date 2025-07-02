@@ -1,1 +1,2 @@
-INSERT INTO giornale (id, nome, anno, periodicita, direttore, url_image) VALUES (1, 'La Repubblica', 1976, 'quotidiano', 'Mario Orfeo', 'https://odg.roma.it/wp-content/uploads/2024/09/la-repubblica-1024x537-1.png');
+INSERT INTO prodotto (id, nome, prezzo, url_image) VALUES (1, 'La Repubblica', 2.00, 'https://odg.roma.it/wp-content/uploads/2024/09/la-repubblica-1024x537-1.png');
+INSERT INTO giornale (id, anno, periodicita, direttore) VALUES (1, 1976, 'quotidiano', 'Mario Orfeo');
