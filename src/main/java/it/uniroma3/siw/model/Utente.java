@@ -2,7 +2,6 @@ package it.uniroma3.siw.model;
 
 import java.util.Objects;
 
-import it.uniroma3.siw.constants.Ruolo;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,24 +13,9 @@ public class Utente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
 	private String nome;
-	
 	private String cognome;
-	
 	private String email;
-	
-	private String password;
-	
-	private Ruolo ruolo;
-	
-	public Ruolo getRuolo() {
-		return ruolo;
-	}
-
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
-	}
 
 	public Long getId() {
 		return id;
@@ -65,17 +49,9 @@ public class Utente {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(cognome, email, id, nome, password);
+		return Objects.hash(cognome, email, id, nome);
 	}
 
 	@Override
@@ -88,8 +64,7 @@ public class Utente {
 			return false;
 		Utente other = (Utente) obj;
 		return Objects.equals(cognome, other.cognome) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(password, other.password);
+				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
 	}
 	
 }

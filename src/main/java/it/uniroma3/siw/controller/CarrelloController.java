@@ -33,7 +33,7 @@ public class CarrelloController {
 
 	@GetMapping("/carrello")
 	public String visualizzaCarrello(Model model) {
-		Utente utente = utenteService.getUtenteLoggato(); // da implementare
+		Utente utente = utenteService.getUtente(); // da implementare
 		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
 		model.addAttribute("carrello", carrello);
 		return "carrello.html";
@@ -43,7 +43,7 @@ public class CarrelloController {
 	public String aggiungiProdottoAlCarrello(@RequestParam("tipo") String tipo,
 			@RequestParam("id") Long idProdotto,
 			Model model) {
-		Utente utente = utenteService.getUtenteLoggato();
+		Utente utente = utenteService.getUtente();
 		Prodotto prodotto = null;
 
 		if (tipo.equals("giornale")) {
