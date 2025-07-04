@@ -1,6 +1,5 @@
 package it.uniroma3.siw.configuration;
 
-import static it.uniroma3.siw.model.Credenziali.ADMIN_ROLE;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

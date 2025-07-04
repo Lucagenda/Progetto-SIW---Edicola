@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Edicola del Faro - Registrazione</title>
+    <link rel="stylesheet" href="/css/stile.css" />
+</head>
+
+<body>
+    <header>
+        <div th:if="${userDetails}">
+            <span th:text="${userDetails.username}"></span>
+            <a href="/logout">Logout</a>
+        </div>
+        <div th:unless="${userDetails}">
+            <a href="/login">Login</a>
+        </div>
+    </header>
+
+    <div>
+        <a href="/"><img src="/images/provaEdicola.png" alt="Logo Edicola del Faro" width="20%" /></a>
+    </div>
+
+    <h1>Registrazione nuovo utente</h1>
+
+    <form th:action="@{/register}" method="POST">
+        <div>
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" placeholder="nome" required th:field="${utente.nome}" />
+            <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label for="cognome">Cognome</label>
+            <input id="cognome" type="text" placeholder="cognome" required th:field="${utente.cognome}" />
+            <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="email" required th:field="${utente.email}" />
+            <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label for="username">Username</label>
+            <input id="username" type="text" placeholder="username" required th:field="${credenziali.username}" />
+            <span th:if="${#fields.hasErrors('credenziali.username')}" th:errors="${credenziali.username}" style="color:red"></span>
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="password" required th:field="${credenziali.password}" />
+            <span th:if="${#fields.hasErrors('credenziali.password')}" th:errors="${credenziali.password}" style="color:red"></span>
+        </div>
+
+        <div>
+            <button type="submit">Registra</button>
+        </div>
+    </form>
+</body>
+
+</html>

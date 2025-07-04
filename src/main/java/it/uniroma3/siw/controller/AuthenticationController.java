@@ -28,7 +28,7 @@ public class AuthenticationController {
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
 		model.addAttribute("utente", new Utente());
-		model.addAttribute("credentials", new Credenziali());
+		model.addAttribute("credenziali", new Credenziali());
 		return "formRegisterUtente";
 	}
 
