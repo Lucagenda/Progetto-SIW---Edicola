@@ -23,42 +23,38 @@ public class AuthConfiguration {
 	private DataSource dataSource;
 
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth)
-			throws Exception {
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
 		.dataSource(dataSource)
-		.authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
-		.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+		.authoritiesByUsernameQuery("SELECT username, role FROM credentials WHERE username = ?")
+		.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username = ?");
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder(){
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
 	@Bean
-	protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
+	protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 		.cors(cors -> cors.disable())
+		.csrf(csrf -> csrf.disable()) // solo per debug
 		.authorizeHttpRequests(requests -> requests
-				// Pagine pubbliche e risorse statiche
-				.requestMatchers(HttpMethod.GET, "/", "/index", "/register", "/login", "/css/**", "/images/**", "/favicon.ico", "/js/**", "/webjars/**").permitAll()
-				// Registrazione e login aperti a tutti (POST)
-				.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
-				// Area amministrativa solo per admin
-				.requestMatchers("/admin/**").hasAuthority(ADMIN_ROLE)
-				// Tutte le altre richieste devono essere autenticate
+				.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/**.css", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
+				.requestMatchers("/admin/**").hasAuthority("ADMIN")
 				.anyRequest().authenticated()
 				)
 		.formLogin(login -> login
 				.loginPage("/login")
 				.permitAll()
-				.defaultSuccessUrl("/success", true)
+				.defaultSuccessUrl("/", true) // redirect solo se non c'era pagina precedente
 				.failureUrl("/login?error=true")
 				)
 		.logout(logout -> logout
@@ -72,5 +68,4 @@ public class AuthConfiguration {
 
 		return httpSecurity.build();
 	}
-
 }

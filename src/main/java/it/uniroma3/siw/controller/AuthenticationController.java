@@ -1,8 +1,6 @@
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -54,23 +52,7 @@ public class AuthenticationController {
 
 	@GetMapping(value = "/login") 
 	public String showLoginForm (Model model) {
-		return "formLogin";
-	}
-
-	@GetMapping(value = "/") 
-	public String index(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication instanceof AnonymousAuthenticationToken) {
-			return "homePage";
-		}
-		else {		
-			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			Credenziali credentials = credenzialiService.getCredenziali(userDetails.getUsername());
-			if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-				return "admin/indexAdmin.html";
-			}
-		}
-		return "homePage";
+		return "login";
 	}
 
 	@GetMapping(value = "/success")
@@ -81,6 +63,6 @@ public class AuthenticationController {
 		if (credentials.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
 			return "admin/indexAdmin";
 		}
-		return "homePage";
+		return "index";
 	}
 }
