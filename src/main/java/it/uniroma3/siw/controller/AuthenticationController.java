@@ -24,6 +24,7 @@ public class AuthenticationController {
 
 	@Autowired
 	private CredenzialiService credenzialiService;
+	
 
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
