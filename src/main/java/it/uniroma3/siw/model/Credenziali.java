@@ -10,8 +10,8 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Credenziali {
 
-	public static final String DEFAULT_ROLE = "DEFAULT";
-	public static final String ADMIN_ROLE = "ADMIN";
+	public static final String DEFAULT_ROLE = "ROLE_DEFAULT";
+	public static final String ADMIN_ROLE = "ROLE_ADMIN";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

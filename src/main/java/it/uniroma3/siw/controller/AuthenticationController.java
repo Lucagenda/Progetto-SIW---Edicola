@@ -3,6 +3,7 @@ package it.uniroma3.siw.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,9 @@ public class AuthenticationController {
 	@Autowired
 	private CredenzialiService credenzialiService;
 	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 	@GetMapping(value = "/register") 
 	public String showRegisterForm (Model model) {
@@ -40,11 +44,18 @@ public class AuthenticationController {
 			BindingResult credenzialiBindingResult,
 			Model model) {
 
-		// se utente e credenziali hanno entrambi contenuti validi, memorizza Utente e Credenziali nel DB
 		if(!utenteBindingResult.hasErrors() && !credenzialiBindingResult.hasErrors()) {
 			utenteService.saveUtente(utente);
 			credenziali.setUtente(utente);
+
+			// Imposta il ruolo di default (importante!)
+			credenziali.setRuolo(Credenziali.DEFAULT_ROLE);
+
+			// Codifica la password
+			credenziali.setPassword(passwordEncoder.encode(credenziali.getPassword()));
+
 			credenzialiService.saveCredenziali(credenziali);
+
 			model.addAttribute("utente", utente);
 			return "registrationSuccessful";
 		}

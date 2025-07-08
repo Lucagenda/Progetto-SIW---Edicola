@@ -45,9 +45,9 @@ public class AuthConfiguration {
 		.cors(cors -> cors.disable())
 		.csrf(csrf -> csrf.disable()) // solo per debug
 		.authorizeHttpRequests(requests -> requests
-				.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/**.css", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/giornali", "/chi-siamo", "/giornale/*", "/**.css", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
-				.requestMatchers("/admin/**").hasAuthority("ADMIN")
+				.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated()
 				)
 		.formLogin(login -> login
