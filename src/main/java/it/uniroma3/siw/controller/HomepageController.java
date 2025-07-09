@@ -10,9 +10,4 @@ public class HomepageController {
 	public String home(){
 		return "index.html";
 	}
-	
-	@GetMapping("/chi-siamo")
-	public String chiSiamo() {
-	    return "chi-siamo";
-	}
 }
