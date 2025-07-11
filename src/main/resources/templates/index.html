@@ -33,8 +33,12 @@
         <h2>🗞️ Giornali</h2>
         <ul>
           <li><a href="/giornali">📄 Lista Giornali</a></li>
-          <li><a href="/formNewGiornale">➕ Aggiungi Giornale</a></li>
-          <li><a href="/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
+		  <li th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
+		    <a href="/admin/formNewGiornale">➕ Aggiungi Giornale</a>
+		  </li>
+		  <li th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
+		    <a href="/admin/aggiornaGiornale">🛠️ Gestisci Giornali</a>
+		  </li>
         </ul>
       </section>
 
@@ -42,8 +46,8 @@
         <h2>🎲 Giocattoli</h2>
         <ul>
           <li><a href="/giocattoli">📄 Lista Giocattoli</a></li>
-          <li><a href="/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
-          <li><a href="/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
+          <li><a href="/admin/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
+          <li><a href="/admin/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
         </ul>
       </section>
     </div>

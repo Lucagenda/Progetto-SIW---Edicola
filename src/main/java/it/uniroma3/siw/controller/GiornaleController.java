@@ -34,8 +34,8 @@ public class GiornaleController {
 		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));    
 		return "giornale.html";
 	}
-
-	@GetMapping("/formNewGiornale")
+	
+	@GetMapping("/admin/formNewGiornale")
 	public String formNewGiornale(Model model) {
 		model.addAttribute("giornale", new Giornale());
 		return "formNewGiornale.html";
@@ -53,7 +53,7 @@ public class GiornaleController {
 		}
 	}
 
-	@GetMapping("/aggiornaGiornale")
+	@GetMapping("/admin/aggiornaGiornale")
 	public String homeAggiornaGiornale(Model model) {
 		model.addAttribute("giornali",this.giornaleService.getAllGiornali());
 		return "aggiornaGiornale";
@@ -65,7 +65,7 @@ public class GiornaleController {
 		return "redirect:/aggiornaGiornale";
 	}
 
-	@GetMapping("modificaGiornale/{id}")
+	@GetMapping("/modificaGiornale/{id}")
 	public String modificaGiornale(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
 		return "modificaGiornale.html";

@@ -21,6 +21,7 @@ public class AuthConfiguration {
 	@Autowired
 	private DataSource dataSource;
 
+	//Questo metodo definisce le query SQL per ottenere username e password
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication()
@@ -29,6 +30,7 @@ public class AuthConfiguration {
 		.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credenziali WHERE username = ?");
 	}
 
+	//Questo metodo definisce il componente "passwordEncoder", usato per criptare e decriptare la password nella sorgente dati.
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -39,6 +41,7 @@ public class AuthConfiguration {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 
+	//Questo metodo contiene le impostazioni della configurazione di autenticatzione e autorizzazione
 	@Bean
 	protected SecurityFilterChain configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
@@ -48,6 +51,7 @@ public class AuthConfiguration {
 				.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/**.css", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
 				.requestMatchers("/admin/**").hasAuthority("ADMIN")
+				//.requestMatchers("/user/**").hasAuthority("DEFAULT")
 				.anyRequest().authenticated()
 				)
 		.formLogin(login -> login
