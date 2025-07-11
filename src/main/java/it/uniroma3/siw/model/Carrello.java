@@ -24,6 +24,19 @@ public class Carrello {
     @OneToMany(mappedBy = "carrello", cascade = CascadeType.ALL, orphanRemoval = true) //orphanRemoval fa si che se rimuovi una voce dal carrello, viene eliminata dal DB.
     private List<VoceCarrello> voci;
 
+    /* metodo per il totale */
+    public double getTotale() {
+        double totale = 0.0;
+        if (voci != null) {
+            for (VoceCarrello voce : voci) {
+                double prezzo = voce.getProdotto().getPrezzo();
+                int quantita = voce.getQuantita();
+                totale += prezzo * quantita;
+            }
+        }
+        return totale;
+    }
+ 
 	public Long getId() {
 		return id;
 	}

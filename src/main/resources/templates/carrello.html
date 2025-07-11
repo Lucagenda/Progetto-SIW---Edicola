@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Il tuo carrello</title>
+</head>
+<body>
+    <h1>Carrello</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Prodotto</th>
+                <th>Prezzo unitario</th>
+                <th>Quantità</th>
+                <th>Totale riga</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="voce : ${carrello.voci}">
+                <td th:text="${voce.prodotto.nome}">Nome prodotto</td>
+                <td th:text="${voce.prodotto.prezzo} + ' €'">Prezzo</td>
+                <td th:text="${voce.quantita}">Quantità</td>
+                <td th:text="${voce.prodotto.prezzo * voce.quantita} + ' €'">Totale riga</td>
+                <td>
+                    <a th:href="@{'/carrello/rimuovi/' + ${voce.id}}">Rimuovi</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 th:text="'Totale carrello: ' + ${carrello.totale} + ' €'">Totale</h3>
+
+    <!-- Pulsante di checkout -->
+    <form action="/checkout" method="post">
+        <button type="submit">Checkout</button>
+    </form>
+
+    <hr>
+
+    <!-- Form per aggiungere prodotto -->
+    <h3>Aggiungi prodotto al carrello</h3>
+    <form action="/carrello/aggiungi" method="post">
+        <label for="tipo">Tipo:</label>
+        <select name="tipo" id="tipo">
+            <option value="giornale">Giornale</option>
+            <option value="giocattolo">Giocattolo</option>
+        </select>
+
+        <label for="id">ID prodotto:</label>
+        <input type="number" name="id" id="id" required />
+
+        <button type="submit">Aggiungi</button>
+    </form>
+</body>
+</html>

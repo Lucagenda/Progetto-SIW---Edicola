@@ -19,7 +19,7 @@ public abstract class Prodotto {
     @NotBlank
     private String nome;
     
-    private String prezzo;
+    private double prezzo;
 
     private String urlImage;
 
@@ -47,11 +47,11 @@ public abstract class Prodotto {
 		this.urlImage = urlImage;
 	}
 
-	public String getPrezzo() {
+	public double getPrezzo() {
 		return prezzo;
 	}
 
-	public void setPrezzo(String prezzo) {
+	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
 

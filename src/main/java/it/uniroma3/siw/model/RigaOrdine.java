@@ -18,8 +18,8 @@ public class RigaOrdine {
     @ManyToOne
     private Ordine ordine;
 
-    //@ManyToOne
-    //private Articolo articolo; //ragioniamo su questo: conviene mettere una classe per ogni articolo o una calsse che generalizza gli articoli??
+    @ManyToOne
+    private Prodotto prodotto;
 
     private int quantita;
 
