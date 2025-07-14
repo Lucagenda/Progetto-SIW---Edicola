@@ -1,9 +1,12 @@
 package it.uniroma3.siw.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import it.uniroma3.siw.model.Giocattolo;
 
-public interface GiocattoloRepository extends CrudRepository<Giocattolo, Long> {
-
+public interface GiocattoloRepository extends JpaRepository<Giocattolo, Long> {
+	
+	List<Giocattolo> findByNome(String nome);
 }

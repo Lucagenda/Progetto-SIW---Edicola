@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Catalogo Prodotti</title>
+</head>
+<body>
+<h1>Catalogo Completo</h1>
+
+<ul>
+    <li th:each="prodotto : ${prodotti}">
+        <div th:switch="${prodotto.getClass().getSimpleName()}">
+
+            <!-- Giornale -->
+            <div th:case="'Giornale'">
+                <a th:href="@{|/giornale/${prodotto.id}|}">
+                    <img th:src="${prodotto.urlImage}" width="100" />
+                    <strong th:text="${prodotto.nome}"></strong> - 
+                    <span th:text="${prodotto.prezzo} + '€'"></span> 
+                    <span>(Giornale)</span>
+                </a>
+            </div>
+
+            <!-- Giocattolo -->
+            <div th:case="'Giocattolo'">
+                <a th:href="@{|/giocattolo/${prodotto.id}|}">
+                    <img th:src="${prodotto.urlImage}" width="100" />
+                    <strong th:text="${prodotto.nome}"></strong> - 
+                    <span th:text="${prodotto.prezzo} + '€'"></span> 
+                    <span>(Giocattolo)</span>
+                </a>
+            </div>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

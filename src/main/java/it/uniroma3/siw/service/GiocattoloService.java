@@ -1,7 +1,10 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.Giocattolo;
 import it.uniroma3.siw.repository.GiocattoloRepository;
@@ -26,5 +29,10 @@ public class GiocattoloService {
 
 	public void deleteById(Long id) {
 		giocattoloRepository.deleteById(id);
+	}
+	
+	@Transactional
+	public List<Giocattolo> cercaPerNome(String nome) {
+	    return giocattoloRepository.findByNome(nome);
 	}
 }

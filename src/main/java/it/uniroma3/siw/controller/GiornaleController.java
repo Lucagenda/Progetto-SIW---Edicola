@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Giornale;
 import it.uniroma3.siw.service.GiornaleService;
-import it.uniroma3.siw.service.GiornalistaService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -19,9 +18,6 @@ public class GiornaleController {
 
 	@Autowired
 	GiornaleService giornaleService;
-
-	@Autowired
-	GiornalistaService giornalistaService;
 
 	@GetMapping("/giornali")
 	public String mostraTuttiGiornali(Model model) {

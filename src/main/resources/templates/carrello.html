@@ -41,17 +41,9 @@
 
     <!-- Form per aggiungere prodotto -->
     <h3>Aggiungi prodotto al carrello</h3>
-    <form action="/carrello/aggiungi" method="post">
-        <label for="tipo">Tipo:</label>
-        <select name="tipo" id="tipo">
-            <option value="giornale">Giornale</option>
-            <option value="giocattolo">Giocattolo</option>
-        </select>
-
-        <label for="id">ID prodotto:</label>
-        <input type="number" name="id" id="id" required />
-
-        <button type="submit">Aggiungi</button>
-    </form>
+	<form class="search-bar" th:action="@{/prodotti/ricerca}" method="get">
+	    <input type="text" name="nome" placeholder="Cerca per nome..." />
+	    <button type="submit">Cerca</button>
+	</form>
 </body>
 </html>
