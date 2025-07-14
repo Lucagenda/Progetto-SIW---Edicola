@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Nuovo Giocattolo</title>
+    <link rel="stylesheet" href="/stile.css?version=3" />
+  </head>
+  <body>
+    <div><a href="/"><img src="/logo-siw.png" width="20%" /></a></div>
+    <h1>Aggiungi un giocattolo</h1>
+    <form th:action="@{/giocattolo}" method="POST" th:object="${giocattolo}">
+      <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
+
+      <div>
+        <label>Nome:</label>
+        <span><input required type="text" th:field="*{nome}" /></span>
+        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      </div>
+
+      <div>
+        <label>Tipologia:</label>
+        <span><input required type="text" th:field="*{tipologia}" /></span>
+        <span th:if="${#fields.hasErrors('tipologia')}" th:errors="*{tipologia}"></span>
+      </div>
+
+      <div>
+        <label>Produttore:</label>
+        <span><input required type="text" th:field="*{produttore}" /></span>
+        <span th:if="${#fields.hasErrors('produttore')}" th:errors="*{produttore}"></span>
+      </div>
+
+      <div>
+        <label>Prezzo:</label>
+        <span><input required type="text" th:field="*{prezzo}" /></span>
+        <span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+      </div>
+
+      <div>
+        <label>URL immagine:</label>
+        <span><input type="url" th:field="*{urlImage}" /></span>
+      </div>
+
+      <div>
+        <span><button type="submit">Conferma</button></span>
+      </div>
+    </form>
+  </body>
+</html>

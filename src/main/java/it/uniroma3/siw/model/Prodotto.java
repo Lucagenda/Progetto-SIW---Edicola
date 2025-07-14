@@ -9,7 +9,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Prodotto {
 
     @Id

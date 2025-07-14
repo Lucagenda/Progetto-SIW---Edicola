@@ -24,6 +24,22 @@ public class ProdottoService {
 	
 	@Autowired
     private GiocattoloRepository giocattoloRepository;
+
+	public List<Prodotto> getAllProdotti() {
+		return prodottoRepository.findAll();
+	}
+	
+	public Prodotto getProdottoById(Long id) {
+		return prodottoRepository.findById(id).get();
+	}
+	
+	public void save(Prodotto prodotto) {
+		prodottoRepository.save(prodotto);
+	}
+	
+	public void deleteById(Long id) {
+		prodottoRepository.deleteById(id);
+	}
 	
 	public List<Prodotto> cercaPerNome(String nome) {
         List<Giornale> giornali = giornaleRepository.findByNome(nome);
@@ -35,9 +51,5 @@ public class ProdottoService {
 
         return risultati;
     }
-
-	public List<Prodotto> getAllProdotti() {
-		return prodottoRepository.findAll();
-	}
 
 }

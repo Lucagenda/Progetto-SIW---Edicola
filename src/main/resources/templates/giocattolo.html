@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Giocattolo</title>
+        <link rel="stylesheet" href="/stile.css?version=2" />
+    </head>
+
+    <body>
+        <div><a href="/"><img src="/logo-siw.png" width="50%"></a></div>
+        <div th:if="${giocattolo}">
+        <h1 th:text="${giocattolo.nome}">Nome giocattolo</h1>
+            <div>Tipologia: <span th:text="${giocattolo.tipologia}">2000</span></div>
+			<div>Produttore: <span th:text="${giocattolo.produttore}">2000</span></div>
+			<div>Prezzo: <span th:text="${giocattolo.prezzo}">2000</span></div>
+            <span><img width="30%" th:src="${giocattolo.urlImage}" /></span>
+        </div>
+        <div th:unless="${giocattolo}">Non esiste</div>
+    </body>
+</html>

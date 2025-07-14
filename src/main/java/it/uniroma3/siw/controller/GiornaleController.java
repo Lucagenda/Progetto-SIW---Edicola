@@ -60,10 +60,5 @@ public class GiornaleController {
 		this.giornaleService.deleteById(id);
 		return "redirect:/aggiornaGiornale";
 	}
-
-	@GetMapping("/modificaGiornale/{id}")
-	public String modificaGiornale(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
-		return "modificaGiornale.html";
-	}
+	
 }
