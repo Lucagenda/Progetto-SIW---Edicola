@@ -1,5 +1,7 @@
 package it.uniroma3.siw.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -58,6 +60,25 @@ public abstract class Prodotto {
 
 	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nome, prezzo, urlImage);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Prodotto other = (Prodotto) obj;
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
+				&& Double.doubleToLongBits(prezzo) == Double.doubleToLongBits(other.prezzo)
+				&& Objects.equals(urlImage, other.urlImage);
 	}
 
 }

@@ -12,8 +12,7 @@ import it.uniroma3.siw.model.Carrello;
 import it.uniroma3.siw.model.Prodotto;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CarrelloService;
-import it.uniroma3.siw.service.GiocattoloService;
-import it.uniroma3.siw.service.GiornaleService;
+import it.uniroma3.siw.service.ProdottoService;
 import it.uniroma3.siw.service.UtenteService;
 
 @Controller
@@ -23,34 +22,23 @@ public class CarrelloController {
 	private CarrelloService carrelloService;
 
 	@Autowired
-	private GiornaleService giornaleService;
-
-	@Autowired
-	private GiocattoloService giocattoloService;
+	private ProdottoService prodottoService;
 
 	@Autowired
 	private UtenteService utenteService; // serve a recuperare l'utente loggato, se hai Spring Security
 
 	@GetMapping("/carrello")
 	public String visualizzaCarrello(Model model) {
-		Utente utente = utenteService.getUtente(); // da implementare
+		Utente utente = utenteService.getUtente();
 		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
 		model.addAttribute("carrello", carrello);
 		return "carrello.html";
 	}
 
 	@PostMapping("/carrello/aggiungi")
-	public String aggiungiProdottoAlCarrello(@RequestParam("tipo") String tipo,
-			@RequestParam("id") Long idProdotto,
-			Model model) {
+	public String aggiungiProdottoAlCarrello(@RequestParam("tipo") String tipo, @RequestParam("id") Long idProdotto, Model model) {
 		Utente utente = utenteService.getUtente();
-		Prodotto prodotto = null;
-
-		if (tipo.equals("giornale")) {
-			prodotto = giornaleService.getGiornaleById(idProdotto);
-		} else if (tipo.equals("giocattolo")) {
-			prodotto = giocattoloService.getGiocattoloById(idProdotto);
-		}
+		Prodotto prodotto = prodottoService.getProdottoById(idProdotto);
 
 		if (prodotto != null) {
 			carrelloService.aggiungiProdotto(utente, prodotto);

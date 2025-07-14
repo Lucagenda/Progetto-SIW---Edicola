@@ -16,11 +16,21 @@
 
     <ul>
       <li th:each="prodotto : ${prodotti}">
-        <a th:href="@{'/prodotto/' + ${prodotto.id}}"
-           th:text="${prodotto.nome + ' - ' + prodotto.prezzo + ' (' + prodotto.tipoProdotto + ')'}">
-           Prodotto
-        </a>
+        <span>
+          <a th:href="@{'/prodotto/' + ${prodotto.id}}"
+             th:text="${prodotto.nome + ' - ' + prodotto.prezzo + ' (' + prodotto.tipoProdotto + ')'}">
+            Prodotto
+          </a>
+        </span>
+
+        <!-- Form per aggiungere al carrello -->
+        <form th:action="@{/carrello/aggiungi}" method="post" style="display:inline">
+          <input type="hidden" name="tipo" th:value="${prodotto.tipoProdotto}" />
+          <input type="hidden" name="id" th:value="${prodotto.id}" />
+          <button type="submit">Aggiungi al carrello</button>
+        </form>
       </li>
     </ul>
   </body>
 </html>
+

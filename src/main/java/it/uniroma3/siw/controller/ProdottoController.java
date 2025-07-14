@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Giocattolo;
 import it.uniroma3.siw.model.Giornale;
 import it.uniroma3.siw.model.Prodotto;
-import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.*;
 import it.uniroma3.siw.service.ProdottoService;
 
@@ -23,9 +21,6 @@ public class ProdottoController {
 
 	@Autowired
 	ProdottoService prodottoService;
-
-	@Autowired
-	CredenzialiService credenzialiService;
 
 	@Autowired
 	GiornaleService giornaleService;
@@ -41,15 +36,15 @@ public class ProdottoController {
 
 	@GetMapping("/prodotto/{id}")
 	public String redirectProdotto(@PathVariable("id") Long id) {
-	    Prodotto prodotto = prodottoService.getProdottoById(id); // carichi il generico
+		Prodotto prodotto = prodottoService.getProdottoById(id); // carichi il generico
 
-	    if (prodotto instanceof Giornale) {
-	        return "redirect:/giornale/" + id;
-	    } else if (prodotto instanceof Giocattolo) {
-	        return "redirect:/giocattolo/" + id;
-	    }
+		if (prodotto instanceof Giornale) {
+			return "redirect:/giornale/" + id;
+		} else if (prodotto instanceof Giocattolo) {
+			return "redirect:/giocattolo/" + id;
+		}
 
-	    return "redirect:/errore"; // pagina di fallback
+		return "redirect:/errore"; // pagina di fallback
 	}
 
 	@GetMapping("/prodotti/ricerca")
@@ -57,28 +52,6 @@ public class ProdottoController {
 		List<Prodotto> tuttiProdotti = prodottoService.cercaPerNome(nome);
 
 		model.addAttribute("prodotti", tuttiProdotti);
-		//		List<String> pathsImmagini = new LinkedList<>();
-		//		for (Libro libro : tuttiLibri) {
-		//			if (libro.getImmagini() == null || libro.getImmagini().isEmpty()) {
-		//				System.out.println("Libro senza immagini: " + libro.getTitolo());
-		//				continue; // Skip libri without images
-		//			} else {
-		//				pathsImmagini.add(libro.getImmagini().get(0).getPath());
-		//				System.out.println("Path immagine: " + libro.getImmagini().get(0).getPath());
-		//			}
-		//
-		//		}
-		//		model.addAttribute("copertine", pathsImmagini);
-
-		if (authentication != null) {
-			String username = authentication.getName();
-			Credenziali credenziali = credenzialiService.getCredenziali(username);
-			String ruolo = credenziali.getRuolo();
-
-			if (ruolo.equals(Credenziali.ADMIN_ROLE)) {
-				return "admin/prodotti";
-			}
-		}
 
 		return "prodotti";
 	}

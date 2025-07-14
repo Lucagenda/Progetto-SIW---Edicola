@@ -1,6 +1,8 @@
 package it.uniroma3.siw.service;
 
 import java.util.ArrayList;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import it.uniroma3.siw.model.Carrello;
@@ -32,14 +34,31 @@ public class CarrelloService {
     public void aggiungiProdotto(Utente utente, Prodotto prodotto) {
         Carrello carrello = getOrCreateCarrello(utente);
 
-        VoceCarrello voce = new VoceCarrello();
-        voce.setProdotto(prodotto);
-        voce.setCarrello(carrello);
-        voceCarrelloRepository.save(voce);
+        // Cerca una voce già presente per quel prodotto
+        Optional<VoceCarrello> voceEsistente = carrello.getVoci().stream()
+            .filter(v -> v.getProdotto().getId().equals(prodotto.getId()))
+            .findFirst();
 
-        carrello.getVoci().add(voce);
+        if (voceEsistente.isPresent()) {
+            // Se la voce esiste, aggiorna quantità e totale
+            VoceCarrello voce = voceEsistente.get();
+            voce.setQuantita(voce.getQuantita() + 1); // aggiunge 1 alla quantità
+
+            voceCarrelloRepository.save(voce);
+        } else {
+            // Se la voce non esiste, crea una nuova
+            VoceCarrello voce = new VoceCarrello();
+            voce.setProdotto(prodotto);
+            voce.setCarrello(carrello);
+            voce.setQuantita(1);
+
+            voceCarrelloRepository.save(voce);
+            carrello.getVoci().add(voce);
+        }
+
         carrelloRepository.save(carrello);
     }
+
 
     public void rimuoviVoce(Long voceId) {
         voceCarrelloRepository.deleteById(voceId);
