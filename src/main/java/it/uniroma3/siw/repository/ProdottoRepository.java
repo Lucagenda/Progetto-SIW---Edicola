@@ -7,5 +7,5 @@ import it.uniroma3.siw.model.Prodotto;
 
 public interface ProdottoRepository extends JpaRepository<Prodotto, Long> {
 
-    List<Prodotto> findByNomeContainingIgnoreCase(String nome);
+    List<Prodotto> findByNome(String nome);
 }

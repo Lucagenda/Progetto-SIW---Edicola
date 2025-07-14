@@ -1,36 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Catalogo Prodotti</title>
-</head>
-<body>
-<h1>Catalogo Completo</h1>
+<html>
+  <head>
+    <title>Catalogo</title>
+    <link rel="stylesheet" href="/style.css?version=2" />
+  </head>
 
-<ul>
-    <li th:each="prodotto : ${prodotti}">
-        <div th:switch="${prodotto.getClass().getSimpleName()}">
+  <body>
+    <div>
+      <a href="/"><img src="/logo-siw.png" width="50%" /></a>
+    </div>
 
-            <!-- Giornale -->
-            <div th:case="'Giornale'">
-                <a th:href="@{|/giornale/${prodotto.id}|}">
-                    <img th:src="${prodotto.urlImage}" width="100" />
-                    <strong th:text="${prodotto.nome}"></strong> - 
-                    <span th:text="${prodotto.prezzo} + '€'"></span> 
-                    <span>(Giornale)</span>
-                </a>
-            </div>
+    <h1>Prodotti</h1>
 
-            <!-- Giocattolo -->
-            <div th:case="'Giocattolo'">
-                <a th:href="@{|/giocattolo/${prodotto.id}|}">
-                    <img th:src="${prodotto.urlImage}" width="100" />
-                    <strong th:text="${prodotto.nome}"></strong> - 
-                    <span th:text="${prodotto.prezzo} + '€'"></span> 
-                    <span>(Giocattolo)</span>
-                </a>
-            </div>
-        </div>
-    </li>
-</ul>
-</body>
+    <div th:if="${prodotti.isEmpty()}">Non ci sono prodotti nel catalogo</div>
+
+    <ul>
+      <li th:each="prodotto : ${prodotti}">
+        <a th:href="@{'/prodotto/' + ${prodotto.id}}"
+           th:text="${prodotto.nome + ' - ' + prodotto.prezzo + ' (' + prodotto.tipoProdotto + ')'}">
+           Prodotto
+        </a>
+      </li>
+    </ul>
+  </body>
 </html>

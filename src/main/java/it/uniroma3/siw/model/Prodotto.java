@@ -23,6 +23,11 @@ public abstract class Prodotto {
 
     private String urlImage;
 
+    /*metodo per ottenere il tipo dinamico */
+    public String getTipoProdotto() {
+        return this.getClass().getSimpleName();
+    }
+    
 	public Long getId() {
 		return id;
 	}

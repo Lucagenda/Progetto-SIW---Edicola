@@ -12,7 +12,7 @@
     <ul>
       <li th:each="giocattolo: ${giocattoli}">
         <a th:href="@{'/giocattolo' + '/' + ${giocattolo.id}}"
-          th:text="${giocattolo.nome} + ' - ' + ${giocattolo.tipologia} + ' (' + ${giocattolo.produttore} + ')' + ${giocattolo.prezzo}">Up! (2000)</a>
+          th:text="${giocattolo.nome} + ' - ' + ${giocattolo.tipologia} + ' (' + ${giocattolo.produttore} + ')'">Up! (2000)</a>
       </li>
     </ul>
   </body>
