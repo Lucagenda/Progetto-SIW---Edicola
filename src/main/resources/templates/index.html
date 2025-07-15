@@ -1,63 +1,71 @@
 <!DOCTYPE html>
-<html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Edicola del Faro</title>
-    <link rel="stylesheet" href="/index.css?version=3" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edicola del Faro</title>
+  <link rel="stylesheet" href="/index.css?version=3" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-    <!-- Icone fisse in alto a destra -->
-    <div class="top-icons">
-      <a href="/carrello" title="Vai al carrello">
-        <img src="/images/carrello.png" alt="Carrello" />
-      </a>
-      <a href="/login" title="Accedi o registrati">
-        <img src="/images/login.png" alt="Login" />
-      </a>
+  <!-- Icone fisse in alto a destra -->
+  <div class="top-icons">
+    <a href="/carrello" title="Vai al carrello">
+      <img src="/images/carrello.png" alt="Carrello" />
+    </a>
+
+    <!-- Se loggato: link al profilo -->
+    <a th:if="${credenziali != null}" th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+      <img src="/images/login.png" alt="Profilo" />
+    </a>
+
+    <!-- Se NON loggato: link al login -->
+    <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+      <img src="/images/login.png" alt="Login" />
+    </a>
+  </div>
+
+  <!-- Sezione Parallax -->
+  <div class="parallax">
+    <div class="overlay">
+      <h1>Benvenuto sull'Edicola del Faro</h1>
+      <p>Scopri giornali, riviste e piccoli tesori da collezione</p>
     </div>
+  </div>
 
-    <!-- Sezione Parallax -->
-    <div class="parallax">
-      <div class="overlay">
-        <h1>Benvenuto sull'Edicola del Faro</h1>
-        <p>Scopri giornali, riviste e piccoli tesori da collezione</p>
-      </div>
-    </div>
+  <!-- Contenuto della homepage -->
+  <div class="content">
+    <section>
+      <h2>🗞️ Giornali</h2>
+      <ul>
+        <li><a href="/giornali">📄 Lista Giornali</a></li>
+      </ul>
+    </section>
 
-    <!-- Contenuto della homepage -->
-    <div class="content">
-      <section>
-        <h2>🗞️ Giornali</h2>
-        <ul>
-          <li><a href="/giornali">📄 Lista Giornali</a></li>
-        </ul>
-      </section>
+    <section>
+      <h2>🎲 Giocattoli</h2>
+      <ul>
+        <li><a href="/giocattoli">📄 Lista Giocattoli</a></li>
+      </ul>
+    </section>
 
-      <section>
-        <h2>🎲 Giocattoli</h2>
-        <ul>
-          <li><a href="/giocattoli">📄 Lista Giocattoli</a></li>
-        </ul>
-      </section>
-	  
-	  <section th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
-	    <h2>⚙️ Amministrazione</h2>
-	    <ul>
-	      <li><a href="/admin/formNewGiornale">➕ Aggiungi Giornale</a></li>
-	      <li><a href="/admin/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
-	      <li><a href="/admin/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
-	      <li><a href="/admin/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
-	    </ul>
-	  </section>
-    </div>
+    <!-- Sezione Amministrazione solo per admin -->
+    <section th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
+      <h2>⚙️ Amministrazione</h2>
+      <ul>
+        <li><a href="/admin/formNewGiornale">➕ Aggiungi Giornale</a></li>
+        <li><a href="/admin/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
+        <li><a href="/admin/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
+        <li><a href="/admin/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
+      </ul>
+    </section>
+  </div>
 
-    <!-- Spazio di scorrimento finale -->
-    <div class="footer-space">
-      <h2>📚 Altri contenuti in arrivo...</h2>
-    </div>
+  <!-- Spazio di scorrimento finale -->
+  <div class="footer-space">
+    <h2>📚 Altri contenuti in arrivo...</h2>
+  </div>
 
-  </body>
+</body>
 </html>

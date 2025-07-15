@@ -51,7 +51,7 @@ public class AuthConfiguration {
 				.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/giornali", "/giocattoli", "/giornale", "/giocattolo", "/**.css", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/webjars/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll()
 				.requestMatchers("/admin/**").hasAuthority("ADMIN")
-				//.requestMatchers("/user/**").hasAuthority("DEFAULT")
+				.requestMatchers("/utente/**").hasAuthority("DEFAULT")
 				.anyRequest().authenticated()
 				)
 		.formLogin(login -> login
