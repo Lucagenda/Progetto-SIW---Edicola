@@ -27,6 +27,18 @@ public class RigaOrdine {
 		return id;
 	}
 
+	public Prodotto getProdotto() {
+		return prodotto;
+	}
+
+
+
+	public void setProdotto(Prodotto prodotto) {
+		this.prodotto = prodotto;
+	}
+
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}

@@ -12,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -32,6 +33,17 @@ public class Ordine {
 
 	@OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL)
 	private List<RigaOrdine> righeOrdine;
+	
+	@ManyToOne
+	private Utente ordinante;
+
+	public Utente getOrdinante() {
+		return ordinante;
+	}
+
+	public void setOrdinante(Utente ordinante) {
+		this.ordinante = ordinante;
+	}
 
 	public Long getId() {
 		return id;

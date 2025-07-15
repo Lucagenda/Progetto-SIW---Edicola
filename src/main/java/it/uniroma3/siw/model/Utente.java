@@ -1,11 +1,15 @@
+
 package it.uniroma3.siw.model;
 
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Utente {
@@ -16,6 +20,9 @@ public class Utente {
 	private String nome;
 	private String cognome;
 	private String email;
+	
+	@OneToMany(mappedBy = "ordinante", cascade = CascadeType.ALL)
+	private List<Ordine> ordini;
 
 	public Long getId() {
 		return id;
@@ -28,7 +35,11 @@ public class Utente {
 	public String getNome() {
 		return nome;
 	}
-
+	
+	public List<Ordine> getOrdini() {
+		return ordini;
+	}
+	
 	public void setNome(String nome) {
 		this.nome = nome;
 	}

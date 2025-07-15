@@ -33,17 +33,17 @@
     <h3 th:text="'Totale carrello: ' + ${carrello.totale} + ' €'">Totale</h3>
 
     <!-- Pulsante di checkout -->
-    <form action="/checkout" method="post">
-        <button type="submit">Checkout</button>
+    <form action="/carrello/checkout" method="post">
+        <button type="submit">Crea Ordine</button>
     </form>
 
     <hr>
 
     <!-- Form per aggiungere prodotto -->
     <h3>Aggiungi prodotto al carrello</h3>
-	<form class="search-bar" th:action="@{/prodotti/ricerca}" method="get">
-	    <input type="text" name="nome" placeholder="Cerca per nome..." />
-	    <button type="submit">Cerca</button>
-	</form>
+    <form class="search-bar" th:action="@{/prodotti/ricerca}" method="get">
+        <input type="text" name="nome" placeholder="Cerca per nome..." />
+        <button type="submit">Cerca</button>
+    </form>
 </body>
 </html>

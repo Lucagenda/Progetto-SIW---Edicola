@@ -37,6 +37,8 @@ public class UtenteController {
 		model.addAttribute("utente", utenteCorrente); 
 		model.addAttribute("credenziali", credenzialicorrenti);
 		model.addAttribute("showPasswordModal", showPasswordModal);
+		// aggiungi lista ordini
+		model.addAttribute("ordini", utenteCorrente.getOrdini());
 		return "utente/utente.html";
 	}
 }

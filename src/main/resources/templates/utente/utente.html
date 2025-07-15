@@ -15,6 +15,32 @@
                 <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
                 <a th:href="@{/logout}" class="nav-link">Esci</a>
             </div>
+            <div class="info-card">
+                <h3>I tuoi ordini</h3>
+                <table th:if="${ordini != null and #lists.size(ordini) > 0}" border="1">
+                    <thead>
+                        <tr>
+                            <th>ID Ordine</th>
+                            <th>Data</th>
+                            <th>Stato</th>
+                            <th>Prodotti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ordine : ${ordini}">
+                            <td th:text="${ordine.id}"></td>
+                            <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${ordine.stato}"></td>
+                            <td>
+                                <ul>
+                                    <li th:each="riga : ${ordine.righeOrdine}" th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p th:if="${ordini == null or #lists.size(ordini) == 0}">Nessun ordine presente.</p>
+            </div>
         </nav>
     </header>
 
