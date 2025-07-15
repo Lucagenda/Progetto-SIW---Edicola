@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <link rel="icon" th:href="@{images/logo.png}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHub - Profilo Utente</title>
+    <title>Edicola Del Faro - Profilo Utente</title>
     <link rel="stylesheet" th:href="@{/css/utente.css}">
 </head>
 <body>
     <header class="header">
         <nav class="nav">
-            <a class="logo">GameHub</a>
+            <a class="logo">Edicola Del Faro</a>
             <div class="nav-links">
                 <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
                 <a th:href="@{/logout}" class="nav-link">Esci</a>
