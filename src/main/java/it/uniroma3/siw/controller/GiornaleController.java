@@ -54,6 +54,12 @@ public class GiornaleController {
 		model.addAttribute("giornali",this.giornaleService.getAllGiornali());
 		return "aggiornaGiornale";
 	}
+	
+	@GetMapping("modificaGiornale/{id}")
+	public String modificaGiornale(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
+		return "modificaGiornale.html";
+	}
 
 	@GetMapping("/cancellaGiornale/{id}")
 	public String deleteGiornale(@PathVariable("id") Long id, Model model) {

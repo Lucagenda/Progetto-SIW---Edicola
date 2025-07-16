@@ -9,11 +9,21 @@
         <div><a href="/"><img src="/logo-siw.png" width="20%"></a></div>
         <div th:if="${giornale}">
         <h1 th:text="${giornale.nome}">Nome giornale</h1>
-		    <div>Periodicità: <span th:text="'(' + ${giornale.periodicita} + ')'">quotidiano</span></div>
-			<div>Direttore: <span th:text="'(' + ${giornale.direttore} + ')'">Gino Paoli</span></div>
             <div>Anno: <span th:text="'(' + ${giornale.anno} + ')'">2000</span></div>
             <span><img width="30%" th:src="${giornale.urlImage}" /></span>
+            <div>
+                <div th:if="${movie.director == null}">
+                    <a th:href="@{'/registaPerFilm' + '/' + ${movie.id}}">Aggiungi regista</a>
+                </div>
+                <div th:if="${movie.director != null}">
+                    <h2>Regista</h>
+                    <p th:text="${movie.director.name + ' ' + movie.director.surname}">Nome Cognome</p>
+                </div>
+            </div>
+            <div>
+                <a th:href="@{'/aggiornaAttori' + '/' + ${movie.id}}">Aggiungi attori</a>
+            </div>
         </div>
-        <div th:unless="${giornale}">Non esiste</div>
+        <div th:unless="${movie}">Non esiste</div>
     </body>
 </html>

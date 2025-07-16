@@ -54,6 +54,12 @@ public class GiocattoloController {
         model.addAttribute("giocattoli", this.giocattoloService.getAllGiocattoli());
         return "aggiornaGiocattolo";
     }
+    
+    @GetMapping("modificaGiocattolo/{id}")
+	public String modificaGiocattolo(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("giocattolo", this.giocattoloService.getGiocattoloById(id));
+		return "modificaGiocattolo.html";
+	}
 
     @GetMapping("/cancellaGiocattolo/{id}")
     public String deleteGiocattolo(@PathVariable("id") Long id, Model model) {
