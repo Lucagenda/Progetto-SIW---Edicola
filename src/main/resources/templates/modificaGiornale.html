@@ -7,23 +7,32 @@
 
     <body>
         <div><a href="/"><img src="/logo-siw.png" width="20%"></a></div>
-        <div th:if="${giornale}">
-        <h1 th:text="${giornale.nome}">Nome giornale</h1>
-            <div>Anno: <span th:text="'(' + ${giornale.anno} + ')'">2000</span></div>
-            <span><img width="30%" th:src="${giornale.urlImage}" /></span>
-            <div>
-                <div th:if="${movie.director == null}">
-                    <a th:href="@{'/registaPerFilm' + '/' + ${movie.id}}">Aggiungi regista</a>
-                </div>
-                <div th:if="${movie.director != null}">
-                    <h2>Regista</h>
-                    <p th:text="${movie.director.name + ' ' + movie.director.surname}">Nome Cognome</p>
-                </div>
-            </div>
-            <div>
-                <a th:href="@{'/aggiornaAttori' + '/' + ${movie.id}}">Aggiungi attori</a>
-            </div>
+    <h1>Modifica Giornale</h1>
+    <form th:action="@{'/modificaGiornale/' + ${giornale.id}}" th:object="${giornale}" method="post">
+        <div>
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" required />
         </div>
-        <div th:unless="${movie}">Non esiste</div>
+        <div>
+            <label>Anno:</label>
+            <input type="number" th:field="*{anno}" required />
+        </div>
+        <div>
+            <label>Prezzo:</label>
+            <input type="number" step="0.01" th:field="*{prezzo}" required />
+        </div>
+        <div>
+            <label>Mensilità/Periodicità:</label>
+            <input type="text" th:field="*{periodicita}" required />
+        </div>
+        <div>
+            <label>Direttore:</label>
+            <input type="text" th:field="*{direttore}" required />
+        </div>
+        <button type="submit">Salva modifiche</button>
+    </form>
+    <div th:if="${messaggioErrore}">
+        <p th:text="${messaggioErrore}" style="color:red;"></p>
+    </div>
     </body>
 </html>
