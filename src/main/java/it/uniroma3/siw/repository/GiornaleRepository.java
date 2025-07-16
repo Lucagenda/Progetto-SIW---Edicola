@@ -9,4 +9,6 @@ import it.uniroma3.siw.model.Giornale;
 public interface GiornaleRepository extends JpaRepository<Giornale, Long> {
 
 	List<Giornale> findByNome(String nome);
+
+	List<Giornale> findByNomeContainingIgnoreCase(String nome);
 }

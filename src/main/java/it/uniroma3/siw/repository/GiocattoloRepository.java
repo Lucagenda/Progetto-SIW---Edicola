@@ -9,4 +9,6 @@ import it.uniroma3.siw.model.Giocattolo;
 public interface GiocattoloRepository extends JpaRepository<Giocattolo, Long> {
 	
 	List<Giocattolo> findByNome(String nome);
+
+	List<Giocattolo> findByNomeContainingIgnoreCase(String nome);
 }

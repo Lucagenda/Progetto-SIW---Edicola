@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestione Ordini - Admin</title>
+</head>
+<body>
+    <div style="position: absolute; top: 20px; right: 30px;">
+        <a th:href="@{/logout}" title="Logout" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Logout</a>
+    </div>
+    <h1>Gestione Ordini Clienti</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID Ordine</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Stato</th>
+                <th>Prodotti</th>
+                <th>Azione</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ordine : ${ordini}">
+                <td th:text="${ordine.id}"></td>
+                <td th:text="${ordine.utente.nome + ' ' + ordine.utente.cognome}"></td>
+                <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+                <td th:text="${ordine.stato}"></td>
+                <td>
+                    <ul>
+                        <li th:each="riga : ${ordine.righeOrdine}" th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+                    </ul>
+                </td>
+                <td>
+                    <form th:action="@{'/admin/ordini/' + ${ordine.id} + '/stato'}" method="post">
+                        <select name="stato">
+                            <option th:each="stato : ${stati}" th:value="${stato}" th:text="${stato}" th:selected="${stato == ordine.stato}"></option>
+                        </select>
+                        <button type="submit">Aggiorna</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

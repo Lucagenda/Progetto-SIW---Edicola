@@ -13,7 +13,9 @@
             <a class="logo">Edicola Del Faro</a>
             <div class="nav-links">
                 <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
-                <a th:href="@{/logout}" class="nav-link">Esci</a>
+            </div>
+            <div style="position: absolute; top: 20px; right: 30px;">
+                <a th:href="@{/logout}" title="Logout" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Logout</a>
             </div>
             <div class="info-card">
                 <h3>I tuoi ordini</h3>

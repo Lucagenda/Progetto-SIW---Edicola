@@ -23,7 +23,7 @@ public class ProdottoService {
 	private GiornaleRepository giornaleRepository;
 	
 	@Autowired
-    private GiocattoloRepository giocattoloRepository;
+	private GiocattoloRepository giocattoloRepository;
 
 	public List<Prodotto> getAllProdotti() {
 		return prodottoRepository.findAll();
@@ -42,14 +42,14 @@ public class ProdottoService {
 	}
 	
 	public List<Prodotto> cercaPerNome(String nome) {
-        List<Giornale> giornali = giornaleRepository.findByNome(nome);
-        List<Giocattolo> giocattoli = giocattoloRepository.findByNome(nome);
+		List<Giornale> giornali = giornaleRepository.findByNomeContainingIgnoreCase(nome);
+		List<Giocattolo> giocattoli = giocattoloRepository.findByNomeContainingIgnoreCase(nome);
 
-        List<Prodotto> risultati = new ArrayList<>();
-        risultati.addAll(giornali);
-        risultati.addAll(giocattoli);
+		List<Prodotto> risultati = new ArrayList<>();
+		risultati.addAll(giornali);
+		risultati.addAll(giocattoli);
 
-        return risultati;
-    }
+		return risultati;
+	}
 
 }

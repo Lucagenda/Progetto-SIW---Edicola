@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Ordine</title>
+</head>
+<body>
+    <h1>Modifica Ordine</h1>
+    <form th:action="@{'/ordine/' + ${ordine.id} + '/modifica'}" method="post">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Prodotto</th>
+                    <th>Quantità</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="riga : ${ordine.righeOrdine}">
+                    <td th:text="${riga.prodotto.nome}"></td>
+                    <td>
+                        <input type="number" name="quantita_[[${riga.id}]]" th:value="${riga.quantita}" min="1" required />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Salva modifiche</button>
+    </form>
+    <a th:href="@{'/utente/' + ${ordine.utente.id}}">Torna al profilo</a>
+</body>
+</html>

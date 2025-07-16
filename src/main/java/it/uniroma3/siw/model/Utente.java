@@ -31,15 +31,17 @@ public class Utente {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	public void setOrdini(List<Ordine> ordini) {
+		this.ordini = ordini;
+	}
+	public List<Ordine> getOrdini() {
+		return ordini;
+	}
 
 	public String getNome() {
 		return nome;
 	}
-	
-	public List<Ordine> getOrdini() {
-		return ordini;
-	}
-	
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}

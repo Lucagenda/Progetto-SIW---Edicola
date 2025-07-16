@@ -1,3 +1,4 @@
+
 package it.uniroma3.siw.service;
 
 import java.util.ArrayList;
@@ -14,6 +15,25 @@ import it.uniroma3.siw.repository.VoceCarrelloRepository;
 
 @Service
 public class CarrelloService {
+    public void aggiungiProdottoConQuantita(Utente utente, Prodotto prodotto, int quantita) {
+        Carrello carrello = getOrCreateCarrello(utente);
+        Optional<VoceCarrello> voceEsistente = carrello.getVoci().stream()
+            .filter(v -> v.getProdotto().getId().equals(prodotto.getId()))
+            .findFirst();
+        if (voceEsistente.isPresent()) {
+            VoceCarrello voce = voceEsistente.get();
+            voce.setQuantita(voce.getQuantita() + quantita);
+            voceCarrelloRepository.save(voce);
+        } else {
+            VoceCarrello voce = new VoceCarrello();
+            voce.setProdotto(prodotto);
+            voce.setCarrello(carrello);
+            voce.setQuantita(quantita);
+            voceCarrelloRepository.save(voce);
+            carrello.getVoci().add(voce);
+        }
+        carrelloRepository.save(carrello);
+    }
 
     @Autowired
     private CarrelloRepository carrelloRepository;

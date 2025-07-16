@@ -16,9 +16,16 @@
     </a>
 
     <!-- Se loggato: link al profilo -->
-    <a th:if="${credenziali != null}" th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
-      <img src="/images/login.png" alt="Profilo" />
-    </a>
+    <span th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
+      <a th:href="@{/admin/ordini}" title="Area Admin">
+        <img src="/images/login.png" alt="Admin" />
+      </a>
+    </span>
+    <span th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}">
+      <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+        <img src="/images/login.png" alt="Profilo" />
+      </a>
+    </span>
 
     <!-- Se NON loggato: link al login -->
     <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">

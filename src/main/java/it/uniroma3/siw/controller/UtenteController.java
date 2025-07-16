@@ -29,7 +29,7 @@ public class UtenteController {
 	public String showUtente(@PathVariable("id") Long id, @RequestParam(value = "showPasswordModal", required = false, defaultValue = "false")
 							boolean showPasswordModal, Model model) {
 		if (!verificaId(id))
-			return "error";
+			return "redirect:/login";
 		
 		Utente utenteCorrente = utenteService.getUtente();
 		// Recupera anche le credenziali dell'utente corrente

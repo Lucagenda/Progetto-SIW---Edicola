@@ -1,5 +1,4 @@
 package it.uniroma3.siw.controller;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +9,7 @@ import it.uniroma3.siw.model.VoceCarrello;
 import it.uniroma3.siw.constants.StatoOrdine;
 import it.uniroma3.siw.service.OrdineService;
 import it.uniroma3.siw.repository.RigaOrdineRepository;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,13 +37,37 @@ public class CarrelloController {
 
 	@Autowired
 	private UtenteService utenteService; // serve a recuperare l'utente loggato, se hai Spring Security
-	
-	@Autowired
+
+	@GetMapping("/carrello")
+	public String visualizzaCarrello(Model model) {
+		Utente utente = utenteService.getUtente();
+		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
+		model.addAttribute("carrello", carrello);
+		return "carrello.html";
+	}
+
+	@PostMapping("/carrello/aggiungi")
+	public String aggiungiProdottoAlCarrello(@RequestParam("tipo") String tipo, @RequestParam("id") Long idProdotto, Model model) {
+		Utente utente = utenteService.getUtente();
+		Prodotto prodotto = prodottoService.getProdottoById(idProdotto);
+
+		if (prodotto != null) {
+			carrelloService.aggiungiProdotto(utente, prodotto);
+		}
+		return "redirect:/carrello";
+	}
+
+	@GetMapping("/carrello/rimuovi/{voceId}")
+	public String rimuoviVoce(@PathVariable("voceId") Long voceId) {
+		carrelloService.rimuoviVoce(voceId);
+		return "redirect:/carrello";
+	}
+
+		@Autowired
 	private OrdineService ordineService;
 
 	@Autowired
 	private RigaOrdineRepository rigaOrdineRepository;
-	
 	@PostMapping("/carrello/checkout")
 	public String checkout(Model model) {
 		Utente utente = utenteService.getUtente();
@@ -72,37 +96,15 @@ public class CarrelloController {
 		ordineService.salvaOrdine(ordine);
 		rigaOrdineRepository.saveAll(righe);
 
-		// Svuota il carrello
-		carrello.getVoci().clear();
+		// Svuota il carrello eliminando le voci dal database
+		List<VoceCarrello> vociDaRimuovere = new ArrayList<>(carrello.getVoci());
+		for (VoceCarrello voce : vociDaRimuovere) {
+			carrello.getVoci().remove(voce);
+			carrelloService.rimuoviVoce(voce.getId());
+		}
 		carrelloService.getOrCreateCarrello(utente).setVoci(new ArrayList<>());
-		carrelloService.getOrCreateCarrello(utente); // aggiorna
+		carrelloService.getOrCreateCarrello(utente);
 
 		return "redirect:/utente/" + utente.getId();
-	}
-
-	@GetMapping("/carrello")
-	public String visualizzaCarrello(Model model) {
-		Utente utente = utenteService.getUtente();
-		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
-		model.addAttribute("carrello", carrello);
-		return "carrello.html";
-	}
-
-	@PostMapping("/carrello/aggiungi")
-	public String aggiungiProdottoAlCarrello(@RequestParam("tipo") String tipo, @RequestParam("id") Long idProdotto, Model model) {
-		Utente utente = utenteService.getUtente();
-		Prodotto prodotto = prodottoService.getProdottoById(idProdotto);
-
-		if (prodotto != null) {
-			carrelloService.aggiungiProdotto(utente, prodotto);
-		}
-
-		return "redirect:/carrello";
-	}
-
-	@GetMapping("/carrello/rimuovi/{voceId}")
-	public String rimuoviVoce(@PathVariable("voceId") Long voceId) {
-		carrelloService.rimuoviVoce(voceId);
-		return "redirect:/carrello";
 	}
 }
