@@ -20,7 +20,12 @@ public class OrdineService {
     }
 
     public List<Ordine> getAllOrdini() {
-        return ordineRepository.findAll();
+        List<Ordine> inPreparazione = ordineRepository.findByStato(StatoOrdine.IN_PREPARAZIONE);
+        List<Ordine> pronti = ordineRepository.findByStato(StatoOrdine.PRONTO);
+        List<Ordine> tutti = new java.util.ArrayList<>();
+        tutti.addAll(inPreparazione);
+        tutti.addAll(pronti);
+        return tutti;
     }
 
     public Ordine getOrdineById(Long id) {
