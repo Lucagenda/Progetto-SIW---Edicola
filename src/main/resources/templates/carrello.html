@@ -5,6 +5,9 @@
     <title>Il tuo carrello</title>
 </head>
 <body>
+    <div style="position: absolute; top: 20px; right: 30px;">
+        <a th:href="@{/}" title="Torna alla Homepage" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Torna alla Homepage</a>
+    </div>
     <h1>Carrello</h1>
 
     <table border="1">
@@ -32,10 +35,15 @@
 
     <h3 th:text="'Totale carrello: ' + ${carrello.totale} + ' €'">Totale</h3>
 
-    <!-- Pulsante di checkout -->
-    <form action="/carrello/checkout" method="post">
-        <button type="submit">Crea Ordine</button>
-    </form>
+    <!-- Pulsanti di checkout e svuota carrello -->
+    <div style="display: flex; gap: 10px;">
+      <form action="/carrello/checkout" method="post">
+          <button type="submit">Crea Ordine</button>
+      </form>
+      <form action="/carrello/svuota" method="post">
+          <button type="submit" style="background-color:#c00; color:white;">Svuota Carrello</button>
+      </form>
+    </div>
 
     <hr>
 

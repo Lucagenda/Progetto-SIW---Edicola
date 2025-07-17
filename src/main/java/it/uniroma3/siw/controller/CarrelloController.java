@@ -107,4 +107,11 @@ public class CarrelloController {
 
 		return "redirect:/utente/" + utente.getId();
 	}
+
+	@PostMapping("/carrello/svuota")
+	public String svuotaCarrello() {
+		Utente utente = utenteService.getUtente();
+		carrelloService.svuotaCarrello(utente);
+		return "redirect:/carrello";
+	}
 }

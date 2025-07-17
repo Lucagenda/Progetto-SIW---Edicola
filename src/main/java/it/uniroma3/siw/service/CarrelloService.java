@@ -1,3 +1,4 @@
+// ...existing code...
 
 package it.uniroma3.siw.service;
 
@@ -82,5 +83,16 @@ public class CarrelloService {
 
     public void rimuoviVoce(Long voceId) {
         voceCarrelloRepository.deleteById(voceId);
+    }
+
+    public void svuotaCarrello(Utente utente) {
+        Carrello carrello = getOrCreateCarrello(utente);
+        if (carrello.getVoci() != null) {
+            for (VoceCarrello voce : new ArrayList<>(carrello.getVoci())) {
+                voceCarrelloRepository.deleteById(voce.getId());
+            }
+            carrello.getVoci().clear();
+            carrelloRepository.save(carrello);
+        }
     }
 }
