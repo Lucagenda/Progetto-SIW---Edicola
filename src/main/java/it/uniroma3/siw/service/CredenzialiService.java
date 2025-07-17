@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import it.uniroma3.siw.model.Credenziali;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.CredenzialiRepository;
 
 @Service
@@ -27,6 +28,11 @@ public class CredenzialiService {
 	public Credenziali getCredenziali(String username) {
 		Optional<Credenziali> result = this.credenzialiRepository.findByUsername(username);
 		return result.orElse(null);
+	}
+	
+	@Transactional
+	public Credenziali getCredenzialiByUtente(Utente utente) {
+		return this.credenzialiRepository.findByUtente(utente).get();
 	}
 
 	@Transactional

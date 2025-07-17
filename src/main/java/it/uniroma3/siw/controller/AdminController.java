@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import it.uniroma3.siw.model.Ordine;
 import it.uniroma3.siw.constants.StatoOrdine;
 import it.uniroma3.siw.service.OrdineService;
 

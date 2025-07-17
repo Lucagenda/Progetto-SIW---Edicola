@@ -60,46 +60,47 @@
                     <p><strong>Email:</strong> <span th:text="${utente.email}">mario.rossi@example.com</span></p>
                 </div>
 
-<!--                <div class="info-card">-->
-<!--                    <h3>Azioni</h3>-->
-<!--                    <a th:href="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" class="cta-button edit-profile-button">Modifica Profilo</a>-->
-<!--					 Bottone/modal per password -->
-<!--					<a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--		<div th:if="${showPasswordModal == true}"-->
-<!--           th:classappend="${showPasswordModal} ? '' : 'modal-hidden'"-->
-<!--           class="modal-overlay"-->
-<!--         >-->
-<!--           <form class="password-card" th:action="@{'/utente/' + ${utente.id} + '/cambiaPassword'}" method="post">-->
-<!--               <h2>Cambia Password</h2>-->
-<!--			   <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>-->
-<!--               <label for="newPassword">Nuova password</label>-->
-<!--               <input-->
-<!--                   type="password"-->
-<!--                   id="newPwd"-->
-<!--                   name="newPwd"-->
-<!--                   placeholder="Inserisci la nuova password"-->
-<!--                   required-->
-<!--                   minlength="8"-->
-<!--               />-->
-<!--               <label for="confirmPassword">Conferma nuova password</label>-->
-<!--               <input-->
-<!--                   type="password"-->
-<!--                   id="confirmPwd"-->
-<!--                   name="confirmPwd"-->
-<!--                   placeholder="Conferma la nuova password"-->
-<!--                   required-->
-<!--                   minlength="8"-->
-<!--               />-->
-<!--               <div class="password-btns">-->
-<!--                   <a th:href="@{'/utente/' + ${utente.id}}" class="password-btn cancel">Annulla</a>-->
-<!--                   <button type="submit" class="password-btn submit">Conferma</button>-->
-<!--               </div>-->
-<!--           </form>-->
-<!--		</div>-->
-<!--    </main>-->
+				<div class="info-card">
+				    <h3>Azioni</h3>
+				    <a th:href="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" class="cta-button edit-profile-button">Modifica Profilo</a>
+				    <!-- Bottone/modal per password -->
+				    <a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>
+				</div>
+				</div>
+				</div>
+				<div th:if="${showPasswordModal == true}"
+				     th:classappend="${showPasswordModal} ? '' : 'modal-hidden'"
+				     class="modal-overlay"
+				>
+				    <form class="password-card" th:action="@{'/utente/' + ${utente.id} + '/cambiaPassword'}" method="post">
+				        <h2>Cambia Password</h2>
+				        <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
+				        <label for="newPassword">Nuova password</label>
+				        <input
+				            type="password"
+				            id="newPwd"
+				            name="newPwd"
+				            placeholder="Inserisci la nuova password"
+				            required
+				            minlength="8"
+				        />
+				        <label for="confirmPassword">Conferma nuova password</label>
+				        <input
+				            type="password"
+				            id="confirmPwd"
+				            name="confirmPwd"
+				            placeholder="Conferma la nuova password"
+				            required
+				            minlength="8"
+				        />
+				        <div class="password-btns">
+				            <a th:href="@{'/utente/' + ${utente.id}}" class="password-btn cancel">Annulla</a>
+				            <button type="submit" class="password-btn submit">Conferma</button>
+				        </div>
+				    </form>
+				</div>
+				</main>
+
 
     <footer class="footer">
         <div class="footer-content">
