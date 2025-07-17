@@ -10,9 +10,14 @@
         <div th:if="${giocattolo}">
         <h1 th:text="${giocattolo.nome}">Nome giocattolo</h1>
             <div>Tipologia: <span th:text="${giocattolo.tipologia}">2000</span></div>
-			<div>Produttore: <span th:text="${giocattolo.produttore}">2000</span></div>
-			<div>Prezzo: <span th:text="${giocattolo.prezzo}">2000</span></div>
+            <div>Produttore: <span th:text="${giocattolo.produttore}">2000</span></div>
+            <div>Prezzo: <span th:text="${giocattolo.prezzo}">2000</span></div>
             <span><img width="30%" th:src="${giocattolo.urlImage}" /></span>
+            <form th:action="@{/carrello/aggiungi}" method="post" style="margin-top:20px;">
+                <input type="hidden" name="id" th:value="${giocattolo.id}" />
+                <input type="hidden" name="tipo" value="Giocattolo" />
+                <button type="submit">Aggiungi al carrello</button>
+            </form>
         </div>
         <div th:unless="${giocattolo}">Non esiste</div>
     </body>

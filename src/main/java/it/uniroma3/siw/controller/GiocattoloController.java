@@ -15,6 +15,31 @@ import jakarta.validation.Valid;
 
 @Controller
 public class GiocattoloController {
+    @GetMapping("/modificaGiocattolo/{id}")
+    public String formModificaGiocattolo(@PathVariable("id") Long id, Model model) {
+        Giocattolo giocattolo = giocattoloService.getGiocattoloById(id);
+        model.addAttribute("giocattolo", giocattolo);
+        return "modificaGiocattolo";
+    }
+
+    @PostMapping("/modificaGiocattolo/{id}")
+    public String modificaGiocattolo(@PathVariable("id") Long id,
+                                     @ModelAttribute("giocattolo") Giocattolo giocattoloModificato,
+                                     BindingResult bindingResult,
+                                     Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("giocattolo", giocattoloModificato);
+            model.addAttribute("messaggioErrore", "Compila tutti i campi correttamente");
+            return "modificaGiocattolo";
+        }
+        Giocattolo giocattolo = giocattoloService.getGiocattoloById(id);
+        giocattolo.setNome(giocattoloModificato.getNome());
+        giocattolo.setProduttore(giocattoloModificato.getProduttore());
+        giocattolo.setTipologia(giocattoloModificato.getTipologia());
+        giocattolo.setPrezzo(giocattoloModificato.getPrezzo());
+        giocattoloService.save(giocattolo);
+        return "redirect:/admin/aggiornaGiocattolo";
+    }
 
     @Autowired
     GiocattoloService giocattoloService;
@@ -54,12 +79,6 @@ public class GiocattoloController {
         model.addAttribute("giocattoli", this.giocattoloService.getAllGiocattoli());
         return "aggiornaGiocattolo";
     }
-    
-    @GetMapping("modificaGiocattolo/{id}")
-	public String modificaGiocattolo(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("giocattolo", this.giocattoloService.getGiocattoloById(id));
-		return "modificaGiocattolo.html";
-	}
 
     @GetMapping("/cancellaGiocattolo/{id}")
     public String deleteGiocattolo(@PathVariable("id") Long id, Model model) {
