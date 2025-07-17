@@ -14,7 +14,7 @@
 
     <!-- Carrello: se ADMIN va a /admin/ordini, altrimenti /carrello -->
     <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
-      <img src="/images/carrello.png" alt="Admin Ordini" />
+      <img src="/images/gear.png" alt="Admin Ordini" />
     </a>
     <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
       <img src="/images/carrello.png" alt="Carrello" />
