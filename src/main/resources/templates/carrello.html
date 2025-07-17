@@ -64,5 +64,13 @@
             <button type="submit">Aggiungi al carrello</button>
         </form>
     </div>
+
+    <!-- Se la ricerca non trova nessun prodotto -->
+    <div th:if="${prodotti != null and #lists.size(prodotti) == 0}">
+        <div style="position: absolute; top: 20px; right: 30px;">
+            <a th:href="@{/carrello}" title="Torna al carrello" style="font-weight:bold; font-size:18px; color:#007bff; text-decoration:none;">Torna al carrello</a>
+        </div>
+        <p>Nessun prodotto trovato.</p>
+    </div>
 </body>
 </html>

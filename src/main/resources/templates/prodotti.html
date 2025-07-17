@@ -12,7 +12,12 @@
 
     <h1>Prodotti</h1>
 
-    <div th:if="${prodotti.isEmpty()}">Non ci sono prodotti nel catalogo</div>
+    <div th:if="${prodotti.isEmpty()}">
+      <div style="position: absolute; top: 20px; right: 30px;">
+        <a th:href="@{/carrello}" title="Torna al carrello" style="font-weight:bold; font-size:18px; color:#007bff; text-decoration:none;">Torna al carrello</a>
+      </div>
+      Non ci sono prodotti nel catalogo
+    </div>
 
     <ul>
       <li th:each="prodotto : ${prodotti}">
