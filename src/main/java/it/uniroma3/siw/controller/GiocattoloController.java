@@ -1,5 +1,5 @@
 package it.uniroma3.siw.controller;
-
+import it.uniroma3.siw.model.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +10,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Giocattolo;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.GiocattoloService;
+import it.uniroma3.siw.service.UtenteService;
 import jakarta.validation.Valid;
 
 @Controller
 public class GiocattoloController {
+
+    @Autowired
+    GiocattoloService giocattoloService;
+
+    @Autowired
+    private UtenteService utenteService;
+    @Autowired
+    private CredenzialiService credenzialiService;
+    
     @GetMapping("/modificaGiocattolo/{id}")
     public String formModificaGiocattolo(@PathVariable("id") Long id, Model model) {
         Giocattolo giocattolo = giocattoloService.getGiocattoloById(id);
@@ -40,10 +51,7 @@ public class GiocattoloController {
         giocattoloService.save(giocattolo);
         return "redirect:/admin/aggiornaGiocattolo";
     }
-
-    @Autowired
-    GiocattoloService giocattoloService;
-
+    
     @GetMapping("/giocattoli")
     public String mostraTuttiGiocattoli(Model model) {
         model.addAttribute("giocattoli", this.giocattoloService.getAllGiocattoli());
@@ -52,7 +60,12 @@ public class GiocattoloController {
 
     @GetMapping("/giocattolo/{id}")
     public String getGiocattolo(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("giocattolo", this.giocattoloService.getGiocattoloById(id));    
+        model.addAttribute("giocattolo", this.giocattoloService.getGiocattoloById(id));
+        // Recupera utente loggato
+        Utente utente = utenteService.getUtente();
+        if (utente != null) {
+            model.addAttribute("credenziali", credenzialiService.getCredenzialiByUtente(utente));
+        }
         return "giocattolo.html";
     }
 
