@@ -1,6 +1,8 @@
 package it.uniroma3.siw.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import it.uniroma3.siw.model.Ordine;
+import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.MessaggioService;
 import it.uniroma3.siw.repository.OrdineRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ import java.util.List;
 public class OrdineService {
     @Autowired
     private OrdineRepository ordineRepository;
+
+    @Autowired
+    private MessaggioService messaggioService;
 
     public void salvaOrdine(Ordine ordine) {
         ordineRepository.save(ordine);
@@ -37,6 +42,11 @@ public class OrdineService {
         if (ordine != null) {
             ordine.setStato(nuovoStato);
             ordineRepository.save(ordine);
+            Utente utente = ordine.getUtente();
+            if (utente != null) {
+                String testo = "Lo stato del tuo ordine #" + ordine.getId() + " è stato aggiornato a '" + nuovoStato + "'.";
+                messaggioService.inviaMessaggio(testo, utente);
+            }
         }
     }
 }

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>I tuoi messaggi</title>
+</head>
+<body>
+    <div style="position: absolute; top: 20px; right: 30px;">
+        <a th:href="@{/}" title="Torna alla Homepage" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Torna alla Homepage</a>
+    </div>
+    <h1>Messaggi</h1>
+    <div th:if="${messaggi != null and #lists.size(messaggi) > 0}">
+        <ul>
+            <li th:each="msg : ${messaggi}">
+                <span th:text="${#temporals.format(msg.data, 'dd/MM/yyyy HH:mm')}"></span> -
+                <span th:text="${msg.testo}"></span>
+                <span th:if="${!msg.letto}" style="color: #c00; font-weight: bold;"> (Nuovo)</span>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${messaggi == null or #lists.size(messaggi) == 0}">
+        <p>Nessun messaggio presente.</p>
+    </div>
+</body>
+</html>

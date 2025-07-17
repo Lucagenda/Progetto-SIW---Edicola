@@ -22,6 +22,10 @@
     <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
       <img src="/images/carrello.png" alt="Carrello" />
     </a>
+    <!-- Messaggi utente -->
+    <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+      <img src="/images/gear.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+    </a>
 
     <!-- Profilo: tutti i loggati vanno a /utente/{id} -->
     <span th:if="${credenziali != null}">

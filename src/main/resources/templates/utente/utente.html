@@ -15,7 +15,7 @@
             <a th:href="@{/logout}" title="Logout" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Logout</a>
         </div>
 
-        <div class="info-card">
+        <div class="info-card" th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}">
             <h3>I tuoi ordini</h3>
             <table th:if="${ordini != null and #lists.size(ordini) > 0}" border="1">
                 <thead>
