@@ -14,7 +14,7 @@
             <div>Direttore: <span th:text="${giornale.direttore}">2000</span></div>
             <div>Prezzo: <span th:text="${giornale.prezzo}">2000</span></div>
             <span><img width="30%" th:src="${giornale.urlImage}" /></span>
-            <form th:action="@{/carrello/aggiungi}" method="post" style="margin-top:20px;">
+			<form th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:action="@{/carrello/aggiungi}" method="post" style="margin-top:20px;">
                 <input type="hidden" name="id" th:value="${giornale.id}" />
                 <input type="hidden" name="tipo" value="Giornale" />
                 <button type="submit">Aggiungi al carrello</button>

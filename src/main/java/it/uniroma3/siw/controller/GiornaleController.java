@@ -10,11 +10,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Giornale;
+import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.GiornaleService;
+import it.uniroma3.siw.service.UtenteService;
 import jakarta.validation.Valid;
 
 @Controller
 public class GiornaleController {
+	
+
+	@Autowired
+	GiornaleService giornaleService;
+	
+	@Autowired
+	UtenteService utenteService;
+	
+	@Autowired
+	CredenzialiService credenzialiService;
+	
+	
 	@GetMapping("/modificaGiornale/{id}")
 	public String formModificaGiornale(@PathVariable("id") Long id, Model model) {
 		Giornale giornale = giornaleService.getGiornaleById(id);
@@ -42,20 +57,22 @@ public class GiornaleController {
 		return "redirect:/admin/aggiornaGiornale";
 	}
 
-	@Autowired
-	GiornaleService giornaleService;
-
 	@GetMapping("/giornali")
 	public String mostraTuttiGiornali(Model model) {
 		model.addAttribute("giornali", this.giornaleService.getAllGiornali());
 		return "giornali.html";
 	}
 
-	@GetMapping("/giornale/{id}")
-	public String getGiornale(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));    
-		return "giornale.html";
-	}
+    @GetMapping("/giornale/{id}")
+    public String getGiornale(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
+        // Recupera utente loggato
+        Utente utente = utenteService.getUtente();
+        if (utente != null) {
+            model.addAttribute("credenziali", credenzialiService.getCredenzialiByUtente(utente));
+        }
+        return "giornale.html";
+    }
 	
 	@GetMapping("/admin/formNewGiornale")
 	public String formNewGiornale(Model model) {
