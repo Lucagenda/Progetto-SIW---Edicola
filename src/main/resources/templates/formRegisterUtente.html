@@ -5,6 +5,29 @@
     <meta charset="UTF-8" />
     <title>Edicola del Faro - Registrazione</title>
     <link rel="stylesheet" href="/css/stile.css" />
+    <script>
+        function validatePasswordOnRegister(event) {
+            const pwdInput = document.getElementById("password");
+            const password = pwdInput.value;
+
+            const minLength = 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasSpecialChar = /[^A-Za-z0-9]/.test(password);
+
+            if (password.length < minLength || !hasUpperCase || !hasSpecialChar) {
+                alert("La password deve essere lunga almeno 8 caratteri, contenere almeno una lettera maiuscola e un carattere speciale.");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("registerForm");
+            form.addEventListener("submit", validatePasswordOnRegister);
+        });
+    </script>
 </head>
 
 <body>
@@ -24,7 +47,7 @@
 
     <h1>Registrazione nuovo utente</h1>
 
-    <form th:action="@{/register}" method="POST">
+    <form id="registerForm" th:action="@{/register}" method="POST">
         <div>
             <label for="nome">Nome</label>
             <input id="nome" type="text" placeholder="nome" required th:field="${utente.nome}" />
@@ -51,7 +74,14 @@
 
         <div>
             <label for="password">Password</label>
-            <input id="password" type="password" placeholder="password" required th:field="${credenziali.password}" />
+            <input
+                id="password"
+                type="password"
+                placeholder="password"
+                required
+                th:field="${credenziali.password}"
+                minlength="8"
+            />
             <span th:if="${#fields.hasErrors('credenziali.password')}" th:errors="${credenziali.password}" style="color:red"></span>
         </div>
 

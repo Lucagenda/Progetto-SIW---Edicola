@@ -2,110 +2,118 @@
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" th:href="@{images/logo.png}"/>
+    <link rel="icon" th:href="@{/images/logo.png}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edicola Del Faro - Profilo Utente</title>
     <link rel="stylesheet" th:href="@{/css/utente.css}">
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <a class="logo">Edicola Del Faro</a>
-            <div class="nav-links">
-                <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
-            </div>
-            <div style="position: absolute; top: 20px; right: 30px;">
-                <a th:href="@{/logout}" title="Logout" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Logout</a>
-            </div>
-            <div class="info-card">
-                <h3>I tuoi ordini</h3>
-                <table th:if="${ordini != null and #lists.size(ordini) > 0}" border="1">
-                    <thead>
-                        <tr>
-                            <th>ID Ordine</th>
-                            <th>Data</th>
-                            <th>Stato</th>
-                            <th>Prodotti</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="ordine : ${ordini}">
-                            <td th:text="${ordine.id}"></td>
-                            <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
-                            <td th:text="${ordine.stato}"></td>
-                            <td>
-                                <ul>
-                                    <li th:each="riga : ${ordine.righeOrdine}" th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <p th:if="${ordini == null or #lists.size(ordini) == 0}">Nessun ordine presente.</p>
-            </div>
-        </nav>
-    </header>
-
-    <main class="main-content">
-        <div class="profile-card">
-            <div class="profile-header">
-                <h1 th:text="'Benvenuto, ' + ${utente.nome}">Benvenuto</h1>
-            </div>
-
-            <div class="profile-info">
-                <div class="info-card">
-                    <h3>Informazioni Utente</h3>
-                    <p><strong>Nome:</strong> <span th:text="${utente.nome}">Mario</span></p>
-                    <p><strong>Cognome:</strong> <span th:text="${utente.cognome}">Rossi</span></p>
-                    <p><strong>Email:</strong> <span th:text="${utente.email}">mario.rossi@example.com</span></p>
-                </div>
-
-				<div class="info-card">
-				    <h3>Azioni</h3>
-				    <a th:href="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" class="cta-button edit-profile-button">Modifica Profilo</a>
-				    <!-- Bottone/modal per password -->
-				    <a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>
-				</div>
-				</div>
-				</div>
-				<div th:if="${showPasswordModal == true}"
-				     th:classappend="${showPasswordModal} ? '' : 'modal-hidden'"
-				     class="modal-overlay"
-				>
-				    <form class="password-card" th:action="@{'/utente/' + ${utente.id} + '/cambiaPassword'}" method="post">
-				        <h2>Cambia Password</h2>
-				        <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
-				        <label for="newPassword">Nuova password</label>
-				        <input
-				            type="password"
-				            id="newPwd"
-				            name="newPwd"
-				            placeholder="Inserisci la nuova password"
-				            required
-				            minlength="8"
-				        />
-				        <label for="confirmPassword">Conferma nuova password</label>
-				        <input
-				            type="password"
-				            id="confirmPwd"
-				            name="confirmPwd"
-				            placeholder="Conferma la nuova password"
-				            required
-				            minlength="8"
-				        />
-				        <div class="password-btns">
-				            <a th:href="@{'/utente/' + ${utente.id}}" class="password-btn cancel">Annulla</a>
-				            <button type="submit" class="password-btn submit">Conferma</button>
-				        </div>
-				    </form>
-				</div>
-				</main>
-
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+<header class="header">
+    <nav class="nav">
+        <a class="logo">Edicola Del Faro</a>
+        <div class="nav-links">
+            <a th:href="@{'/utente/' + ${utente.id}}" class="nav-link active">Profilo</a>
         </div>
-    </footer>
+        <div style="position: absolute; top: 20px; right: 30px;">
+            <a th:href="@{/logout}" title="Logout" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Logout</a>
+        </div>
+
+        <div class="info-card">
+            <h3>I tuoi ordini</h3>
+            <table th:if="${ordini != null and #lists.size(ordini) > 0}" border="1">
+                <thead>
+                <tr>
+                    <th>ID Ordine</th>
+                    <th>Data</th>
+                    <th>Stato</th>
+                    <th>Prodotti</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ordine : ${ordini}">
+                    <td th:text="${ordine.id}"></td>
+                    <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${ordine.stato}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="riga : ${ordine.righeOrdine}"
+                                th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <p th:if="${ordini == null or #lists.size(ordini) == 0}">Nessun ordine presente.</p>
+        </div>
+    </nav>
+</header>
+
+<main class="main-content">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h1 th:text="'Benvenuto, ' + ${utente.nome}">Benvenuto</h1>
+        </div>
+
+        <div class="profile-info">
+            <div class="info-card">
+                <h3>Informazioni Utente</h3>
+                <p><strong>Nome:</strong> <span th:text="${utente.nome}">Mario</span></p>
+                <p><strong>Cognome:</strong> <span th:text="${utente.cognome}">Rossi</span></p>
+                <p><strong>Email:</strong> <span th:text="${utente.email}">mario.rossi@example.com</span></p>
+            </div>
+
+            <div class="info-card">
+                <h3>Azioni</h3>
+                <a th:href="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" class="cta-button edit-profile-button">Modifica Profilo</a>
+                <a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CAMBIO PASSWORD -->
+    <div th:if="${showPasswordModal == true}"
+         th:classappend="${showPasswordModal} ? '' : 'modal-hidden'"
+         class="modal-overlay">
+        <form class="password-card" th:action="@{'/utente/' + ${utente.id} + '/cambiaPassword'}" method="post">
+            <h2>Cambia Password</h2>
+
+            <span th:if="${msgError}" class="error-message" th:text="${msgError}"></span>
+
+            <label for="newPwd">Nuova password</label>
+            <input
+                type="password"
+                id="newPwd"
+                name="newPwd"
+                placeholder="Inserisci la nuova password"
+                required
+                minlength="8"
+                pattern="(?=.*[A-Z])(?=.*[\W_]).{8,}"
+                oninvalid="this.setCustomValidity('La password deve avere almeno 8 caratteri, una maiuscola e un carattere speciale')"
+                oninput="this.setCustomValidity('')"
+            />
+
+            <label for="confirmPwd">Conferma nuova password</label>
+            <input
+                type="password"
+                id="confirmPwd"
+                name="confirmPwd"
+                placeholder="Conferma la nuova password"
+                required
+                minlength="8"
+            />
+
+            <div class="password-btns">
+                <a th:href="@{'/utente/' + ${utente.id}}" class="password-btn cancel">Annulla</a>
+                <button type="submit" class="password-btn submit">Conferma</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+    </div>
+</footer>
 </body>
 </html>

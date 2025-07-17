@@ -26,14 +26,14 @@ public class UtenteController {
 	private CredenzialiService credenzialiService;
 
 	private boolean verificaId(Long id) {
-		return id == this.utenteService.getUtente().getId();
+	    return id != null && id.equals(this.utenteService.getUtente().getId());
 	}
 	
 	@GetMapping("/utente/{id}")
 	public String showUtente(@PathVariable("id") Long id, @RequestParam(value = "showPasswordModal", required = false, defaultValue = "false")
 							boolean showPasswordModal, Model model) {
 		if (!verificaId(id))
-			return "redirect:/login";
+			return "error";
 		
 		Utente utenteCorrente = utenteService.getUtente();
 		// Recupera anche le credenziali dell'utente corrente
@@ -71,21 +71,29 @@ public class UtenteController {
 	}
 	
 	@PostMapping("/utente/{id}/cambiaPassword")
-	public String updateCredentialsUser(@PathVariable("id") Long id, @RequestParam @Valid String confirmPwd,
-			@RequestParam @Valid String newPwd, Model model) {
-		if (newPwd == null || confirmPwd == null || newPwd.equals("") || confirmPwd.equals("")
-				|| !newPwd.equals(confirmPwd)) {
-			model.addAttribute("msgError", "Il campo della nuova password è vuota");
-			model.addAttribute("utente", this.utenteService.getUtente());
-			model.addAttribute("showPasswordModal", true);
-			return "utente/utente.html";
-		}
-		Utente utente = this.utenteService.getUtente();
-		if (!verificaId(id))
-			return "redirect:/login";
-		Credenziali credenziali = this.credenzialiService.getCredenzialiByUtente(utente);
-		credenziali.setPassword(newPwd);
-		this.credenzialiService.saveCredenziali(credenziali);
-		return "redirect:/utente/" + utente.getId();
+	public String updateCredentialsUser(@PathVariable("id") Long id,
+	                                    @RequestParam @Valid String confirmPwd,
+	                                    @RequestParam @Valid String newPwd,
+	                                    Model model) {
+	    if (newPwd == null || confirmPwd == null || newPwd.isEmpty() || confirmPwd.isEmpty()) {
+	        model.addAttribute("msgError", "La password non può essere vuota");
+	    } else if (!newPwd.equals(confirmPwd)) {
+	        model.addAttribute("msgError", "Le password non coincidono");
+	    } else if (!newPwd.matches("^(?=.*[A-Z])(?=.*[\\W_]).{8,}$")) {
+	        model.addAttribute("msgError", "La password deve avere almeno 8 caratteri, una maiuscola e un carattere speciale");
+	    } else {
+	        // tutto valido, salva
+	        Utente utente = this.utenteService.getUtente();
+	        if (!verificaId(id)) return "redirect:/login";
+	        Credenziali credenziali = this.credenzialiService.getCredenzialiByUtente(utente);
+	        credenziali.setPassword(newPwd);
+	        this.credenzialiService.saveCredenziali(credenziali);
+	        return "redirect:/utente/" + utente.getId();
+	    }
+
+	    model.addAttribute("utente", this.utenteService.getUtente());
+	    model.addAttribute("showPasswordModal", true);
+	    return "utente/utente.html";
 	}
+
 }
