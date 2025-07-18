@@ -2,14 +2,10 @@ package it.uniroma3.siw.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import it.uniroma3.siw.model.Ordine;
 import it.uniroma3.siw.model.Utente;
-import it.uniroma3.siw.service.MessaggioService;
 import it.uniroma3.siw.repository.OrdineRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import it.uniroma3.siw.model.Ordine;
 import it.uniroma3.siw.constants.StatoOrdine;
-import it.uniroma3.siw.repository.OrdineRepository;
 import java.util.List;
 
 @Service

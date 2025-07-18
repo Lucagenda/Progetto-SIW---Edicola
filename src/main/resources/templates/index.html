@@ -3,80 +3,114 @@
 <head>
   <meta charset="UTF-8" />
   <title>Edicola del Faro</title>
-  <link rel="stylesheet" href="/index.css?version=3" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/index.css?version=5" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faders = document.querySelectorAll('.fade-in-section');
+    const appearOptions = {
+      threshold: 0.2,
+      rootMargin: "0px 0px -50px 0px"
+    };
+    const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+  });
+</script>
+
 <body>
 
-  <!-- Icone fisse in alto a destra -->
-  <div class="top-icons">
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="/" class="logo" title="Edicola del Faro">Edicola del Faro</a>
+    </div>
 
-    <!-- Carrello: se ADMIN va a /admin/ordini, altrimenti /carrello -->
-    <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
-      <img src="/images/gear.png" alt="Admin Ordini" />
-    </a>
-    <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
-      <img src="/images/carrello.png" alt="Carrello" />
-    </a>
-    <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
-      <img src="/images/carrello.png" alt="Carrello" />
-    </a>
-    <!-- Messaggi utente -->
-    <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
-      <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
-    </a>
+    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+      <input type="text" name="nome" placeholder="Cerca giornali e giocattoli..." aria-label="Cerca prodotti" required />
+      <button type="submit" title="Cerca">🔍</button>
+    </form>
 
-    <!-- Profilo: tutti i loggati vanno a /utente/{id} -->
-    <span th:if="${credenziali != null}">
-      <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
-        <img src="/images/login.png" alt="Profilo" />
+    <div class="top-icons">
+      <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+        <img src="/images/gear.png" alt="Admin Ordini" />
       </a>
-    </span>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+        <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+      </a>
+      <span th:if="${credenziali != null}">
+        <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+          <img src="/images/login.png" alt="Profilo" />
+        </a>
+      </span>
+      <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+        <img src="/images/login.png" alt="Login" />
+      </a>
+    </div>
+  </nav>
 
-    <!-- Se NON loggato: link al login -->
-    <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
-      <img src="/images/login.png" alt="Login" />
-    </a>
-  </div>
-
-  <!-- Sezione Parallax -->
+  <!-- Parallax -->
   <div class="parallax">
     <div class="overlay">
-      <h1>Benvenuto sull'Edicola del Faro</h1>
-      <p>Scopri giornali, riviste e piccoli tesori da collezione</p>
+      <h1>Benvenuto nell'Edicola del Faro</h1>
+      <p>Scopri giornali, riviste e tanto altro</p>
     </div>
   </div>
 
-  <!-- Contenuto della homepage -->
-  <div class="content">
-    <section>
-      <h2>🗞️ Giornali</h2>
-      <ul>
-        <li><a href="/giornali">📄 Lista Giornali</a></li>
-      </ul>
-    </section>
+  <!-- Dove ci troviamo -->
+  <section id="dove-ci-troviamo" class="fade-in-section">
+    <h2><span class="icon">📍</span>Dove ci troviamo</h2>
+    <div class="container">
+      <div class="info">
+        <p><strong>Indirizzo:</strong> Via Lorenzo Bezzi,SNC - 00054 Fiumicino RM</p>
+        <p><strong>Orari:</strong> Aperto tutti i giorni 7:00 - 19:00</p>
+        <p><strong>Telefono:</strong> +39 388 795 9506</p>
+        <p><strong>Email:</strong> gsalzarulo03@gmail.com</p>
+      </div>
+      <div class="mappa">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.5226672406076!2d12.233083315312562!3d41.76158437926313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325fb8e7bc6915d%3A0x94193d09a85a40c!2sAmazon%20Hub%20Counter%20-%20EDICOLA%20DEL%20FARO!5e0!3m2!1sit!2sit!4v1690074889133!5m2!1sit!2sit"
+          width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
 
-    <section>
-      <h2>🎲 Giocattoli</h2>
-      <ul>
-        <li><a href="/giocattoli">📄 Lista Giocattoli</a></li>
-      </ul>
-    </section>
+  <!-- Riga divisoria -->
+  <hr class="section-divider" />
 
-    <!-- Sezione Amministrazione solo per admin -->
-    <section th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}">
-      <h2>⚙️ Amministrazione</h2>
-      <ul>
-        <li><a href="/admin/formNewGiornale">➕ Aggiungi Giornale</a></li>
-        <li><a href="/admin/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
-        <li><a href="/admin/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
-        <li><a href="/admin/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
-      </ul>
-    </section>
-  </div>
+  <!-- Catalogo -->
+  <section class="catalog-section">
+    <h2>Il nostro catalogo</h2>
+    <div class="catalog-grid">
+      <a href="/giornali" class="catalog-card giornali-card" title="Vai ai giornali">
+        <img src="/images/giornale.jpg" alt="Giornali" />
+        <div class="catalog-label">Giornali</div>
+      </a>
+      <a href="/giocattoli" class="catalog-card giocattoli-card" title="Vai ai giocattoli">
+        <img src="/images/giocattolo.jpg" alt="Giocattoli" />
+        <div class="catalog-label">Giocattoli</div>
+      </a>
+    </div>
+  </section>
 
-  <!-- Spazio di scorrimento finale -->
+  <!-- Altri contenuti -->
   <div class="footer-space">
     <h2>📚 Altri contenuti in arrivo...</h2>
   </div>
