@@ -40,8 +40,14 @@ public class OrdineService {
             ordineRepository.save(ordine);
             Utente utente = ordine.getUtente();
             if (utente != null) {
-                String testo = "Lo stato del tuo ordine #" + ordine.getId() + " è stato aggiornato a '" + nuovoStato + "'.";
-                messaggioService.inviaMessaggio(testo, utente);
+                if(nuovoStato == StatoOrdine.PRONTO) {
+                    String testo = "Il tuo ordine #" + ordine.getId() + " è pronto per il ritiro. Ti aspettiamo in edicola!";
+                    messaggioService.inviaMessaggio(testo, utente);
+                }
+                if(nuovoStato == StatoOrdine.RITIRATO){
+                    String testo = "Grazie per aver ritirato l'ordine #" + ordine.getId() + ". Al prossimo acquisto!";
+                    messaggioService.inviaMessaggio(testo, utente);
+                }
             }
         }
     }

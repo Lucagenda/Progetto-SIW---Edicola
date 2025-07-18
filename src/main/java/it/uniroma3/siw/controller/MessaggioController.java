@@ -1,5 +1,6 @@
-package it.uniroma3.siw.controller;
 
+package it.uniroma3.siw.controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.MessaggioService;
 import it.uniroma3.siw.service.UtenteService;
@@ -20,5 +21,11 @@ public class MessaggioController {
         Utente utente = utenteService.getUtente();
         model.addAttribute("messaggi", messaggioService.getMessaggiPerUtente(utente));
         return "messaggi.html";
+    }
+    @PostMapping("/messaggi/segnaTuttiComeLetto")
+    public String segnaTuttiComeLetto() {
+        Utente utente = utenteService.getUtente();
+        messaggioService.segnaTuttiComeLetto(utente);
+        return "redirect:/messaggi";
     }
 }

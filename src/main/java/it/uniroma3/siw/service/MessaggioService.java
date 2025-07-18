@@ -31,4 +31,15 @@ public class MessaggioService {
             messaggioRepository.save(msg);
         }
     }
+
+    @Transactional
+    public void segnaTuttiComeLetto(Utente utente) {
+        List<Messaggio> messaggi = messaggioRepository.findByDestinatarioOrderByDataDesc(utente);
+        for (Messaggio msg : messaggi) {
+            if (!msg.isLetto()) {
+                msg.setLetto(true);
+                messaggioRepository.save(msg);
+            }
+        }
+    }
 }
