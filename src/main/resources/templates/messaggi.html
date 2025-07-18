@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>I tuoi messaggi</title>
+    <link rel="stylesheet" th:href="@{/messaggi.css}" href="/messaggi.css" />
 </head>
 <body>
     <div style="position: absolute; top: 20px; right: 30px;">
@@ -11,12 +12,17 @@
     <div style="display: flex; align-items: center; gap: 20px;">
         <h1 style="margin: 0;">Messaggi</h1>
         <form th:action="@{/messaggi/segnaTuttiComeLetto}" method="post" style="margin: 0;">
-            <button type="submit" style="font-size: 1em; padding: 6px 14px;">Segna tutti come letto</button>
+            <button type="submit" class="messaggi-btn">Segna tutti come letto</button>
         </form>
     </div>
+    <div style="margin: 18px 0 28px 0; max-width: 600px; text-align: left;">
+        <p style="font-size:1.25rem; color:#232f3e; margin:0;">
+            In questa pagina trovi tutti i messaggi personali e le notifiche importanti relative al tuo account. I messaggi nuovi sono evidenziati. Puoi segnarli tutti come letti con il pulsante dedicato.
+        </p>
+    </div>
     <div th:if="${messaggi != null and #lists.size(messaggi) > 0}">
-        <ul>
-            <li th:each="msg : ${messaggi}">
+        <ul class="messaggi-list">
+            <li th:each="msg : ${messaggi}" class="messaggio">
                 <span th:text="${#temporals.format(msg.data, 'dd/MM/yyyy HH:mm')}"></span> -
                 <span th:text="${msg.testo}"></span>
                 <span th:if="${!msg.letto}" style="color: #c00; font-weight: bold;"> (Nuovo)</span>
