@@ -2,46 +2,34 @@
 <html>
 
 <head>
-	<title>
-		Edicola del Faro - Login
-	</title>
-	<link rel="stylesheet" href="/css/stile.css" />
+	<title>Edicola del Faro - Login</title>
+	<link rel="stylesheet" href="/login.css" />
 </head>
 
-<body>
-	<header>
-		<div th:if="${userDetails}">
-			<span th:text="${userDetails.username}"></span>
-			<a href="/logout">Logout</a>
-		</div>
-		<!-- <div th:unless="${user}">
-			<a href="/login">Login</a>
-		</div> -->
-	</header>
 
-	<div>
-		<a href="/"><img src="/images/provaEdicola.png" width="20%"/></a>
+<body>
+  <nav class="navbar">
+	<div class="navbar-left">
+	  <a href="/" class="logo" title="Edicola del Faro">Edicola del Faro</a>
 	</div>
-	<h1>Login</h1>
-	<form th:action="@{/login}" method="POST">
-			<div>
-				<span>Username:</span>
-				<span><input name="username" type="text" required /></span>
-			</div>
-			<div>
-				<span>Password:</span>
-				<span><input name="password" type="password" required /></span>
-			</div>
-			<div>
-				<span th:if="${param.error != null}">Username o password errati</span>
-			</div>
-			<div>
-				<span><button type="submit">Login</button></span>
-			</div>
-	</form>
-	<div>
-		<a th:href="@{/register}">Registrati</a>
+  </nav>
+  <div class="login-container">
+	<div class="login-box">
+	  <div class="login-title">Login</div>
+	  <form class="login-form" th:action="@{/login}" method="POST">
+		<label for="username">Username</label>
+		<input id="username" name="username" type="text" required />
+		<label for="password">Password</label>
+		<input id="password" name="password" type="password" required />
+		<div th:if="${param.error != null}" style="color:#d32f2f; font-size:0.98rem; text-align:center; margin-bottom: 4px;">Username o password errati</div>
+		<button type="submit">Login</button>
+	  </form>
+	  <div style="margin-top: 18px; text-align:center;">
+		<span style="color:#232f3e; font-size:1rem; font-weight:500; margin-right:8px;">Non hai un profilo?</span>
+		<a th:href="@{/register}" style="color:#ff9900; text-decoration:underline; font-weight:500;">Registrati</a>
+	  </div>
 	</div>
+  </div>
 </body>
 
 </html>

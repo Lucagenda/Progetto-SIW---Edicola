@@ -4,11 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <title>Edicola del Faro - Registrazione</title>
-    <link rel="stylesheet" href="/css/stile.css" />
+    <link rel="stylesheet" href="/register.css" />
     <script>
         function validatePasswordOnRegister(event) {
             const pwdInput = document.getElementById("password");
+            const confirmPwdInput = document.getElementById("confirmPassword");
             const password = pwdInput.value;
+            const confirmPassword = confirmPwdInput.value;
 
             const minLength = 8;
             const hasUpperCase = /[A-Z]/.test(password);
@@ -20,75 +22,74 @@
                 return false;
             }
 
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").style.display = "block";
+                confirmPwdInput.focus();
+                event.preventDefault();
+                return false;
+            } else {
+                document.getElementById("confirmPasswordError").style.display = "none";
+            }
+
             return true;
         }
-
         document.addEventListener("DOMContentLoaded", () => {
             const form = document.getElementById("registerForm");
-            form.addEventListener("submit", validatePasswordOnRegister);
+            if(form) form.addEventListener("submit", validatePasswordOnRegister);
         });
     </script>
 </head>
 
+
 <body>
-    <header>
-        <div th:if="${userDetails}">
-            <span th:text="${userDetails.username}"></span>
-            <a href="/logout">Logout</a>
-        </div>
-        <div th:unless="${userDetails}">
-            <a href="/login">Login</a>
-        </div>
-    </header>
-
-    <div>
-        <a href="/"><img src="/images/provaEdicola.png" alt="Logo Edicola del Faro" width="20%" /></a>
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="/" class="logo" title="Edicola del Faro">Edicola del Faro</a>
     </div>
+  </nav>
+  <div class="register-container">
+    <div class="register-box">
+      <div class="register-title">Registrazione nuovo utente</div>
+      <form class="register-form" id="registerForm" th:action="@{/register}" method="POST">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" placeholder="nome" required th:field="${utente.nome}" />
+        <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}" style="color:red"></span>
 
-    <h1>Registrazione nuovo utente</h1>
+        <label for="cognome">Cognome</label>
+        <input id="cognome" type="text" placeholder="cognome" required th:field="${utente.cognome}" />
+        <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}" style="color:red"></span>
 
-    <form id="registerForm" th:action="@{/register}" method="POST">
-        <div>
-            <label for="nome">Nome</label>
-            <input id="nome" type="text" placeholder="nome" required th:field="${utente.nome}" />
-            <span th:if="${#fields.hasErrors('utente.nome')}" th:errors="${utente.nome}" style="color:red"></span>
-        </div>
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="email" required th:field="${utente.email}" />
+        <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}" style="color:red"></span>
 
-        <div>
-            <label for="cognome">Cognome</label>
-            <input id="cognome" type="text" placeholder="cognome" required th:field="${utente.cognome}" />
-            <span th:if="${#fields.hasErrors('utente.cognome')}" th:errors="${utente.cognome}" style="color:red"></span>
-        </div>
+        <label for="username">Username</label>
+        <input id="username" type="text" placeholder="username" required th:field="${credenziali.username}" />
+        <span th:if="${#fields.hasErrors('credenziali.username')}" th:errors="${credenziali.username}" style="color:red"></span>
 
-        <div>
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="email" required th:field="${utente.email}" />
-            <span th:if="${#fields.hasErrors('utente.email')}" th:errors="${utente.email}" style="color:red"></span>
-        </div>
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          placeholder="password"
+          required
+          th:field="${credenziali.password}"
+          minlength="8"
+        />
+        <span th:if="${#fields.hasErrors('credenziali.password')}" th:errors="${credenziali.password}" style="color:red"></span>
+        <label for="confirmPassword">Conferma password</label>
+        <input
+          id="confirmPassword"
+          type="password"
+          placeholder="conferma password"
+          required
+        />
+        <span id="confirmPasswordError" style="color:red; display:none; font-size:0.98rem; margin-top:4px;">Le due password devono coincidere</span>
 
-        <div>
-            <label for="username">Username</label>
-            <input id="username" type="text" placeholder="username" required th:field="${credenziali.username}" />
-            <span th:if="${#fields.hasErrors('credenziali.username')}" th:errors="${credenziali.username}" style="color:red"></span>
-        </div>
-
-        <div>
-            <label for="password">Password</label>
-            <input
-                id="password"
-                type="password"
-                placeholder="password"
-                required
-                th:field="${credenziali.password}"
-                minlength="8"
-            />
-            <span th:if="${#fields.hasErrors('credenziali.password')}" th:errors="${credenziali.password}" style="color:red"></span>
-        </div>
-
-        <div>
-            <button type="submit">Registra</button>
-        </div>
-    </form>
+        <button type="submit">Registra</button>
+      </form>
+    </div>
+  </div>
 </body>
 
 </html>
