@@ -1,3 +1,83 @@
+.messaggi-descrizione {
+  margin: 18px 0 28px 0;
+  max-width: 100%;
+  width: 100%;
+  text-align: left;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.messaggi-main {
+  margin-left: 32px;
+}
+
+.messaggi-list {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 32px;
+  padding: 0;
+}
+
+.messaggio {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+  padding: 22px 18px;
+  gap: 8px;
+  position: relative;
+  font-size: 1.1rem;
+  color: #232f3e;
+}
+.messaggio .data {
+  font-size: 0.95rem;
+  color: #888;
+  margin-bottom: 2px;
+}
+.messaggio .nuovo {
+  color: #c00;
+  font-weight: bold;
+  margin-left: 8px;
+}
+
+.messaggi-btn {
+  background: #232f3e;
+  color: #ff9900;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+.messaggi-btn:hover {
+  background: #ff9900;
+  color: #232f3e;
+}
+
+@media (max-width: 700px) {
+  .messaggi-list {
+    max-width: 98vw;
+    padding: 8px 2px;
+  }
+}
 /* Bottone Segna tutti come letto */
 .messaggio {
   background: #232f3e;
@@ -19,36 +99,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(120deg, #ff9900 0%, #232f3e 100%);
+    background-color: #f4f6f9;
   min-height: 100vh;
   color: #232f3e;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #232f3e;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  z-index: 1100;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.7rem;
-  color: #ff9900;
-  text-decoration: none;
-  user-select: none;
-}
-.logo:hover {
-  text-decoration: underline;
-}
 
 .messaggi-container {
   margin-top: 110px;

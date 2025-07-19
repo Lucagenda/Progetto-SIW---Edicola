@@ -2,6 +2,7 @@
 package it.uniroma3.siw.controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.MessaggioService;
 import it.uniroma3.siw.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,16 @@ public class MessaggioController {
     private MessaggioService messaggioService;
     @Autowired
     private UtenteService utenteService;
+    @Autowired
+    private CredenzialiService credenzialiService;
 
     @GetMapping("/messaggi")
     public String visualizzaMessaggi(Model model) {
         Utente utente = utenteService.getUtente();
         model.addAttribute("messaggi", messaggioService.getMessaggiPerUtente(utente));
+        if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
         return "messaggi.html";
     }
     @PostMapping("/messaggi/segnaTuttiComeLetto")

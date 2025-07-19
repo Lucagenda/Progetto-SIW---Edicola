@@ -23,11 +23,16 @@ import it.uniroma3.siw.model.Carrello;
 import it.uniroma3.siw.model.Prodotto;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CarrelloService;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.ProdottoService;
 import it.uniroma3.siw.service.UtenteService;
 
 @Controller
 public class CarrelloController {
+
+		
+	@Autowired
+	private CredenzialiService credenzialiService;
 
 	@Autowired
 	private CarrelloService carrelloService;
@@ -43,6 +48,9 @@ public class CarrelloController {
 		Utente utente = utenteService.getUtente();
 		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
 		model.addAttribute("carrello", carrello);
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
 		return "carrello.html";
 	}
 

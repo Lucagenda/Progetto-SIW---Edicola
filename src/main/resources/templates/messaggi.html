@@ -3,34 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>I tuoi messaggi</title>
+    <link rel="stylesheet" th:href="@{/navbar.css}" href="/navbar.css" />
+    <link rel="stylesheet" th:href="@{/footer.css}">
     <link rel="stylesheet" th:href="@{/messaggi.css}" href="/messaggi.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div style="position: absolute; top: 20px; right: 30px;">
-        <a th:href="@{/}" title="Torna alla Homepage" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Torna alla Homepage</a>
-    </div>
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <h1 style="margin: 0;">Messaggi</h1>
-        <form th:action="@{/messaggi/segnaTuttiComeLetto}" method="post" style="margin: 0;">
-            <button type="submit" class="messaggi-btn">Segna tutti come letto</button>
+    <!-- Navbar moderna -->
+    <header class="navbar">
+        <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+        <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+            <input type="text" name="nome" placeholder="Cerca prodotti..." />
+            <button type="submit">🔍</button>
         </form>
+        <div class="top-icons">
+          <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+            <img src="/images/gear.png" alt="Admin Ordini" />
+          </a>
+          <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+            <img src="/images/carrello.png" alt="Carrello" />
+          </a>
+          <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+            <img src="/images/carrello.png" alt="Carrello" />
+          </a>
+          <!-- Icona messaggi rimossa perché già nella pagina messaggi -->
+          <span th:if="${credenziali != null}">
+            <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+              <img src="/images/login.png" alt="Profilo" />
+            </a>
+          </span>
+          <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+            <img src="/images/login.png" alt="Login" />
+          </a>
+        </div>
+    </header>
+    <div style="height: 80px;"></div>
+    <div class="messaggi-main">
+        <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 18px;">
+            <h1 style="margin: 0; color: #ff9900; font-size: 2rem;">Messaggi</h1>
+            <form th:action="@{/messaggi/segnaTuttiComeLetto}" method="post" style="margin: 0;">
+                <button type="submit" class="messaggi-btn">Segna tutti come letto</button>
+            </form>
+        </div>
+        <div class="messaggi-descrizione">
+            <p style="font-size:1.15rem; color:#232f3e; margin:0;">
+                In questa sezione puoi visualizzare i tuoi messaggi. Se hai ricevuto nuovi messaggi, verranno evidenziati come 'Nuovo'. Puoi anche segnare tutti i messaggi come letti con il pulsante apposito. 
+                Se non hai ancora ricevuto messaggi, questa sezione sarà vuota. I messaggi possono includere aggiornamenti sullo stato dei vari ordini.
+            </p>
+        </div>
+        <div th:if="${messaggi != null and #lists.size(messaggi) > 0}">
+            <ul class="messaggi-list">
+                <li th:each="msg : ${messaggi}" class="messaggio">
+                    <span class="data" th:text="${#temporals.format(msg.data, 'dd/MM/yyyy HH:mm')}"></span>
+                    <span th:text="${msg.testo}"></span>
+                    <span th:if="${!msg.letto}" class="nuovo">(Nuovo)</span>
+                </li>
+            </ul>
+        </div>
+        <div th:if="${messaggi == null or #lists.size(messaggi) == 0}">
+            <p>Nessun messaggio presente.</p>
+        </div>
     </div>
-    <div style="margin: 18px 0 28px 0; max-width: 600px; text-align: left;">
-        <p style="font-size:1.25rem; color:#232f3e; margin:0;">
-            In questa pagina trovi tutti i messaggi personali e le notifiche importanti relative al tuo account. I messaggi nuovi sono evidenziati. Puoi segnarli tutti come letti con il pulsante dedicato.
-        </p>
-    </div>
-    <div th:if="${messaggi != null and #lists.size(messaggi) > 0}">
-        <ul class="messaggi-list">
-            <li th:each="msg : ${messaggi}" class="messaggio">
-                <span th:text="${#temporals.format(msg.data, 'dd/MM/yyyy HH:mm')}"></span> -
-                <span th:text="${msg.testo}"></span>
-                <span th:if="${!msg.letto}" style="color: #c00; font-weight: bold;"> (Nuovo)</span>
-            </li>
-        </ul>
-    </div>
-    <div th:if="${messaggi == null or #lists.size(messaggi) == 0}">
-        <p>Nessun messaggio presente.</p>
-    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+        </div>
+    </footer>
 </body>
 </html>

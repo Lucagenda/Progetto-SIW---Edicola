@@ -1,36 +1,4 @@
 /* Navbar stile index */
-
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #232f3e;
-  display: flex;;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  z-index: 1100;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.navbar-left {
-  display: flex;
-  align-items: center;
-}
-.logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #ff9900;
-  text-decoration: none;
-  user-select: none;
-}
-.logo:hover {
-  text-decoration: underline;
-}
-
 body {
   padding-top: 80px; /* più spazio per la navbar fissa e maggiore distanza dal blocco register */
 }
@@ -43,33 +11,6 @@ body, html {
   color: #333;
   height: 100%;
 }
-
-/* Navbar */
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #232f3e;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  z-index: 1100;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.navbar .logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #ff9900;
-  text-decoration: none;
-  user-select: none;
-}
-.navbar .logo:hover {
-  text-decoration: underline;
 }
 
 .search-form {
