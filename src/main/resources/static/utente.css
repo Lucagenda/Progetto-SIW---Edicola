@@ -1,0 +1,198 @@
+/* Reset base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.main-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px;
+  padding-top: 96px;
+}
+
+/* Profilo */
+.profile-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  margin-top: 32px;
+}
+
+.profile-header h1 {
+  font-size: 2rem;
+  color: #232f3e;
+  margin-bottom: 16px;
+}
+
+.profile-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.info-card {
+  flex: 1 1 320px;
+  background-color: #ffffff;
+  border: 1px solid #e1e5eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.info-card h3 {
+  margin-bottom: 12px;
+  color: #ff9900;
+}
+
+.cta-button {
+  display: inline-block;
+  margin: 6px 0;
+  padding: 10px 16px;
+  background-color: #ff9900;
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.cta-button:hover {
+  background-color: #e68a00;
+}
+
+/* Tabella ordini */
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 0.95rem;
+}
+
+.orders-table th,
+.orders-table td {
+  border: 1px solid #d3d3d3;
+  padding: 10px;
+  text-align: left;
+}
+
+.orders-table th {
+  background-color: #232f3e;
+  color: white;
+}
+
+.orders-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  padding: 16px;
+}
+
+.password-card {
+  background-color: white;
+  padding: 28px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.password-card h2 {
+  margin-bottom: 16px;
+  color: #232f3e;
+}
+
+.password-card label {
+  display: block;
+  margin: 10px 0 4px;
+  font-weight: 600;
+}
+
+.password-card input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.password-btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.password-btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.password-btn.cancel {
+  background-color: #ccc;
+  color: #232f3e;
+}
+
+.password-btn.submit {
+  background-color: #ff9900;
+  color: white;
+}
+
+.password-btn.submit:hover {
+  background-color: #e68a00;
+}
+
+.error-message {
+  color: #c00;
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Footer */
+.footer {
+  margin-top: 48px;
+  background-color: #232f3e;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 16px;
+  }
+
+  .profile-info {
+    flex-direction: column;
+  }
+
+  .orders-table th, .orders-table td {
+    font-size: 0.85rem;
+  }
+}
