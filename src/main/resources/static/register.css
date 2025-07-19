@@ -11,7 +11,7 @@ body, html {
   color: #333;
   height: 100%;
 }
-}
+
 
 .search-form {
   flex: 1;
@@ -143,6 +143,11 @@ body, html {
 }
 .register-form button:hover {
   background-color: #e68a00;
+}
+
+.footer {
+    position: sticky;
+    top: 100%;
 }
 
 @media (max-width: 480px) {

@@ -4,15 +4,22 @@
 <head>
 	<title>Edicola del Faro - Login</title>
 	<link rel="stylesheet" href="/login.css" />
+	<link rel="stylesheet" th:href="@{/navbar.css}" href="/navbar.css" />
+	<link rel="stylesheet" th:href="@{/footer.css}">
+	<link rel="stylesheet" th:href="@{/utente.css}" href="/utente.css" />
+	<link rel="stylesheet" th:href="@{/carrello.css}" href="/carrello.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 
 
 <body>
-  <nav class="navbar">
-	<div class="navbar-left">
-	  <a href="/" class="logo" title="Edicola del Faro">Edicola del Faro</a>
-	</div>
-  </nav>
+
+	<!-- Navbar moderna -->
+	        <header class="navbar">
+	            <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+	    </div>
+	  </header>
   <div class="login-container">
 	<div class="login-box">
 	  <div class="login-title">Login</div>
@@ -30,6 +37,11 @@
 	  </div>
 	</div>
   </div>
+  <footer class="footer">
+      <div class="footer-content">
+          <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+  </footer>
 </body>
 
 </html>

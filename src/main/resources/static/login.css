@@ -1,34 +1,6 @@
-/* Navbar stile index */
 
-
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color: #232f3e;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  z-index: 1100;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-.navbar-left {
-  display: flex;
-  align-items: center;
-}
-.logo {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #ff9900;
-  text-decoration: none;
-  user-select: none;
-}
 .logo:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 body {
@@ -140,6 +112,11 @@ body, html {
 }
 .login-form button:hover {
   background-color: #e68a00;
+}
+
+.footer {
+    position: sticky;
+    top: 100%;
 }
 
 @media (max-width: 480px) {
