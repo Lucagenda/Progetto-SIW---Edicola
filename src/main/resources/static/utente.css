@@ -70,29 +70,57 @@ body {
   background-color: #e68a00;
 }
 
-/* Tabella ordini */
-.orders-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 12px;
-  font-size: 0.95rem;
+/* Tabelle ordini */
+.info-card table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px; /* spazio verticale tra righe */
+    table-layout: fixed;
 }
 
-.orders-table th,
-.orders-table td {
-  border: 1px solid #d3d3d3;
-  padding: 10px;
-  text-align: left;
+.info-card th, .info-card td {
+    padding: 12px 16px;
+    text-align: left;
+    vertical-align: top;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e0e0e0; /* linea grigia chiara */
 }
 
-.orders-table th {
-  background-color: #232f3e;
-  color: white;
+.info-card th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+    color: #333;
 }
 
-.orders-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
+.info-card td ul {
+    padding-left: 20px;
+    margin: 0;
+    list-style-type: disc;
+    color: #444;
 }
+
+.info-card tr {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Migliora spaziatura colonne */
+.info-card th:nth-child(1),
+.info-card td:nth-child(1) {
+    width: 12%;
+}
+.info-card th:nth-child(2),
+.info-card td:nth-child(2) {
+    width: 20%;
+}
+.info-card th:nth-child(3),
+.info-card td:nth-child(3) {
+    width: 18%;
+}
+.info-card th:nth-child(4),
+.info-card td:nth-child(4) {
+    width: 50%;
+}
+
 
 /* Modal */
 .modal-overlay {

@@ -64,35 +64,94 @@
 	                <a th:href="@{'/utente/' + ${utente.id} + '?showPasswordModal=true'}" class="cta-button change-password-button">Cambia Password</a>
 	            </div>
 
-	            <div class="info-card" th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}">
-	                <h3>I tuoi ordini</h3>
-	                <table th:if="${ordini != null and #lists.size(ordini) > 0}">
-	                    <thead>
-	                    <tr>
-	                        <th>ID Ordine</th>
-	                        <th>Data</th>
-	                        <th>Stato</th>
-	                        <th>Prodotti</th>
-	                    </tr>
-	                    </thead>
-	                    <tbody>
-	                    <tr th:each="ordine : ${ordini}">
-	                        <td th:text="${ordine.id}"></td>
-	                        <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
-	                        <td th:text="${ordine.stato}"></td>
-	                        <td>
-	                            <ul>
-	                                <li th:each="riga : ${ordine.righeOrdine}"
-	                                    th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
-	                            </ul>
-	                        </td>
-	                    </tr>
-	                    </tbody>
-	                </table>
-	                <p th:if="${ordini == null or #lists.size(ordini) == 0}">Nessun ordine presente.</p>
-	            </div>
-	        </div>
-	    </div>
+				<div class="info-card" th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}">
+				    <h3>I tuoi ordini</h3>
+
+				    <!-- ORDINI IN PREPARAZIONE -->
+				    <div>
+				        <h4>Ordini in preparazione</h4>
+				        <table>
+				            <thead>
+				                <tr>
+				                    <th>ID Ordine</th>
+				                    <th>Data</th>
+				                    <th>Stato</th>
+				                    <th>Prodotti</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr th:each="ordine : ${ordini}" th:if="${ordine.stato.name() == 'IN_PREPARAZIONE'}">
+				                    <td th:text="${ordine.id}"></td>
+				                    <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+				                    <td th:text="${ordine.stato}"></td>
+				                    <td>
+				                        <ul>
+				                            <li th:each="riga : ${ordine.righeOrdine}"
+				                                th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+				                        </ul>
+				                    </td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>
+
+				    <!-- ORDINI PRONTI -->
+				    <div>
+				        <h4>Ordini pronti per il ritiro</h4>
+				        <table>
+				            <thead>
+				                <tr>
+				                    <th>ID Ordine</th>
+				                    <th>Data</th>
+				                    <th>Stato</th>
+				                    <th>Prodotti</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr th:each="ordine : ${ordini}" th:if="${ordine.stato.name() == 'PRONTO'}">
+				                    <td th:text="${ordine.id}"></td>
+				                    <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+				                    <td th:text="${ordine.stato}"></td>
+				                    <td>
+				                        <ul>
+				                            <li th:each="riga : ${ordine.righeOrdine}"
+				                                th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+				                        </ul>
+				                    </td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>
+
+				    <!-- ORDINI RITIRATI -->
+				    <div>
+				        <h4>Ordini ritirati</h4>
+				        <table>
+				            <thead>
+				                <tr>
+				                    <th>ID Ordine</th>
+				                    <th>Data</th>
+				                    <th>Stato</th>
+				                    <th>Prodotti</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                <tr th:each="ordine : ${ordini}" th:if="${ordine.stato.name() == 'RITIRATO'}">
+				                    <td th:text="${ordine.id}"></td>
+				                    <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+				                    <td th:text="${ordine.stato}"></td>
+				                    <td>
+				                        <ul>
+				                            <li th:each="riga : ${ordine.righeOrdine}"
+				                                th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
+				                        </ul>
+				                    </td>
+				                </tr>
+				            </tbody>
+				        </table>
+				    </div>
+				</div>
+
 
 	    <!-- MODAL CAMBIO PASSWORD -->
 	    <div th:if="${showPasswordModal == true}"
