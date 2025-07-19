@@ -209,17 +209,6 @@ body {
   border: 3px solid #198754;
 }
 
-/* Footer space */
-.footer-space {
-  padding: 60px 24px;
-  background-color: #232f3e;
-  color: #fff;
-  font-size: 1.6rem;
-  text-align: center;
-  font-weight: 500;
-  user-select: none;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
