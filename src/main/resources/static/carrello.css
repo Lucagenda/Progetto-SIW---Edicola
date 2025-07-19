@@ -1,0 +1,231 @@
+
+.carrello-btn-primary {
+  background: #232f3e;
+  color: #ff9900;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+.carrello-btn-primary:hover {
+  background: #ff9900;
+  color: #232f3e;
+}
+
+.carrello-btn-danger {
+  background: #c00;
+  color: #fff;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+.carrello-btn-danger:hover {
+  background: #a30000;
+  color: #fff;
+}
+/* Nuove classi per layout card carrello moderno */
+.carrello-item-content {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  width: 100%;
+}
+.carrello-item-img {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f6f6;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 8px;
+  margin-right: 10px;
+  min-width: 90px;
+  min-height: 90px;
+  max-width: 110px;
+  max-height: 110px;
+}
+.carrello-item-img img {
+  max-width: 90px;
+  max-height: 90px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: #fff;
+}
+/* Stile moderno per la pagina carrello, coerente con il tema index.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #f4f6f9;
+  min-height: 100vh;
+  color: #232f3e;
+}
+
+.carrello-main {
+  margin-left: 32px;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #232f3e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 1100;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.logo {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #ff9900;
+  text-decoration: none;
+  user-select: none;
+}
+.logo:hover {
+  text-decoration: underline;
+}
+
+.carrello-container {
+  margin-top: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.carrello-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ff9900;
+  margin-bottom: 28px;
+  letter-spacing: 1px;
+}
+
+
+.carrello-list {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-bottom: 32px;
+  padding: 0;
+}
+
+.carrello-item {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+  padding: 22px 18px;
+  gap: 24px;
+  position: relative;
+}
+.carrello-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.carrello-item-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #232f3e;
+}
+.carrello-item-prezzo {
+  color: #ff9900;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.carrello-item-quantita {
+  font-size: 1rem;
+  color: #232f3e;
+}
+.carrello-item-totale {
+  font-size: 1.1rem;
+  color: #232f3e;
+  font-weight: 600;
+}
+.carrello-item-azioni {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+.carrello-item-azioni a, .carrello-item-azioni button {
+  background: #232f3e;
+  color: #ff9900;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  text-decoration: none;
+}
+.carrello-item-azioni a:hover, .carrello-item-azioni button:hover {
+  background: #ff9900;
+  color: #232f3e;
+}
+
+.carrello-totale {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ff9900;
+  margin-bottom: 18px;
+  text-align: right;
+  width: 100%;
+  max-width: 800px;
+}
+
+.carrello-btn {
+  background-color: #232f3e;
+  color: #ff9900;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s;
+  margin-top: 18px;
+}
+.carrello-btn:hover {
+  background-color: #ff9900;
+  color: #232f3e;
+}
+
+
+
+@media (max-width: 700px) {
+  .carrello-table, .carrello-totale {
+    max-width: 98vw;
+    padding: 8px 2px;
+  }
+  .carrello-title {
+    font-size: 1.3rem;
+  }
+}

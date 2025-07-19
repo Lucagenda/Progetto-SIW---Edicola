@@ -3,56 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Il tuo carrello</title>
+    <link rel="stylesheet" th:href="@{/navbar.css}" href="/navbar.css" />
+    <link rel="stylesheet" th:href="@{/utente.css}" href="/utente.css" />
+    <link rel="stylesheet" th:href="@{/carrello.css}" href="/carrello.css" />
 </head>
 <body>
-    <div style="position: absolute; top: 20px; right: 30px;">
-        <a th:href="@{/}" title="Torna alla Homepage" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Torna alla Homepage</a>
-    </div>
-    <h1>Carrello</h1>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Prodotto</th>
-                <th>Prezzo unitario</th>
-                <th>Quantità</th>
-                <th>Totale riga</th>
-                <th>Azioni</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="voce : ${carrello.voci}">
-                <td th:text="${voce.prodotto.nome}">Nome prodotto</td>
-                <td th:text="${voce.prodotto.prezzo} + ' €'">Prezzo</td>
-                <td th:text="${voce.quantita}">Quantità</td>
-                <td th:text="${voce.prodotto.prezzo * voce.quantita} + ' €'">Totale riga</td>
-                <td>
-                    <a th:href="@{'/carrello/rimuovi/' + ${voce.id}}">Rimuovi</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Navbar grafica -->
+    <header class="navbar">
+        <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+        <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+            <input type="text" name="nome" placeholder="Cerca prodotti..." required />
+            <button type="submit">🔍</button>
+        </form>
+        <div class="top-icons">
+            <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+                <img src="/images/gear.png" alt="Admin Ordini" />
+            </a>
+            <!-- Icona carrello nascosta su carrello.html -->
+            <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+                <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+            </a>
+            <span th:if="${credenziali != null}">
+                <a th:href="@{/logout}" title="Logout">
+                    <img src="/images/logout.png" alt="Logout" />
+                </a>
+            </span>
+        </div>
+    </header>
+    <div style="height: 80px;"></div>
+    <div class="carrello-main">
+      <h1>Carrello</h1>
+
+      <div class="carrello-list">
+        <div class="carrello-item" th:each="voce : ${carrello.voci}">
+          <div class="carrello-item-content">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div class="carrello-item-info">
+                <span class="carrello-item-nome" th:text="${voce.prodotto.nome}">Nome prodotto</span>
+                <span class="carrello-item-prezzo" th:text="${voce.prodotto.prezzo} + ' €'">Prezzo</span>
+                <span class="carrello-item-quantita">Quantità: <span th:text="${voce.quantita}">1</span></span>
+                <span class="carrello-item-totale">Totale parziale: <span th:text="${voce.prodotto.prezzo * voce.quantita} + ' €'">Totale riga</span></span>
+              </div>
+              <div class="carrello-item-azioni">
+                <a th:href="@{'/carrello/rimuovi/' + ${voce.id}}">Rimuovi</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     <h3 th:text="'Totale carrello: ' + ${carrello.totale} + ' €'">Totale</h3>
 
     <!-- Pulsanti di checkout e svuota carrello -->
     <div style="display: flex; gap: 10px;">
       <form action="/carrello/checkout" method="post">
-          <button type="submit">Crea Ordine</button>
+          <button type="submit" class="carrello-btn-primary">
+              Crea Ordine
+          </button>
       </form>
       <form action="/carrello/svuota" method="post">
-          <button type="submit" style="background-color:#c00; color:white;">Svuota Carrello</button>
+          <button type="submit" class="carrello-btn-danger">
+              Svuota Carrello
+          </button>
       </form>
     </div>
 
-    <hr>
 
-    <!-- Form per cercare prodotto per nome -->
-    <h3>Cerca prodotto per nome</h3>
-    <form class="search-bar" th:action="@{/prodotti/ricerca}" method="get">
-        <input type="text" name="nome" placeholder="Nome prodotto..." required />
-        <button type="submit">Cerca</button>
-    </form>
 
     <!-- Se ci sono risultati mostra la selezione -->
     <div th:if="${prodotti != null}">
