@@ -13,8 +13,8 @@
 	<header class="navbar">
 	    <a class="logo" th:href="@{/}">Edicola Del Faro</a>
 
-	    <form class="search-form" th:action="@{/cerca}" method="get">
-	        <input type="text" name="query" placeholder="Cerca prodotti..." />
+	    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+	        <input type="text" name="nome" placeholder="Cerca prodotti..." />
 	        <button type="submit">
 	            🔍
 	        </button>
