@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Edicola del Faro</title>
+  <link rel="stylesheet" th:href="@{/navbar.css}">
   <link rel="stylesheet" href="/index.css?version=5" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&family=Montserrat:wght@700&display=swap" rel="stylesheet" />
@@ -32,15 +33,15 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar">
-    <div class="navbar-left">
-      <a href="/" class="logo" title="Edicola del Faro">Edicola del Faro</a>
-    </div>
+  <header class="navbar">
+    <a href="/" class="logo" title="Edicola del Faro">Edicola Del Faro</a>
 
-    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
-      <input type="text" name="nome" placeholder="Cerca giornali e giocattoli..." aria-label="Cerca prodotti" required />
-      <button type="submit" title="Cerca">🔍</button>
-    </form>
+	<form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+		        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+		        <button type="submit">
+		            🔍
+		        </button>
+		    </form>
 
     <div class="top-icons">
       <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
@@ -64,7 +65,7 @@
         <img src="/images/login.png" alt="Login" />
       </a>
     </div>
-  </nav>
+  </header>
 
   <!-- Parallax -->
   <div class="parallax">
