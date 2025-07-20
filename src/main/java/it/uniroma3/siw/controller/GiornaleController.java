@@ -34,6 +34,10 @@ public class GiornaleController {
 	public String formModificaGiornale(@PathVariable("id") Long id, Model model) {
 		Giornale giornale = giornaleService.getGiornaleById(id);
 		model.addAttribute("giornale", giornale);
+		Utente utente = utenteService.getUtente();
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
 		return "modificaGiornale";
 	}
 

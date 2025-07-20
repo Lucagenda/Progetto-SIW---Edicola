@@ -30,6 +30,10 @@ public class GiocattoloController {
     public String formModificaGiocattolo(@PathVariable("id") Long id, Model model) {
         Giocattolo giocattolo = giocattoloService.getGiocattoloById(id);
         model.addAttribute("giocattolo", giocattolo);
+        Utente utente = utenteService.getUtente();
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
         return "modificaGiocattolo";
     }
 

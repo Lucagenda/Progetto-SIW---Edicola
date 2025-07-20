@@ -2,31 +2,76 @@
 <html>
   <head>
     <title>Modifica Giocattolo</title>
-    <link rel="stylesheet" href="/style.css?version=2" />
+    <link rel="stylesheet" th:href="@{/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/footer.css}" />
+    <link rel="stylesheet" th:href="@{/newProdotto.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
+
   <body>
-    <h1>Modifica Giocattolo</h1>
-    <form th:action="@{'/modificaGiocattolo/' + ${giocattolo.id}}" th:object="${giocattolo}" method="post">
-      <div>
-        <label>Nome:</label>
-        <input type="text" th:field="*{nome}" required />
+    <!-- Navbar moderna -->
+    <header class="navbar">
+      <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+      <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+        <button type="submit">🔍</button>
+      </form>
+
+      <div class="top-icons">
+        <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+          <img src="/images/gear.png" alt="Admin Ordini" />
+        </a>
+        <span th:if="${credenziali != null}">
+          <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+            <img src="/images/login.png" alt="Profilo" />
+          </a>
+        </span>
+        <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+          <img src="/images/login.png" alt="Login" />
+        </a>
       </div>
-      <div>
-        <label>Produttore:</label>
-        <input type="text" th:field="*{produttore}" required />
+    </header>
+
+    <main class="container">
+      <h1>Modifica Giocattolo</h1>
+
+      <form class="form-prodotto" th:action="@{'/modificaGiocattolo/' + ${giocattolo.id}}" th:object="${giocattolo}" method="post">
+        <div class="grid-prodotto">
+          <div>
+            <label>Nome:</label>
+            <input type="text" th:field="*{nome}" required />
+          </div>
+
+          <div>
+            <label>Produttore:</label>
+            <input type="text" th:field="*{produttore}" required />
+          </div>
+
+          <div>
+            <label>Tipologia:</label>
+            <input type="text" th:field="*{tipologia}" required />
+          </div>
+
+          <div>
+            <label>Prezzo:</label>
+            <input type="number" step="0.01" th:field="*{prezzo}" required />
+          </div>
+        </div>
+
+        <button type="submit">Salva modifiche</button>
+      </form>
+
+      <div th:if="${messaggioErrore}" class="error-message">
+        <p th:text="${messaggioErrore}" style="color:red;"></p>
       </div>
-      <div>
-        <label>Tipologia:</label>
-        <input type="text" th:field="*{tipologia}" required />
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
       </div>
-      <div>
-        <label>Prezzo:</label>
-        <input type="number" step="0.01" th:field="*{prezzo}" required />
-      </div>
-      <button type="submit">Salva modifiche</button>
-    </form>
-    <div th:if="${messaggioErrore}">
-      <p th:text="${messaggioErrore}" style="color:red;"></p>
-    </div>
+    </footer>
   </body>
 </html>

@@ -2,46 +2,81 @@
 <html>
   <head>
     <title>Nuovo Giocattolo</title>
-    <link rel="stylesheet" href="/stile.css?version=3" />
+    <link rel="stylesheet" th:href="@{/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/footer.css}" />
+    <link rel="stylesheet" th:href="@{/newProdotto.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div><a href="/"><img src="/logo-siw.png" width="20%" /></a></div>
+    
+    <!-- Navbar moderna -->
+    <header class="navbar">
+      <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+      <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+        <button type="submit">🔍</button>
+      </form>
+
+      <div class="top-icons">
+        <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+          <img src="/images/gear.png" alt="Admin Ordini" />
+        </a>
+        <span th:if="${credenziali != null}">
+          <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+            <img src="/images/login.png" alt="Profilo" />
+          </a>
+        </span>
+        <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+          <img src="/images/login.png" alt="Login" />
+        </a>
+      </div>
+    </header>
+
     <h1>Aggiungi un giocattolo</h1>
-    <form th:action="@{/giocattolo}" method="POST" th:object="${giocattolo}">
+
+    <form class="form-prodotto" th:action="@{/giocattolo}" method="POST" th:object="${giocattolo}">
       <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
 
-      <div>
-        <label>Nome:</label>
-        <span><input required type="text" th:field="*{nome}" /></span>
-        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+      <div class="grid-prodotto">
+        <div>
+          <label>Nome:</label>
+          <input required type="text" th:field="*{nome}" />
+          <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        </div>
+
+        <div>
+          <label>Tipologia:</label>
+          <input required type="text" th:field="*{tipologia}" />
+          <span th:if="${#fields.hasErrors('tipologia')}" th:errors="*{tipologia}"></span>
+        </div>
+
+        <div>
+          <label>Produttore:</label>
+          <input required type="text" th:field="*{produttore}" />
+          <span th:if="${#fields.hasErrors('produttore')}" th:errors="*{produttore}"></span>
+        </div>
+
+        <div>
+          <label>Prezzo:</label>
+          <input required type="text" th:field="*{prezzo}" />
+          <span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+        </div>
+
+        <div>
+          <label>URL immagine:</label>
+          <input type="url" th:field="*{urlImage}" />
+        </div>
       </div>
 
-      <div>
-        <label>Tipologia:</label>
-        <span><input required type="text" th:field="*{tipologia}" /></span>
-        <span th:if="${#fields.hasErrors('tipologia')}" th:errors="*{tipologia}"></span>
-      </div>
-
-      <div>
-        <label>Produttore:</label>
-        <span><input required type="text" th:field="*{produttore}" /></span>
-        <span th:if="${#fields.hasErrors('produttore')}" th:errors="*{produttore}"></span>
-      </div>
-
-      <div>
-        <label>Prezzo:</label>
-        <span><input required type="text" th:field="*{prezzo}" /></span>
-        <span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
-      </div>
-
-      <div>
-        <label>URL immagine:</label>
-        <span><input type="url" th:field="*{urlImage}" /></span>
-      </div>
-
-      <div>
-        <span><button type="submit">Conferma</button></span>
-      </div>
+      <button type="submit">Conferma</button>
     </form>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+    </footer>
   </body>
 </html>
