@@ -1,6 +1,7 @@
 package it.uniroma3.siw.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import it.uniroma3.siw.model.Ordine;
@@ -47,6 +48,10 @@ public class CarrelloController {
 	public String visualizzaCarrello(Model model) {
 		Utente utente = utenteService.getUtente();
 		Carrello carrello = carrelloService.getOrCreateCarrello(utente);
+		// Ordina le voci per id prodotto
+    	if (carrello.getVoci() != null) {
+			carrello.getVoci().sort(Comparator.comparing(vc -> vc.getProdotto().getId()));
+		}
 		model.addAttribute("carrello", carrello);
 		if (utente != null) {
 			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));

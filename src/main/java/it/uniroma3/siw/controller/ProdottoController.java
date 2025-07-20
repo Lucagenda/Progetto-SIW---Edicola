@@ -13,11 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.uniroma3.siw.model.Giocattolo;
 import it.uniroma3.siw.model.Giornale;
 import it.uniroma3.siw.model.Prodotto;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.*;
-import it.uniroma3.siw.service.ProdottoService;
 
 @Controller
 public class ProdottoController {
+
+	@Autowired
+	CredenzialiService credenzialiService;
+
+	@Autowired
+	UtenteService utenteService;
 
 	@Autowired
 	ProdottoService prodottoService;
@@ -50,8 +56,10 @@ public class ProdottoController {
 	@GetMapping("/prodotti/ricerca")
 	public String cercaLibri(@RequestParam("nome") String nome, Model model, Authentication authentication) {
 		List<Prodotto> tuttiProdotti = prodottoService.cercaPerNome(nome);
-
+		Utente utente = utenteService.getUtente();
+		model.addAttribute("credenziali", nome);
 		model.addAttribute("prodotti", tuttiProdotti);
+		model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
 
 		return "prodotti";
 	}

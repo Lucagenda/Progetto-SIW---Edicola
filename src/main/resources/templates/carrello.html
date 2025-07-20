@@ -45,13 +45,19 @@
                 <div class="carrello-item-content">
                     <div style="display: flex; align-items: center; gap: 16px;">
                         <div class="carrello-item-info">
+                            <span><img width="40%" th:src="${voce.prodotto.urlImage}" /></span>
                             <span class="carrello-item-nome" th:text="${voce.prodotto.nome}">Nome prodotto</span>
                             <span class="carrello-item-prezzo" th:text="${voce.prodotto.prezzo} + ' €'">Prezzo</span>
                             <span class="carrello-item-quantita">Quantità: <span th:text="${voce.quantita}">1</span></span>
                             <span class="carrello-item-totale">Totale parziale: <span th:text="${voce.prodotto.prezzo * voce.quantita} + ' €'">Totale riga</span></span>
                         </div>
                         <div class="carrello-item-azioni">
-                            <a th:href="@{'/carrello/rimuovi/' + ${voce.id}}">Rimuovi</a>
+                            <form th:action="@{/carrello/aggiungi}" method="post" style="margin-bottom:8px;">
+                                <input type="hidden" name="tipo" th:value="${voce.prodotto.tipoProdotto}" />
+                                <input type="hidden" name="id" th:value="${voce.prodotto.id}" />
+                                <button type="submit" class="carrello-btn-danger" style="width:100%;">Aggiungi x1</button>
+                            </form>
+                            <a th:href="@{'/carrello/rimuovi/' + ${voce.id}}" class="carrello-btn-danger" style="width:100%;text-align:center;">Rimuovi</a>
                         </div>
                     </div>
                 </div>
