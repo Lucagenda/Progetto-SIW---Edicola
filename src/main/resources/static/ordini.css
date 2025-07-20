@@ -103,3 +103,52 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.admin-section {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  padding: 24px 28px;
+  margin: 0 20px 40px 20px; /* distanziamento dal footer e dai lati */
+}
+
+.admin-section .sub-title {
+  color: #ff9900;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.admin-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.admin-list li {
+  margin-bottom: 12px;
+}
+
+.admin-list li a {
+  font-weight: 600;
+  font-size: 18px;
+  color: #232f3e;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.admin-list li a:hover {
+  color: #ff9900;
+  text-decoration: underline;
+}
+
+.admin-subsection {
+  margin-bottom: 28px;
+}
+
+.admin-subsection h3 {
+  color: #232f3e;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #ff9900;
+  padding-bottom: 4px;
+}

@@ -92,6 +92,27 @@
 		        </tbody>
 		    </table>
 		</div>
+		
+		<!-- Sezione Amministrazione per modifica del catalogo -->
+		<section th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" class="admin-section">
+		  <h2 class="sub-title">⚙️ Amministrazione</h2>
+
+		  <div class="admin-subsection">
+		    <h3>Giornali</h3>
+		    <ul class="admin-list">
+		      <li><a href="/admin/formNewGiornale">➕ Aggiungi Giornale</a></li>
+		      <li><a href="/admin/aggiornaGiornale">🛠️ Gestisci Giornali</a></li>
+		    </ul>
+		  </div>
+
+		  <div class="admin-subsection">
+		    <h3>Giocattoli</h3>
+		    <ul class="admin-list">
+		      <li><a href="/admin/formNewGiocattolo">➕ Aggiungi Giocattolo</a></li>
+		      <li><a href="/admin/aggiornaGiocattolo">🛠️ Gestisci Giocattoli</a></li>
+		    </ul>
+		  </div>
+		</section>
 
 <!-- Footer FUORI dal contenuto principale -->
 <footer class="footer">
