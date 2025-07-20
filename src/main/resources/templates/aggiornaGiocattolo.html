@@ -1,20 +1,75 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Aggiorna Giocattolo</title>
-    <link rel="stylesheet" href="/style.css?version=2" />
+	<title>Aggiorna Giocattolo</title>
+	<link rel="stylesheet" href="/style.css?version=2" />
+	<link rel="stylesheet" th:href="@{/navbar.css}">
+	<link rel="stylesheet" th:href="@{/footer.css}">
+	<link rel="stylesheet" th:href="@{/carrello.css}" href="/carrello.css" />
+	<link rel="stylesheet" th:href="@{/aggiornaGiocattolo.css}" href="/aggiornaGiocattolo.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
 
   <body>
-    <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
-    <h1>Giocattoli</h1>
-    <div th:if="${giocattoli.isEmpty()}">Non ci sono giocattoli nel sistema</div>
-    <ul>
-      <li th:each="giocattolo: ${giocattoli}">
-        <span th:text="${giocattolo.nome} + ' - ' + ${giocattolo.produttore} + ' (' + ${giocattolo.tipologia} + ')'">Up! (200)</span>
-        <a th:href="@{'/cancellaGiocattoo' + '/' + ${giocattolo.id}}">Cancella</a>
-        <a th:href="@{'/modificaGiocattolo' + '/' + ${giocattolo.id}}">Modifica</a>
-      </li>
-    </ul>
+
+	<!-- Navbar moderna -->
+		<header class="navbar">
+			<a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+			<form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+				<input type="text" name="nome" placeholder="Cerca prodotti..." />
+				<button type="submit">
+					🔍
+				</button>
+			</form>
+
+	  <div class="top-icons">
+		<a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+		  <img src="/images/gear.png" alt="Admin Ordini" />
+		</a>
+		<a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+		  <img src="/images/carrello.png" alt="Carrello" />
+		</a>
+		<a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+		  <img src="/images/carrello.png" alt="Carrello" />
+		</a>
+		<a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+		  <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+		</a>
+		<span th:if="${credenziali != null}">
+		  <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+			<img src="/images/login.png" alt="Profilo" />
+		  </a>
+		</span>
+		<a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+		  <img src="/images/login.png" alt="Login" />
+		</a>
+	  </div>
+	</header>
+	
+	<h1>GIocattoli</h1>
+	<div th:if="${giocattoli.isEmpty()}">Non ci sono giocattoli nel sistema</div>
+	
+
+  <div class="giocattoli-container">
+	<div class="giocattolo-card" th:each="giocattolo: ${giocattoli}">
+	  <img class="giocattolo-img" th:src="${giocattolo.urlImage}" alt="Immagine giocattolo" />
+	  <div class="giocattolo-titolo" th:text="${giocattolo.nome}">Nome giocattolo</div>
+	  <div class="giocattolo-costo" th:text="${giocattolo.tipologia} + ' (' + ${giocattolo.produttore} + ')'">Mensile (2024)</div>
+	  <!-- Pulsanti sempre visibili in fondo -->
+	  <div style="flex:1 1 auto;"></div>
+	  <div class="btns-bottom">
+		<a th:href="@{'/cancellaGiocattolo' + '/' + ${giocattolo.id}}" class="btn-cancella carrello-btn-danger">Cancella</a>
+		<a th:href="@{'/modificaGiocattolo' + '/' + ${giocattolo.id}}" class="btn-modifica carrello-btn-primary" style="width: 100%;">Modifica</a>
+	  </div>
+	</div>
+  </div>
+	
+	<footer class="footer">
+		<div class="footer-content">
+			<p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+		</div>
+	</footer>
+	
   </body>
 </html>

@@ -3,17 +3,70 @@
   <head>
     <title>Giocattoli</title>
     <link rel="stylesheet" href="/style.css?version=2" />
+    <link rel="stylesheet" th:href="@{/giocattoli.css}" href="/giocattoli.css" />
+    <link rel="stylesheet" th:href="@{/navbar.css}" href="/navbar.css" />
+    <link rel="stylesheet" th:href="@{/footer.css}" href="/footer.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
 
-  <body>
-    <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
-    <h1>Giocattoli</h1>
-    <div th:if="${giocattoli.isEmpty()}">Non ci sono giocattoli nel sistema</div>
-    <ul>
-      <li th:each="giocattolo: ${giocattoli}">
-        <a th:href="@{'/giocattolo' + '/' + ${giocattolo.id}}"
-          th:text="${giocattolo.nome} + ' - ' + ${giocattolo.tipologia} + ' (' + ${giocattolo.produttore} + ')'">Up! (2000)</a>
-      </li>
-    </ul>
+  <body style="min-height:100vh;display:flex;flex-direction:column;">
+    <!-- Navbar moderna -->
+    <header class="navbar">
+        <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+        <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+            <input type="text" name="nome" placeholder="Cerca prodotti..." />
+            <button type="submit">
+                🔍
+            </button>
+        </form>
+        <div class="top-icons">
+      <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+        <img src="/images/gear.png" alt="Admin Ordini" />
+      </a>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+        <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+      </a>
+      <span th:if="${credenziali != null}">
+        <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+          <img src="/images/login.png" alt="Profilo" />
+        </a>
+      </span>
+      <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+        <img src="/images/login.png" alt="Login" />
+      </a>
+    </div>
+  </header>
+<main style="flex:1 0 auto;">
+      <h1>GIocattoli</h1>
+      <div th:if="${giocattoli.isEmpty()}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;">
+        <span style="font-size:2.1rem; color:#111; font-weight:700; text-align:center;">Non ci sono giocattoli nel sistema</span>
+      </div>
+      <div class="giocattoli-container" th:if="${not giocattoli.isEmpty()}">
+        <a th:each="giocattolo : ${giocattoli}" th:href="@{'/giocattolo/' + ${giocattolo.id}}" style="text-decoration:none;color:inherit;width:240px;min-width:200px;display:flex;flex-direction:column;align-items:center;position:relative;">
+          <div class="giocattolo-card" style="width:100%;min-width:unset;">
+            <img class="giocattolo-img" th:src="${giocattolo.urlImage}" alt="Immagine giocattolo" />
+            <div class="giocattolo" th:text="${giocattolo.nome}">Nome Giocattolo</div>
+            <div class="giocattolo-costo" th:text="${#numbers.formatDecimal(giocattolo.prezzo, 1, 'COMMA', 2, 'POINT')} + ' €'">0,00 €</div>
+          </div>
+          <form th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:action="@{/carrello/aggiungi}" method="post" style="width:90%;margin:8px auto 0 auto;pointer-events:auto;">
+            <input type="hidden" name="tipo" value="Giocattolo" />
+            <input type="hidden" name="id" th:value="${giocattolo.id}" />
+            <button class="btn-aggiungi-carrello" type="submit">Aggiungi al carrello</button>
+          </form>
+        </a>
+      </div>
+    </main>
+        <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+    </footer>
   </body>
 </html>

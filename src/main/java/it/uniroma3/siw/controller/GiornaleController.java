@@ -1,3 +1,4 @@
+
 package it.uniroma3.siw.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.GiornaleService;
 import it.uniroma3.siw.service.UtenteService;
 import jakarta.validation.Valid;
+import java.util.Comparator;
+import java.util.List;
 
 @Controller
 public class GiornaleController {
@@ -63,20 +66,24 @@ public class GiornaleController {
 
 	@GetMapping("/giornali")
 	public String mostraTuttiGiornali(Model model) {
+		Utente utente = utenteService.getUtente();
 		model.addAttribute("giornali", this.giornaleService.getAllGiornali());
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
 		return "giornali.html";
 	}
 
-    @GetMapping("/giornale/{id}")
-    public String getGiornale(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
-        // Recupera utente loggato
-        Utente utente = utenteService.getUtente();
-        if (utente != null) {
-            model.addAttribute("credenziali", credenzialiService.getCredenzialiByUtente(utente));
-        }
-        return "giornale.html";
-    }
+	@GetMapping("/giornale/{id}")
+	public String getGiornale(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("giornale", this.giornaleService.getGiornaleById(id));
+		// Recupera utente loggato
+		Utente utente = utenteService.getUtente();
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenzialiByUtente(utente));
+		}
+		return "giornale.html";
+	}
 	
 	@GetMapping("/admin/formNewGiornale")
 	public String formNewGiornale(Model model) {
@@ -102,7 +109,16 @@ public class GiornaleController {
 
 	@GetMapping("/admin/aggiornaGiornale")
 	public String homeAggiornaGiornale(Model model) {
-		model.addAttribute("giornali",this.giornaleService.getAllGiornali());
+		List<Giornale> giornali = new java.util.ArrayList<>();
+		for (Giornale g : this.giornaleService.getAllGiornali()) {
+			giornali.add(g);
+		}
+		giornali.sort(Comparator.comparingLong(Giornale::getId));
+		model.addAttribute("giornali", giornali);
+		Utente utente = utenteService.getUtente();
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
 		return "aggiornaGiornale";
 	}
 

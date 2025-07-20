@@ -1,21 +1,76 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Aggiorna Giornale</title>
-    <link rel="stylesheet" href="/style.css?version=2" />
+	<title>Aggiorna Giornale</title>
+	<link rel="stylesheet" href="/style.css?version=2" />
+	<link rel="stylesheet" th:href="@{/navbar.css}">
+	<link rel="stylesheet" th:href="@{/footer.css}">
+	<link rel="stylesheet" th:href="@{/carrello.css}" href="/carrello.css" />
+	<link rel="stylesheet" th:href="@{/aggiornaGiornale.css}" href="/aggiornaGiornale.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
 
   <body>
-    <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
-    <h1>Giornali</h1>
-    <div th:if="${giornali.isEmpty()}">Non ci sono giornali nel sistema</div>
-    <ul>
-      <li th:each="giornale: ${giornali}">
-        <span th:text="${giornale.nome} + ' - ' + ${giornale.periodicita} + ' (' + ${giornale.anno} + ')'">Up! (200)</span>
-        <a th:href="@{'/cancellaGiornale' + '/' + ${giornale.id}}">Cancella</a>
-        <a th:href="@{'/modificaGiornale' + '/' + ${giornale.id}}">Modifica</a>
-      </li>
-    </ul>
+
+	<!-- Navbar moderna -->
+		<header class="navbar">
+			<a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+			<form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+				<input type="text" name="nome" placeholder="Cerca prodotti..." />
+				<button type="submit">
+					🔍
+				</button>
+			</form>
+
+	  <div class="top-icons">
+		<a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+		  <img src="/images/gear.png" alt="Admin Ordini" />
+		</a>
+		<a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+		  <img src="/images/carrello.png" alt="Carrello" />
+		</a>
+		<a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+		  <img src="/images/carrello.png" alt="Carrello" />
+		</a>
+		<a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+		  <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+		</a>
+		<span th:if="${credenziali != null}">
+		  <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+			<img src="/images/login.png" alt="Profilo" />
+		  </a>
+		</span>
+		<a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+		  <img src="/images/login.png" alt="Login" />
+		</a>
+	  </div>
+	</header>
+	
+	<h1>Giornali</h1>
+	<div th:if="${giornali.isEmpty()}">Non ci sono giornali nel sistema</div>
+	
+
+  <div class="giornali-container">
+	<div class="giornale-card" th:each="giornale: ${giornali}">
+	  <img class="giornale-img" th:src="${giornale.urlImage}" alt="Immagine giornale" />
+	  <div class="giornale-titolo" th:text="${giornale.nome}">Nome giornale</div>
+	  <div class="giornale-costo" th:text="${giornale.periodicita} + ' (' + ${giornale.anno} + ')'">Mensile (2024)</div>
+	  <!-- Pulsanti sempre visibili in fondo -->
+	  <div style="flex:1 1 auto;"></div>
+	  <div class="btns-bottom">
+		<a th:href="@{'/cancellaGiornale' + '/' + ${giornale.id}}" class="btn-cancella carrello-btn-danger">Cancella</a>
+		<a th:href="@{'/modificaGiornale' + '/' + ${giornale.id}}" class="btn-modifica carrello-btn-primary" style="width: 100%;">Modifica</a>
+	  </div>
+	</div>
+  </div>
+	
+	<footer class="footer">
+		<div class="footer-content">
+			<p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+		</div>
+	</footer>
+	
   </body>
 </html>
 

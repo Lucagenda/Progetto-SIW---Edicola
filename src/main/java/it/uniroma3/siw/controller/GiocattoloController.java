@@ -1,4 +1,7 @@
 package it.uniroma3.siw.controller;
+
+import java.util.Comparator;
+import java.util.List;
 import it.uniroma3.siw.model.Utente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,9 +34,9 @@ public class GiocattoloController {
         Giocattolo giocattolo = giocattoloService.getGiocattoloById(id);
         model.addAttribute("giocattolo", giocattolo);
         Utente utente = utenteService.getUtente();
-		if (utente != null) {
-			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
-		}
+        if (utente != null) {
+            model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+        }
         return "modificaGiocattolo";
     }
 
@@ -58,7 +61,11 @@ public class GiocattoloController {
     
     @GetMapping("/giocattoli")
     public String mostraTuttiGiocattoli(Model model) {
+        Utente utente = utenteService.getUtente();
         model.addAttribute("giocattoli", this.giocattoloService.getAllGiocattoli());
+        if (utente != null) {
+            model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+        }
         return "giocattoli.html";
     }
 
@@ -93,7 +100,16 @@ public class GiocattoloController {
 
     @GetMapping("/admin/aggiornaGiocattolo")
     public String homeAggiornaGiocattolo(Model model) {
-        model.addAttribute("giocattoli", this.giocattoloService.getAllGiocattoli());
+        Utente utente = utenteService.getUtente();
+        if (utente != null) {
+            model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+        }
+        List<Giocattolo> giocattoli = new java.util.ArrayList<>();
+        for (Giocattolo g : this.giocattoloService.getAllGiocattoli()) {
+            giocattoli.add(g);
+        }
+        giocattoli.sort(Comparator.comparingLong(Giocattolo::getId));
+        model.addAttribute("giocattoli", giocattoli);
         return "aggiornaGiocattolo";
     }
 

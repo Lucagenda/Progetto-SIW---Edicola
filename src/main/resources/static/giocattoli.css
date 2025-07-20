@@ -1,0 +1,108 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+
+}
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+.giocattoli-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: flex-start;
+  align-items: stretch;
+  margin: 40px auto 0 auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.giocattolo-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 240px;
+  min-width: 200px;
+  min-height: 390px;
+  height: 100%;
+  padding: 22px 18px 18px 18px;
+  transition: box-shadow 0.2s;
+  position: relative;
+  padding-bottom: 90px;
+}
+.giocattolo-card:hover {
+  box-shadow: 0 6px 24px rgba(255,153,0,0.18);
+}
+
+.giocattolo-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  background: #f4f6f9;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.giocattolo-titolo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #232f3e;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.giocattolo-costo {
+  font-size: 1.08rem;
+  color: #ff9900 !important;
+  font-weight: 600;
+  text-align: center;
+}
+
+.btn-aggiungi-carrello {
+  background-color: #ff9900;
+  color: #232f3e;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  right: 18px;
+  width: auto;
+  margin-top: 0;
+}
+.btn-aggiungi-carrello:hover {
+  background-color: #e68a00;
+  color: #fff;
+}
+
+@media (max-width: 700px) {
+  .giocattoli-container {
+    justify-content: center;
+    gap: 18px;
+  }
+  .giocattolo-card {
+    width: 90vw;
+    min-width: unset;
+    padding: 16px 6vw 16px 6vw;
+  }
+  .giocattolo-img {
+    width: 90px;
+    height: 90px;
+  }
+}

@@ -3,17 +3,72 @@
   <head>
     <title>Giornali</title>
     <link rel="stylesheet" href="/style.css?version=2" />
+    <link rel="stylesheet" th:href="@{/giornali.css}" href="/giornali.css" />
+    <link rel="stylesheet" th:href="@{/navbar.css}" href="/navbar.css" />
+    <link rel="stylesheet" th:href="@{/footer.css}" href="/footer.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
 
-  <body>
-    <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
-    <h1>Giornali</h1>
-    <div th:if="${giornali.isEmpty()}">Non ci sono giornali nel sistema</div>
-    <ul>
-      <li th:each="giornale: ${giornali}">
-        <a th:href="@{'/giornale' + '/' + ${giornale.id}}"
-          th:text="${giornale.nome} + ' - ' + ${giornale.periodicita} + ' (' + ${giornale.anno} + ')'">Up! (2000)</a>
-      </li>
-    </ul>
+  <body style="min-height:100vh;display:flex;flex-direction:column;">
+    <!-- Navbar moderna -->
+    <header class="navbar">
+        <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+        <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+            <input type="text" name="nome" placeholder="Cerca prodotti..." />
+            <button type="submit">
+                🔍
+            </button>
+        </form>
+
+    <div class="top-icons">
+      <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+        <img src="/images/gear.png" alt="Admin Ordini" />
+      </a>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+        <img src="/images/carrello.png" alt="Carrello" />
+      </a>
+      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+        <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+      </a>
+      <span th:if="${credenziali != null}">
+        <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+          <img src="/images/login.png" alt="Profilo" />
+        </a>
+      </span>
+      <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+        <img src="/images/login.png" alt="Login" />
+      </a>
+    </div>
+  </header>
+    <main style="flex:1 0 auto;">
+      <div><a href="/"><img src="/logo-siw.png" width="50%"/></a></div>
+      <h1>Giornali</h1>
+      <div th:if="${giornali.isEmpty()}" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:40vh;">
+        <span style="font-size:2.1rem; color:#111; font-weight:700; text-align:center;">Non ci sono giornali nel sistema</span>
+      </div>
+      <div class="giornali-container" th:if="${not giornali.isEmpty()}">
+        <a th:each="giornale : ${giornali}" th:href="@{'/giornale/' + ${giornale.id}}" style="text-decoration:none;color:inherit;width:240px;min-width:200px;display:flex;flex-direction:column;align-items:center;position:relative;">
+          <div class="giornale-card" style="width:100%;min-width:unset;">
+            <img class="giornale-img" th:src="${giornale.urlImage}" alt="Immagine giornale" />
+            <div class="giornale-titolo" th:text="${giornale.nome}">Nome giornale</div>
+            <div class="giornale-costo" th:text="${#numbers.formatDecimal(giornale.prezzo, 1, 'COMMA', 2, 'POINT')} + ' €'">0,00 €</div>
+          </div>
+          <form th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:action="@{/carrello/aggiungi}" method="post" style="width:90%;margin:8px auto 0 auto;pointer-events:auto;">
+            <input type="hidden" name="tipo" value="Giornale" />
+            <input type="hidden" name="id" th:value="${giornale.id}" />
+            <button class="btn-aggiungi-carrello" type="submit">Aggiungi al carrello</button>
+          </form>
+        </a>
+      </div>
+    </main>
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+    </footer>
   </body>
 </html>
