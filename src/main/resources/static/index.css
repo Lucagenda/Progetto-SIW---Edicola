@@ -103,11 +103,13 @@ body {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transform: scale(1);
 }
 
 #dove-ci-troviamo .mappa:hover {
-  box-shadow: 0 6px 25px rgb(255 153 0 / 0.4); /* ombra arancio su hover */
+  box-shadow: 0 8px 20px rgb(255 153 0 / 0.4); /* ombra arancio potenziata */
+  transform: scale(1.03);
 }
 
 /* Effetto fade-in on scroll */
