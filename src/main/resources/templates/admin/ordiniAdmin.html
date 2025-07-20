@@ -3,44 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestione Ordini - Admin</title>
+    <link rel="stylesheet" th:href="@{/navbar.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <link rel="stylesheet" th:href="@{/ordini.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <div style="position: absolute; top: 20px; right: 30px;">
-        <a th:href="@{/}" title="Torna alla Homepage" style="font-weight:bold; font-size:18px; color:#c00; text-decoration:none;">Torna alla Homepage</a>
+
+	<!-- Navbar moderna -->
+			<header class="navbar">
+			    <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+			    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+			        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+			        <button type="submit">
+			            🔍
+			        </button>
+			    </form>
+
+	    <div class="top-icons">
+	      <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+	        <img src="/images/gear.png" alt="Admin Ordini" />
+	      </a>
+	      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+	        <img src="/images/carrello.png" alt="Carrello" />
+	      </a>
+	      <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+	        <img src="/images/carrello.png" alt="Carrello" />
+	      </a>
+	      <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+	        <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+	      </a>
+	      <span th:if="${credenziali != null}">
+	        <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+	          <img src="/images/login.png" alt="Profilo" />
+	        </a>
+	      </span>
+	      <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+	        <img src="/images/login.png" alt="Login" />
+	      </a>
+	    </div>
+	  </header>
+
+<!-- Contenuto principale -->
+<div class="main-content">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h1>Gestione Ordini Clienti</h1>
+        </div>
+
+		<div class="info-card">
+		    <h2 class="sub-title">Gestione degli Ordini</h2>
+		    <table class="orders-table">
+		        <thead>
+		            <tr>
+		                <th>ID Ordine</th>
+		                <th>Cliente</th>
+		                <th>Data</th>
+		                <th>Stato</th>
+		                <th>Prodotti</th>
+		                <th>Azione</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr th:each="ordine : ${ordini}">
+		                <td th:text="${ordine.id}"></td>
+		                <td th:text="${ordine.utente.nome + ' ' + ordine.utente.cognome}"></td>
+		                <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
+		                <td th:text="${ordine.stato}"></td>
+		                <td>
+		                    <ul>
+		                        <li th:each="riga : ${ordine.righeOrdine}"
+		                            th:text="${riga.prodotto.nome + ' x' + riga.quantita}"></li>
+		                    </ul>
+		                </td>
+		                <td>
+		                    <form th:action="@{'/admin/ordini/' + ${ordine.id} + '/stato'}" method="post">
+		                        <select name="stato" class="carrello-btn-select" style="margin-bottom: 6px; width: 100%;">
+		                            <option th:each="stato : ${stati}"
+		                                    th:value="${stato}"
+		                                    th:text="${stato}"
+		                                    th:selected="${stato == ordine.stato}"></option>
+		                        </select>
+		                        <button type="submit" class="carrello-btn-primary" style="width: 100%;">Aggiorna</button>
+		                    </form>
+		                </td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+
+<!-- Footer FUORI dal contenuto principale -->
+<footer class="footer">
+    <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
     </div>
-    <h1>Gestione Ordini Clienti</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID Ordine</th>
-                <th>Cliente</th>
-                <th>Data</th>
-                <th>Stato</th>
-                <th>Prodotti</th>
-                <th>Azione</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="ordine : ${ordini}">
-                <td th:text="${ordine.id}"></td>
-                <td th:text="${ordine.utente.nome + ' ' + ordine.utente.cognome}"></td>
-                <td th:text="${#temporals.format(ordine.dataOrdine, 'dd/MM/yyyy HH:mm')}"></td>
-                <td th:text="${ordine.stato}"></td>
-                <td>
-                    <ul>
-                        <li th:each="riga : ${ordine.righeOrdine}" th:text="${riga.prodotto.nome} + ' x' + ${riga.quantita}"></li>
-                    </ul>
-                </td>
-                <td>
-                    <form th:action="@{'/admin/ordini/' + ${ordine.id} + '/stato'}" method="post">
-                        <select name="stato">
-                            <option th:each="stato : ${stati}" th:value="${stato}" th:text="${stato}" th:selected="${stato == ordine.stato}"></option>
-                        </select>
-                        <button type="submit">Aggiorna</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+</footer>
+
 </body>
 </html>
+
+
