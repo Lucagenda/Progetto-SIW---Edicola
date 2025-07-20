@@ -2,40 +2,87 @@
 <html>
   <head>
     <title>Nuovo Giornale</title>
-    <link rel="stylesheet" href="/stile.css?version=3" />
+    <link rel="stylesheet" th:href="@{/navbar.css}">
+    <link rel="stylesheet" th:href="@{/footer.css}">
+    <link rel="stylesheet" th:href="@{/newProdotto.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div><a href="/"><img src="/logo-siw.png" width="20%"/></a></div>
+    
+    <!-- Navbar moderna -->
+    <header class="navbar">
+      <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+      <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+        <button type="submit">🔍</button>
+      </form>
+
+      <div class="top-icons">
+        <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+          <img src="/images/gear.png" alt="Admin Ordini" />
+        </a>
+        <span th:if="${credenziali != null}">
+          <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+            <img src="/images/login.png" alt="Profilo" />
+          </a>
+        </span>
+        <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+          <img src="/images/login.png" alt="Login" />
+        </a>
+      </div>
+    </header>
+
     <h1>Aggiungi un giornale</h1>
-    <form th:action="@{/giornale}" method="POST" th:object="${giornale}">
+
+    <form class="form-prodotto" th:action="@{/giornale}" method="POST" th:object="${giornale}">
       <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</p>
-      <div>
-        <label>Titolo:</label> <span><input required type="text" th:field="${giornale.nome}"/></span>
-        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
-      </div>
-	  <div>
-	    <label>Periodicità:</label><span><input required type="text" th:field="${giornale.periodicita}"/></span>
-	    <span th:if="${#fields.hasErrors('periodicita')}" th:errors="*{periodicita}"></span>
-	  </div>
-	  <div>
-	    <label>Direttore:</label><span><input required type="text" th:field="${giornale.direttore}"/></span>
-	    <span th:if="${#fields.hasErrors('direttore')}" th:errors="*{direttore}"></span>
-	  </div>
-	  <div>
-      <div>
-        <label>Anno:</label><span><input required type="text" th:field="${giornale.anno}"/></span>
-        <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
-      </div>
-	  <div>
-	   	<label>Prezzo:</label><span><input required type="text" th:field="${giornale.prezzo}"/></span>
-        <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
-      </div>
-      <div>
-        <label>URL immagine:</label><span><input type="url" th:field="${giornale.urlImage}" /></span>
-      </div>
-      <div>
-        <span><button type="submit">Conferma</button></span>
-      </div>
+
+	  <div class="grid-prodotto">
+	      <div>
+	        <label>Titolo:</label>
+	        <input required type="text" th:field="*{nome}" />
+	        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+	      </div>
+
+	      <div>
+	        <label>Periodicità:</label>
+	        <input required type="text" th:field="*{periodicita}" />
+	        <span th:if="${#fields.hasErrors('periodicita')}" th:errors="*{periodicita}"></span>
+	      </div>
+
+	      <div>
+	        <label>Direttore:</label>
+	        <input required type="text" th:field="*{direttore}" />
+	        <span th:if="${#fields.hasErrors('direttore')}" th:errors="*{direttore}"></span>
+	      </div>
+
+	      <div>
+	        <label>Anno:</label>
+	        <input required type="text" th:field="*{anno}" />
+	        <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}"></span>
+	      </div>
+
+	      <div>
+	        <label>Prezzo:</label>
+	        <input required type="text" th:field="*{prezzo}" />
+	        <span th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+	      </div>
+
+	      <div>
+	        <label>URL immagine:</label>
+	        <input type="url" th:field="*{urlImage}" />
+	      </div>
+	    </div>
+
+	    <button type="submit">Conferma</button>
     </form>
+
+    <!-- Footer separato correttamente -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+    </footer>
   </body>
 </html>

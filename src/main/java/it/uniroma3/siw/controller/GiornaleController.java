@@ -76,6 +76,10 @@ public class GiornaleController {
 	
 	@GetMapping("/admin/formNewGiornale")
 	public String formNewGiornale(Model model) {
+		Utente utente = utenteService.getUtente();
+		if (utente != null) {
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
+		}
 		model.addAttribute("giornale", new Giornale());
 		return "formNewGiornale.html";
 	}

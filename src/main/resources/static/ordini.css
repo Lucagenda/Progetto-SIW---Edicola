@@ -104,6 +104,14 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Riga grigia */
+.section-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 40px auto;
+  width: 95%;
+}
+
 .admin-section {
   background-color: #fff;
   border-radius: 12px;
