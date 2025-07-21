@@ -15,9 +15,12 @@ import it.uniroma3.siw.model.VoceCarrello;
 public class GiornaleService {
 	@Autowired
 	VoceCarrelloRepository voceCarrelloRepository;
-	
+
 	@Autowired
 	GiornaleRepository giornaleRepository;
+
+	@Autowired
+	it.uniroma3.siw.repository.RigaOrdineRepository rigaOrdineRepository;
 
 	public Iterable<Giornale> getAllGiornali() {
 		return giornaleRepository.findAll();
@@ -38,6 +41,19 @@ public class GiornaleService {
 			java.util.List<VoceCarrello> vociCarrello = voceCarrelloRepository.findByProdotto(giornale);
 			if (vociCarrello != null && !vociCarrello.isEmpty()) {
 				voceCarrelloRepository.deleteAll(vociCarrello);
+			}
+			// Cancella le righe d'ordine associate solo se l'ordine è RITIRATO
+			java.util.List<it.uniroma3.siw.model.RigaOrdine> righeOrdine = rigaOrdineRepository.findByProdotto(giornale);
+			if (righeOrdine != null && !righeOrdine.isEmpty()) {
+				java.util.List<it.uniroma3.siw.model.RigaOrdine> daEliminare = new java.util.ArrayList<>();
+				for (it.uniroma3.siw.model.RigaOrdine riga : righeOrdine) {
+					if (riga.getOrdine() != null && riga.getOrdine().getStato() == it.uniroma3.siw.constants.StatoOrdine.RITIRATO) {
+						daEliminare.add(riga);
+					}
+				}
+				if (!daEliminare.isEmpty()) {
+					rigaOrdineRepository.deleteAll(daEliminare);
+				}
 			}
 			// Cancella il giornale
 			giornaleRepository.deleteById(id);
