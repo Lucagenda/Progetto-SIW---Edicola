@@ -52,7 +52,9 @@ public class UtenteController {
 			return "redirect:/login";
 
 		Utente utente = this.utenteService.getUtente();
+		Credenziali credenzialicorrenti = credenzialiService.getCredenziali(id);
 		model.addAttribute("utente", utente);
+		model.addAttribute("credenziali", credenzialicorrenti);
 		return "utente/formModificaUtente.html";
 	}
 

@@ -1,34 +1,83 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Modifica Profilo</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}" />
-</head>
-<body>
-<main>
-    <div class="form-container">
-        <h2>Modifica Profilo</h2>
+    <link rel="stylesheet" th:href="@{/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/footer.css}" />
+    <link rel="stylesheet" th:href="@{/newProdotto.css}" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
 
-        <form th:action="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" th:object="${utente}" method="post">
-            
-            <div th:if="${msgError}" class="error-message" th:text="${msgError}"></div>
+  <body>
+    <!-- Navbar -->
+    <header class="navbar">
+      <a class="logo" th:href="@{/}">Edicola Del Faro</a>
 
+      <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+        <input type="text" name="nome" placeholder="Cerca prodotti..." />
+        <button type="submit">🔍</button>
+      </form>
+
+	  <div class="top-icons">
+	        <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+	          <img src="/images/gear.png" alt="Admin Ordini" />
+	        </a>
+	        <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+	          <img src="/images/carrello.png" alt="Carrello" />
+	        </a>
+	        <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+	          <img src="/images/carrello.png" alt="Carrello" />
+	        </a>
+	        <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+	          <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+	        </a>
+	        <span th:if="${credenziali != null}">
+	          <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+	            <img src="/images/login.png" alt="Profilo" />
+	          </a>
+	        </span>
+	        <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+	          <img src="/images/login.png" alt="Login" />
+	        </a>
+	      </div>
+	    </header>
+
+    <!-- Main -->
+    <main class="container">
+      <h1>Modifica Profilo</h1>
+
+      <form class="form-prodotto" th:action="@{'/utente/' + ${utente.id} + '/modificaProfilo'}" th:object="${utente}" method="post">
+        <div class="grid-prodotto">
+          <div>
             <label for="nome">Nome</label>
             <input type="text" id="nome" th:field="*{nome}" placeholder="Inserisci il nome" required />
+          </div>
 
+          <div>
             <label for="cognome">Cognome</label>
             <input type="text" id="cognome" th:field="*{cognome}" placeholder="Inserisci il cognome" required />
+          </div>
 
+          <div>
             <label for="email">Email</label>
             <input type="email" id="email" th:field="*{email}" placeholder="Inserisci l'email" required />
+          </div>
+        </div>
 
-            <div class="form-buttons">
-                <a th:href="@{'/utente/' + ${utente.id}}" class="btn cancel-btn">Annulla</a>
-                <button type="submit" class="btn submit-btn">Salva Modifiche</button>
-            </div>
-        </form>
-    </div>
-</main>
-</body>
+        <div class="form-buttons">
+          <button type="submit" class="btn submit-btn">Salva Modifiche</button>
+        </div>
+
+        <div th:if="${msgError}" class="error-message" th:text="${msgError}"></div>
+      </form>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+      </div>
+    </footer>
+  </body>
 </html>
