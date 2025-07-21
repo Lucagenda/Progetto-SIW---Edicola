@@ -80,7 +80,7 @@ public class GiornaleController {
 		// Recupera utente loggato
 		Utente utente = utenteService.getUtente();
 		if (utente != null) {
-			model.addAttribute("credenziali", credenzialiService.getCredenzialiByUtente(utente));
+			model.addAttribute("credenziali", credenzialiService.getCredenziali(utente.getId()));
 		}
 		return "giornale.html";
 	}

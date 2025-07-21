@@ -1,25 +1,79 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Giornale</title>
-        <link rel="stylesheet" href="/stile.css?version=2" />
-    </head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${giornale.nome}">Giornale</title>
+  <link rel="stylesheet" th:href="@{/navbar.css}" />
+  <link rel="stylesheet" th:href="@{/footer.css}" />
+  <link rel="stylesheet" th:href="@{/prodotto.css}" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
 
-    <body>
-        <div><a href="/"><img src="/logo-siw.png" width="50%"></a></div>
-        <div th:if="${giornale}">
-        <h1 th:text="${giornale.nome}">Nome giornale</h1>
-            <div>Periodicità: <span th:text="${giornale.periodicita}">2000</span></div>
-            <div>Fondazione: <span th:text="${giornale.anno}">2000</span></div>
-            <div>Direttore: <span th:text="${giornale.direttore}">2000</span></div>
-            <div>Prezzo: <span th:text="${giornale.prezzo}">2000</span></div>
-            <span><img width="30%" th:src="${giornale.urlImage}" /></span>
-			<form th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:action="@{/carrello/aggiungi}" method="post" style="margin-top:20px;">
-                <input type="hidden" name="id" th:value="${giornale.id}" />
-                <input type="hidden" name="tipo" value="Giornale" />
-                <button type="submit">Aggiungi al carrello</button>
-            </form>
-        </div>
-        <div th:unless="${giornale}">Non esiste</div>
-    </body>
+<!-- Navbar -->
+<header class="navbar">
+  <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+  <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+    <input type="text" name="nome" placeholder="Cerca prodotti..." />
+    <button type="submit">🔍</button>
+  </form>
+
+  <div class="top-icons">
+        <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
+          <img src="/images/gear.png" alt="Admin Ordini" />
+        </a>
+        <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" href="/carrello" title="Vai al carrello">
+          <img src="/images/carrello.png" alt="Carrello" />
+        </a>
+        <a th:unless="${credenziali != null}" href="/carrello" title="Vai al carrello">
+          <img src="/images/carrello.png" alt="Carrello" />
+        </a>
+        <a th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:href="@{/messaggi}" title="Messaggi">
+          <img src="/images/message.png" alt="Messaggi" style="width:28px;vertical-align:middle;" />
+        </a>
+        <span th:if="${credenziali != null}">
+          <a th:href="@{'/utente/' + ${credenziali.id}}" title="Vai al profilo">
+            <img src="/images/login.png" alt="Profilo" />
+          </a>
+        </span>
+        <a th:unless="${credenziali != null}" href="/login" title="Accedi o registrati">
+          <img src="/images/login.png" alt="Login" />
+        </a>
+      </div>
+    </header>
+
+<!-- Main -->
+<main class="product-container" th:if="${giornale}">
+  <div class="product-image">
+    <img th:src="${giornale.urlImage}" alt="Immagine Giornale" />
+  </div>
+
+  <div class="product-info">
+    <h1 class="product-title" th:text="${giornale.nome}">Nome Giornale</h1>
+    <p class="product-attribute"><span>Periodicità:</span> <span th:text="${giornale.periodicita}"></span></p>
+    <p class="product-attribute"><span>Anno di fondazione:</span> <span th:text="${giornale.anno}"></span></p>
+    <p class="product-attribute"><span>Direttore:</span> <span th:text="${giornale.direttore}"></span></p>
+    <p class="product-price">€ <span th:text="${giornale.prezzo}">0.00</span></p>
+
+    <form th:if="${credenziali != null and credenziali.ruolo != 'ADMIN'}" th:action="@{/carrello/aggiungi}" method="post" class="product-add">
+      <input type="hidden" name="id" th:value="${giornale.id}" />
+      <input type="hidden" name="tipo" value="Giornale" />
+      <button type="submit">🛒 Aggiungi al carrello</button>
+    </form>
+  </div>
+</main>
+
+<div th:unless="${giornale}" class="not-found">
+  <p>Questo giornale non esiste.</p>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-content">
+    <p>Edicola del Faro - Nuovi contenuti in arrivo</p>
+  </div>
+</footer>
+
+</body>
 </html>
