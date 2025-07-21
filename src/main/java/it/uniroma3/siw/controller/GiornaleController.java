@@ -125,7 +125,7 @@ public class GiornaleController {
 	@GetMapping("/cancellaGiornale/{id}")
 	public String deleteGiornale(@PathVariable("id") Long id, Model model) {
 		this.giornaleService.deleteById(id);
-		return "redirect:/aggiornaGiornale";
+		return "redirect:/admin/aggiornaGiornale";
 	}
 	
 }

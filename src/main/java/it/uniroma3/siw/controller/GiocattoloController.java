@@ -116,6 +116,6 @@ public class GiocattoloController {
     @GetMapping("/cancellaGiocattolo/{id}")
     public String deleteGiocattolo(@PathVariable("id") Long id, Model model) {
         this.giocattoloService.deleteById(id);
-        return "redirect:/aggiornaGiocattolo";
+        return "redirect:/admin/aggiornaGiocattolo";
     }
 }

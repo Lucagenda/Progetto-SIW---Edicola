@@ -8,9 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.uniroma3.siw.model.Giornale;
 import it.uniroma3.siw.repository.GiornaleRepository;
+import it.uniroma3.siw.repository.VoceCarrelloRepository;
+import it.uniroma3.siw.model.VoceCarrello;
 
 @Service
 public class GiornaleService {
+	@Autowired
+	VoceCarrelloRepository voceCarrelloRepository;
 	
 	@Autowired
 	GiornaleRepository giornaleRepository;
@@ -28,11 +32,20 @@ public class GiornaleService {
 	}
 
 	public void deleteById(Long id) {
-		giornaleRepository.deleteById(id);
+		Giornale giornale = giornaleRepository.findById(id).orElse(null);
+		if (giornale != null) {
+			// Cancella solo le voci di carrello che referenziano il giornale
+			java.util.List<VoceCarrello> vociCarrello = voceCarrelloRepository.findByProdotto(giornale);
+			if (vociCarrello != null && !vociCarrello.isEmpty()) {
+				voceCarrelloRepository.deleteAll(vociCarrello);
+			}
+			// Cancella il giornale
+			giornaleRepository.deleteById(id);
+		}
 	}
 	
 	@Transactional
 	public List<Giornale> cercaPerNome(String nome) {
-	    return giornaleRepository.findByNome(nome);
+		return giornaleRepository.findByNome(nome);
 	}
 }
