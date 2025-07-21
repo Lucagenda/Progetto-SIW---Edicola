@@ -43,6 +43,19 @@ public class GiocattoloService {
 			if (vociCarrello != null && !vociCarrello.isEmpty()) {
 				voceCarrelloRepository.deleteAll(vociCarrello);
 			}
+			// Cancella le righe d'ordine associate solo se l'ordine è RITIRATO
+			java.util.List<RigaOrdine> righeOrdine = rigaOrdineRepository.findByProdotto(giocattolo);
+			if (righeOrdine != null && !righeOrdine.isEmpty()) {
+				java.util.List<RigaOrdine> daEliminare = new java.util.ArrayList<>();
+				for (RigaOrdine riga : righeOrdine) {
+					if (riga.getOrdine() != null && riga.getOrdine().getStato() == it.uniroma3.siw.constants.StatoOrdine.RITIRATO) {
+						daEliminare.add(riga);
+					}
+				}
+				if (!daEliminare.isEmpty()) {
+					rigaOrdineRepository.deleteAll(daEliminare);
+				}
+			}
 			// Cancella il giocattolo
 			giocattoloRepository.deleteById(id);
 		}
