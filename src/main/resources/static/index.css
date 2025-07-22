@@ -17,9 +17,9 @@ body {
   height: 400px;
   background-image: url('/images/provaEdicola.png');
   background-attachment: fixed;
-  background-position: center -60px;
+  background-position: center -90px;
   background-repeat: no-repeat;
-  background-size: 70% auto;
+  background-size: 85% auto;
   position: relative;
   display: flex;
   align-items: center;
@@ -45,45 +45,19 @@ body {
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
-/* Dove ci troviamo - Sezione */
-#dove-ci-troviamo {
-  padding: 0 20px; /* tolto il padding verticale qui per gestirlo nel container */
-  background-color: #f9f9f9;
-  border-top: 2px solid #0077cc;
-  border-bottom: 2px solid #0077cc;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #222;
-  max-width: 900px;
-  margin: 60px 0 60px 20px;
-  box-sizing: border-box;
-}
-
-#dove-ci-troviamo .container {
+/* Sezione Chi siamo e Dove ci troviamo */
+#chi-siamo-dove-ci-troviamo {
   display: flex;
   gap: 40px;
-  align-items: flex-start;
   flex-wrap: wrap;
-  padding: 40px 0; /* padding verticale per distanza uguale sopra e sotto */
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
-#dove-ci-troviamo h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #ff9900; /* ARANCIONE al posto del blu */
-  font-weight: 700;
-  user-select: none;
-}
-
-#dove-ci-troviamo .icon {
-  font-size: 2.4rem;
-  color: #ff9900; /* arancio anche l'icona */
-}
-
-#dove-ci-troviamo .info {
-  flex: 1 1 320px;
+/* Blocco "Chi siamo" */
+#chi-siamo-dove-ci-troviamo .info {
+  flex: 1 1 500px;
   background: white;
   padding: 25px 30px;
   border-radius: 8px;
@@ -94,58 +68,40 @@ body {
   user-select: text;
 }
 
-#dove-ci-troviamo .info strong {
-  color: #ff9900; /* arancio al posto del blu */
+/* Titolo "Chi siamo" */
+#chi-siamo-dove-ci-troviamo .info h2 {
+  color: #ff9900;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
-#dove-ci-troviamo .mappa {
+#chi-siamo-dove-ci-troviamo .info h2 span {
+  margin-right: 8px;
+}
+
+/* Blocco mappa */
+#chi-siamo-dove-ci-troviamo .blocco-mappa {
   flex: 2 1 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Titolo "Dove ci troviamo" */
+#chi-siamo-dove-ci-troviamo .blocco-mappa h2 {
+  color: #ff9900;
+  font-weight: 700;
+  margin: 0;
+  user-select: none;
+}
+
+/* Mappa */
+#chi-siamo-dove-ci-troviamo .mappa {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  transform: scale(1);
-}
-
-#dove-ci-troviamo .mappa:hover {
-  box-shadow: 0 8px 20px rgb(255 153 0 / 0.4); /* ombra arancio potenziata */
-  transform: scale(1.03);
-}
-
-/* Effetto fade-in on scroll */
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-
-.fade-in-section.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Responsive */
-@media (max-width: 720px) {
-  #dove-ci-troviamo .container {
-    flex-direction: column;
-    gap: 25px;
-    padding: 30px 0; /* ridotto un po' su mobile */
-  }
-
-  #dove-ci-troviamo .mappa {
-    order: 0;
-    width: 100%;
-    height: 280px;
-  }
-
-  #dove-ci-troviamo .info {
-    order: 1;
-    width: 100%;
-  }
-
-  #dove-ci-troviamo h2 {
-    justify-content: center;
-  }
 }
 
 
@@ -234,3 +190,58 @@ body {
   }
   
 }
+
+/* ------------------------------------- */
+/* RECENSIONI SCROLLING - STILE BASE - FUORI MEDIA QUERY! */
+/* Serve che funzioni su desktop e mobile */
+/* ------------------------------------- */
+#recensioni-scrolling {
+  background-color: #232f3e;
+  color: #ff9900;
+  padding: 12px 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  margin: 40px 20px;
+}
+
+.recensioni-track {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: scrollRecensioni 25s linear infinite;
+}
+
+.recensione {
+  display: inline-block;
+  margin-right: 60px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+@keyframes scrollRecensioni {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ------------------------------------- */
+/* RECENSIONI - ADATTAMENTI MOBILE       */
+/* Dentro media query per schermi piccoli */
+/* ------------------------------------- */
+@media (max-width: 720px) {
+  #recensioni-scrolling {
+    margin: 30px 10px;
+  }
+  .recensione {
+    font-size: 1rem;
+    margin-right: 40px;
+  }
+}
+
