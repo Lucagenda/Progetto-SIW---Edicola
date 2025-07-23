@@ -10,6 +10,7 @@
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform; /* Migliora performance animazione */
 }
 
 .fade-in-section.visible {
@@ -18,7 +19,7 @@
 }
 
 body {
-  background-color: #f4f6f9;
+  background-color: rgb(255, 255, 255);
   color: #333;
   line-height: 1.6;
 }
@@ -29,9 +30,9 @@ body {
   height: 400px;
   background-image: url('/images/provaEdicola.png');
   background-attachment: fixed;
-  background-position: center -90px;
+  background-position: center -208px;
   background-repeat: no-repeat;
-  background-size: 85% auto;
+  background-size: 100% auto;
   position: relative;
   display: flex;
   align-items: center;
@@ -57,6 +58,44 @@ body {
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
+/* Disabilita fixed background su mobile per prestazioni */
+@media (max-width: 768px) {
+  .parallax {
+    background-attachment: scroll;
+  }
+}
+
+/* Orario dinamico */
+.fascia-orari {
+  padding: 12px 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  animation: pulse 2s ease-in-out infinite;
+  transition: background-color 0.5s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fascia-orari.aperto {
+  background-color: #35353587;
+}
+
+.fascia-orari.chiuso {
+  background-color: #f44336;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
@@ -65,10 +104,8 @@ body {
   .search-form {
     max-width: 100%;
   }
-  .location-section {
-    flex-direction: column;
-    padding: 20px 12px;
-  }
+  /* Rimosso .location-section perché non presente in HTML */
+
   .catalog-grid {
     flex-direction: column;
     gap: 24px;
@@ -78,7 +115,6 @@ body {
     max-width: 320px;
     margin: 0 auto;
   }
-  
 }
 
 /* Sezione Chi siamo - Servizi disponibili - Dove ci troviamo */
@@ -98,7 +134,7 @@ body {
   background: white;
   padding: 25px 30px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
   font-size: 1.1rem;
   line-height: 1.6;
   color: #444;
@@ -124,11 +160,7 @@ body {
   transition: box-shadow 0.3s ease;
 }
 
-#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Definisci l'animazione respiro */
+/* Animazione respiro per hover servizi */
 @keyframes respiro {
   0%, 100% {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -141,6 +173,7 @@ body {
 }
 
 #info-e-mappa .sezione-servizi-disponibili .servizio:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: respiro 3s ease infinite;
 }
 
@@ -153,7 +186,7 @@ body {
   background: white;
   padding: 25px 30px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
 }
 
 /* Titolo "Dove ci troviamo" */
@@ -170,14 +203,18 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
   height: 280px;
+  transition: box-shadow 0.3s ease;
+}
+
+#info-e-mappa .contenitore-mappa:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 /* Lista servizi e card (per "Servizi Disponibili") */
-#info-e-mappa .sezione-servizi-disponibili .lista-servizi {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
+#info-e-mappa .sezione-servizi-disponibili .servizi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonne uguali */
+  gap: 20px; /* spazio tra le celle */
 }
 
 #info-e-mappa .sezione-servizi-disponibili .servizio {
@@ -198,24 +235,9 @@ body {
   justify-content: center;
 }
 
-#info-e-mappa .sezione-servizi-disponibili .servizi-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 colonne uguali */
-  gap: 20px; /* spazio tra le celle */
-}
-
 #info-e-mappa .sezione-servizi-disponibili .servizio:hover {
   background-color: #ffefc1;
 }
-
-#info-e-mappa .contenitore-mappa {
-  transition: box-shadow 0.3s ease;
-}
-
-#info-e-mappa .contenitore-mappa:hover {
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
 
 /* Riga grigia */
 .section-divider {
@@ -279,8 +301,6 @@ body {
   border: 3px solid #198754;
 }
 
-
-
 /* ------------------------------------- */
 /* RECENSIONI SCROLLING - STILE BASE - FUORI MEDIA QUERY! */
 /* Serve che funzioni su desktop e mobile */
@@ -336,14 +356,14 @@ body {
 }
 
 /* Pulsante torna su */
-.container{
+.scroll-container {
   display: flex;
   justify-content: center;
   width: auto;
   height: 200vh;
 }
 
-h1{
+h1 {
   font-size: 12vw;
 }
 

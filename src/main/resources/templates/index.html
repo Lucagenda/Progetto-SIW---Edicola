@@ -8,94 +8,50 @@
   <link rel="stylesheet" href="/index.css?version=5" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" /> <!-- Pulsante Torna su con indicatore di progresso -->
 </head>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const faders = document.querySelectorAll('.fade-in-section');
-    const appearOptions = {
-      threshold: 0.2,
-      rootMargin: "0px 0px -50px 0px"
-    };
-    const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
-      entries.forEach(entry => {
-        if(!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        appearOnScroll.unobserve(entry.target);
-      });
-    }, appearOptions);
-
-    faders.forEach(fader => {
-      appearOnScroll.observe(fader);
-    });
-  });
-</script>
-
-<!-- Pulsante Torna su con indicatore di progresso -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" />
-	<div class="progress-wrap">
-	  <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-	    <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-	  </svg>
-	</div>
-
-	<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-	<script>
-	  (function($) { "use strict";
-
-	  $(document).ready(function() {
-	    var progressPath = document.querySelector('.progress-wrap path');
-	    var pathLength = progressPath.getTotalLength();
-	    progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
-	    progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
-	    progressPath.style.strokeDashoffset = pathLength;
-	    progressPath.getBoundingClientRect();
-	    progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
-
-	    var updateProgress = function () {
-	      var scroll = $(window).scrollTop();
-	      var height = $(document).height() - $(window).height();
-	      var progress = pathLength - (scroll * pathLength / height);
-	      progressPath.style.strokeDashoffset = progress;
-	    }
-
-	    updateProgress();
-
-	    $(window).scroll(updateProgress);
-
-	    var offset = 50;
-	    var duration = 550;
-
-	    $(window).on('scroll', function() {
-	      if ($(this).scrollTop() > offset) {
-	        $('.progress-wrap').addClass('active-progress');
-	      } else {
-	        $('.progress-wrap').removeClass('active-progress');
-	      }
-	    });
-
-	    $('.progress-wrap').on('click', function(event) {
-	      event.preventDefault();
-	      $('html, body').animate({scrollTop: 0}, duration);
-	      return false;
-	    });
-	  });
-
-	  })(jQuery);
-	</script>
 
 <body>
 
-	<!-- Navbar moderna -->
-		<header class="navbar">
-		    <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+	<!-- Effetto fader -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const faders = document.querySelectorAll('.fade-in-section');
+      const appearOptions = {
+        threshold: 0.2,
+        rootMargin: "0px 0px -50px 0px"
+      };
+      const appearOnScroll = new IntersectionObserver((entries, appearOnScroll) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting) return;
+          entry.target.classList.add('visible');
+          appearOnScroll.unobserve(entry.target);
+        });
+      }, appearOptions);
 
-		    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
-		        <input type="text" name="nome" placeholder="Cerca prodotti..." />
-		        <button type="submit">
-		            🔍
-		        </button>
-		    </form>
+      faders.forEach(fader => {
+        appearOnScroll.observe(fader);
+      });
+    });
+  </script>
+
+  <!-- Pulsante Torna su -->
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
+  </div>
+
+  <!-- Navbar moderna -->
+  <header class="navbar">
+    <a class="logo" th:href="@{/}">Edicola Del Faro</a>
+
+    <form class="search-form" th:action="@{/prodotti/ricerca}" method="get">
+      <input type="text" name="nome" placeholder="Cerca prodotti..." />
+      <button type="submit">
+        🔍
+      </button>
+    </form>
 
     <div class="top-icons">
       <a th:if="${credenziali != null and credenziali.ruolo == 'ADMIN'}" href="/admin/ordini" title="Area Admin">
@@ -126,103 +82,195 @@
     <div class="overlay">
       <h1>Benvenuto nell'Edicola del Faro</h1>
       <p>Scopri giornali, riviste, carte da gioco e tanto altro...</p>
+      <div id="fascia-orari" class="fascia-orari">
+        ⏳ Controllo l’orario…
+      </div>
     </div>
   </div>
-   
-   
+
   <!-- Catalogo -->
-      <section class="catalog-section">
-        <h2>Il nostro catalogo</h2>
-        <div class="catalog-grid">
-          <a href="/giornali" class="catalog-card giornali-card" title="Vai ai giornali">
-            <img src="/images/giornale.jpg" alt="Giornali" />
-            <div class="catalog-label">Giornali</div>
-          </a>
-          <a href="/giocattoli" class="catalog-card giocattoli-card" title="Vai ai giocattoli">
-            <img src="/images/giocattolo.jpg" alt="Giocattoli" />
-            <div class="catalog-label">Giocattoli</div>
-          </a>
-        </div>
-      </section>
-   
+  <section class="catalog-section">
+    <h2>Il nostro catalogo</h2>
+    <div class="catalog-grid">
+      <a href="/giornali" class="catalog-card giornali-card" title="Vai ai giornali">
+        <img src="/images/giornale.jpg" alt="Giornali" />
+        <div class="catalog-label">Giornali</div>
+      </a>
+      <a href="/giocattoli" class="catalog-card giocattoli-card" title="Vai ai giocattoli">
+        <img src="/images/giocattolo.jpg" alt="Giocattoli" />
+        <div class="catalog-label">Giocattoli</div>
+      </a>
+    </div>
+  </section>
 
   <!-- Riga divisoria -->
   <hr class="section-divider" />
-  
-  
-  <!-- Sezione Chi siamo - Servizi Disponibili - Dove ci troviamo -->     
-<section id="info-e-mappa" class="fade-in-section">
 
-	<div class="sezione-chi-siamo">
-	  <h2><span>💬</span>Chi siamo</h2>
-	  <p>
-	    Edicola del Faro è il tuo angolo di tranquillità e informazione nel cuore di Fiumicino.<br>
-	    Qui trovi giornali e riviste aggiornati, ricariche telefoniche rapide e servizi di pagamento comodi e veloci.<br>
-	    Il nostro staff ti accoglie sempre con un sorriso, pronto a consigliarti e aiutarti a trovare quello che cerchi.<br>
-	    Offriamo anche una selezione di prodotti utili per la quotidianità, tutto in un ambiente familiare e attento alle esigenze di ogni cliente.<br>
-	    Passa a trovarci: qualità, cortesia e disponibilità ti aspettano ogni giorno!
-	  </p>
-	</div>
+  <!-- Sezione Chi siamo - Servizi Disponibili - Dove ci troviamo -->
+  <section id="info-e-mappa" class="fade-in-section">
 
-  <div class="sezione-servizi-disponibili">
-	<h2><span class="icon">🛠️</span> Servizi Disponibili</h2>
-	  <div class="servizi-grid">
-	    <div class="servizio">📦 Ritiro Amazon Hub</div>
-	    <div class="servizio">📲 Ricariche telefoniche</div>
-	    <div class="servizio">🧾 Pagamento bollettini</div>
-	    <div class="servizio">🎟️ Biglietti ATAC/COTRAL</div>
-	    <div class="servizio">🎲 Lotterie e SuperEnalotto</div>
-	    <div class="servizio">🎫 Gratta e Vinci</div>
-	  </div>
-  </div>
-
-  <div class="sezione-dove-siamo">
-    <h2>📍 Dove ci troviamo</h2>
-    <div class="contenitore-mappa">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.5226672406076!2d12.233083315312562!3d41.76158437926313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325fb8e7bc6915d%3A0x94193d09a85a40c!2sAmazon%20Hub%20Counter%20-%20EDICOLA%20DEL%20FARO!5e0!3m2!1sit!2sit!4v1690074889133!5m2!1sit!2sit"
-        width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="sezione-chi-siamo">
+      <h2><span>💬</span>Chi siamo</h2>
+      <p>
+        Edicola del Faro è il tuo angolo di tranquillità e informazione nel cuore di Fiumicino.<br>
+        Qui trovi giornali e riviste aggiornati, ricariche telefoniche rapide e servizi di pagamento comodi e veloci.<br>
+        Il nostro staff ti accoglie sempre con un sorriso, pronto a consigliarti e aiutarti a trovare quello che cerchi.<br>
+        Offriamo anche una selezione di prodotti utili per la quotidianità, tutto in un ambiente familiare e attento alle esigenze di ogni cliente.<br>
+        Passa a trovarci: qualità, cortesia e disponibilità ti aspettano ogni giorno!
+      </p>
     </div>
-  </div>
 
-</section>
+    <div class="sezione-servizi-disponibili">
+      <h2><span class="icon">🛠️</span> Servizi Disponibili</h2>
+      <div class="servizi-grid">
+        <div class="servizio">📦 Ritiro Amazon Hub</div>
+        <div class="servizio">📲 Ricariche telefoniche</div>
+        <div class="servizio">🧾 Pagamento bollettini</div>
+        <div class="servizio">🎟️ Biglietti ATAC/COTRAL</div>
+        <div class="servizio">🎲 Lotterie e SuperEnalotto</div>
+        <div class="servizio">🎫 Gratta e Vinci</div>
+      </div>
+    </div>
 
+    <div class="sezione-dove-siamo">
+      <h2>📍 Dove ci troviamo</h2>
+      <div class="contenitore-mappa">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.5226672406076!2d12.233083315312562!3d41.76158437926313!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1325fb8e7bc6915d%3A0x94193d09a85a40c!2sAmazon%20Hub%20Counter%20-%20EDICOLA%20DEL%20FARO!5e0!3m2!1sit!2sit!4v1690074889133!5m2!1sit!2sit"
+          width="100%" height="280" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
 
-	<!-- Recensioni animate -->
-	
-	<section id="recensioni-scrolling" class="fade-in-section">
-	  <div class="recensioni-track">
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Spettacolare! Consigliatissimo." - Marco</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️ "Venditori cordiali e competenti!" - Laura</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Ottimo servizio e qualità top." - Andrea</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️ "Soddisfatto, rifarei l’acquisto." - Silvia</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Super consigliato, da 10 e lode!" - Gianni</div>
+  </section>
 
-	    <!-- Duplicazione per loop fluido -->
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Spettacolare! Consigliatissimo." - Marco</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️ "Venditori cordiali e competenti!" - Laura</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Ottimo servizio e qualità top." - Andrea</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️ "Soddisfatto, rifarei l’acquisto." - Silvia</div>
-	    <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Super consigliato, da 10 e lode!" - Gianni</div>
-	  </div>
-	</section>
+  <!-- Recensioni animate -->
+  <section id="recensioni-scrolling" class="fade-in-section">
+    <div class="recensioni-track">
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Spettacolare! Consigliatissimo." - Marco</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️ "Venditori cordiali e competenti!" - Laura</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Ottimo servizio e qualità top." - Andrea</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️ "Soddisfatto, rifarei l’acquisto." - Silvia</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Super consigliato, da 10 e lode!" - Gianni</div>
 
-	<!-- Footer -->
-	<footer class="footer">
-	  <div class="footer-content" style="text-align:center; padding:16px; color:rgb(192, 192, 192); font-size:0.9rem;">
-	    <p><strong>Edicola del Faro</strong> — Via Lorenzo Bezzi, SNC - 00054 Fiumicino RM</p>
-	    <p>📞 +39 347 709 2164 | 📧 edicoladelfaro@gmail.com</p>
-	    <p>🕒 Lun-Sab 6:30-19:30 | Dom 6:30-14:00</p>
-	    <p>
-	      <a href="/privacy" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Privacy</a> |
-	      <a href="/termini" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Termini & Condizioni</a> |
-	      <a href="/contatti" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Contatti</a>
-	    </p>
-	    <p style="margin-top:12px;">Grazie per averci scelto — Ti aspettiamo in edicola! ✨</p>
+      <!-- Duplicazione per loop fluido -->
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Spettacolare! Consigliatissimo." - Marco</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️ "Venditori cordiali e competenti!" - Laura</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Ottimo servizio e qualità top." - Andrea</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️ "Soddisfatto, rifarei l’acquisto." - Silvia</div>
+      <div class="recensione">⭐️⭐️⭐️⭐️⭐️ "Super consigliato, da 10 e lode!" - Gianni</div>
+    </div>
+  </section>
 
-	    </div>
-	</footer>
-	
-  </body>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content" style="text-align:center; padding:16px; color:rgb(192, 192, 192); font-size:0.9rem;">
+      <p><strong>Edicola del Faro</strong> — Via Lorenzo Bezzi, SNC - 00054 Fiumicino RM</p>
+      <p>📞 +39 347 709 2164 | 📧 edicoladelfaro@gmail.com</p>
+      <p>🕒 Lun-Sab 6:30-19:30 | Dom 6:30-14:00</p>
+      <p>
+        <a href="/privacy" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Privacy</a> |
+        <a href="/termini" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Termini & Condizioni</a> |
+        <a href="/contatti" style="color:#ff9900; text-decoration:none; margin: 0 8px;">Contatti</a>
+      </p>
+      <p style="margin-top:12px;">Grazie per averci scelto — Ti aspettiamo in edicola! ✨</p>
+    </div>
+  </footer>
+  
+  
+  
+  <!----------------------- codici Js -------------------------->
+
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Script per pulsante torna su con indicatore di progresso -->
+  <script>
+    (function($) { "use strict";
+
+    $(document).ready(function() {
+      var progressPath = document.querySelector('.progress-wrap path');
+      var pathLength = progressPath.getTotalLength();
+      progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+      progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+      progressPath.style.strokeDashoffset = pathLength;
+      progressPath.getBoundingClientRect();
+      progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+
+      var updateProgress = function () {
+        var scroll = $(window).scrollTop();
+        var height = $(document).height() - $(window).height();
+        var progress = pathLength - (scroll * pathLength / height);
+        progressPath.style.strokeDashoffset = progress;
+      }
+
+      updateProgress();
+
+      $(window).scroll(updateProgress);
+
+      var offset = 50;
+      var duration = 550;
+
+      $(window).on('scroll', function() {
+        if ($(this).scrollTop() > offset) {
+          $('.progress-wrap').addClass('active-progress');
+        } else {
+          $('.progress-wrap').removeClass('active-progress');
+        }
+      });
+
+      $('.progress-wrap').on('click', function(event) {
+        event.preventDefault();
+        $('html, body').animate({scrollTop: 0}, duration);
+        return false;
+      });
+    });
+
+    })(jQuery);
+  </script>
+
+  <!-- orario dinamico -->
+  <script>
+    const fascia = document.getElementById("fascia-orari");
+
+    const orari = {
+      0: { aperto: "06:30", chiuso: "14:00" },
+      1: { aperto: "06:30", chiuso: "19:30" },
+      2: { aperto: "06:30", chiuso: "19:30" },
+      3: { aperto: "06:30", chiuso: "19:30" },
+      4: { aperto: "06:30", chiuso: "19:30" },
+      5: { aperto: "06:30", chiuso: "19:30" },
+      6: { aperto: "06:30", chiuso: "19:30" },
+    };
+
+    function isOpen(now, openTime, closeTime) {
+      const [h1, m1] = openTime.split(":").map(Number);
+      const [h2, m2] = closeTime.split(":").map(Number);
+      const open = new Date(now); open.setHours(h1, m1, 0);
+      const close = new Date(now); close.setHours(h2, m2, 0);
+      return now >= open && now <= close;
+    }
+
+    function aggiornaFascia() {
+      const now = new Date();
+      const giorno = now.getDay();
+      const oggi = orari[giorno];
+      const aperto = isOpen(now, oggi.aperto, oggi.chiuso);
+
+      if (aperto) {
+        fascia.textContent = `🟢 Siamo aperti! Oggi fino alle ${oggi.chiuso}`;
+        fascia.classList.add("aperto");
+        fascia.classList.remove("chiuso");
+      } else {
+        const domani = orari[(giorno + 1) % 7];
+        fascia.textContent = `🔴 Siamo chiusi. Riapriamo domani alle ${domani.aperto}`;
+        fascia.classList.add("chiuso");
+        fascia.classList.remove("aperto");
+      }
+    }
+
+    aggiornaFascia();
+  </script>
+
+</body>
 
 </html>
