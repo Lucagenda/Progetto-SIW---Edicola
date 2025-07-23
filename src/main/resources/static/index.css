@@ -5,8 +5,21 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Fade in section per effetto apparizione */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform; /* Migliora performance animazione */
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body {
-  background-color: #f4f6f9;
+  background-color: rgb(255, 255, 255);
   color: #333;
   line-height: 1.6;
 }
@@ -17,9 +30,9 @@ body {
   height: 400px;
   background-image: url('/images/provaEdicola.png');
   background-attachment: fixed;
-  background-position: center -150px;
+  background-position: center -208px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% auto;
   position: relative;
   display: flex;
   align-items: center;
@@ -45,109 +58,186 @@ body {
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
-/* Dove ci troviamo - Sezione */
-#dove-ci-troviamo {
-  padding: 0 20px; /* tolto il padding verticale qui per gestirlo nel container */
-  background-color: #f9f9f9;
-  border-top: 2px solid #0077cc;
-  border-bottom: 2px solid #0077cc;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #222;
-  max-width: 900px;
-  margin: 60px auto;
-  box-sizing: border-box;
+/* Disabilita fixed background su mobile per prestazioni */
+@media (max-width: 768px) {
+  .parallax {
+    background-attachment: scroll;
+  }
 }
 
-#dove-ci-troviamo .container {
+/* Orario dinamico */
+.fascia-orari {
+  padding: 12px 20px;
+  margin-top: 20px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  text-align: center;
+  font-weight: bold;
+  color: white;
+  animation: pulse 2s ease-in-out infinite;
+  transition: background-color 0.5s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fascia-orari.aperto {
+  background-color: #35353587;
+}
+
+.fascia-orari.chiuso {
+  background-color: #f44336;
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: center;
+  }
+  .search-form {
+    max-width: 100%;
+  }
+  /* Rimosso .location-section perché non presente in HTML */
+
+  .catalog-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .catalog-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+/* Sezione Chi siamo - Servizi disponibili - Dove ci troviamo */
+#info-e-mappa {
   display: flex;
   gap: 40px;
-  align-items: flex-start;
   flex-wrap: wrap;
-  padding: 40px 0; /* padding verticale per distanza uguale sopra e sotto */
+  max-width: 1000px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
-#dove-ci-troviamo h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #ff9900; /* ARANCIONE al posto del blu */
-  font-weight: 700;
-  user-select: none;
-}
-
-#dove-ci-troviamo .icon {
-  font-size: 2.4rem;
-  color: #ff9900; /* arancio anche l'icona */
-}
-
-#dove-ci-troviamo .info {
-  flex: 1 1 320px;
+/* Blocco "Chi siamo" e "Servizi Disponibili" */
+#info-e-mappa .sezione-chi-siamo,
+#info-e-mappa .sezione-servizi-disponibili {
+  flex: 1 1 300px;
   background: white;
   padding: 25px 30px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
   font-size: 1.1rem;
   line-height: 1.6;
   color: #444;
   user-select: text;
 }
 
-#dove-ci-troviamo .info strong {
-  color: #ff9900; /* arancio al posto del blu */
+/* Titoli "Chi siamo" e "Servizi Disponibili" */
+#info-e-mappa .sezione-chi-siamo h2,
+#info-e-mappa .sezione-servizi-disponibili h2 {
+  color: #ff9900;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
 }
 
-#dove-ci-troviamo .mappa {
-  flex: 2 1 400px;
+#info-e-mappa .sezione-chi-siamo h2 span,
+#info-e-mappa .sezione-servizi-disponibili h2 .icon {
+  margin-right: 8px;
+}
+
+#info-e-mappa .sezione-servizi-disponibili .servizio {
+  transition: box-shadow 0.3s ease;
+}
+
+/* Animazione respiro per hover servizi */
+@keyframes respiro {
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  animation: respiro 3s ease infinite;
+}
+
+/* Blocco "Dove ci troviamo" */
+#info-e-mappa .sezione-dove-siamo {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
+}
+
+/* Titolo "Dove ci troviamo" */
+#info-e-mappa .sezione-dove-siamo h2 {
+  color: #ff9900;
+  font-weight: 700;
+  margin: 0;
+  user-select: none;
+}
+
+/* Mappa */
+#info-e-mappa .contenitore-mappa {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-  transform: scale(1);
+  height: 280px;
+  transition: box-shadow 0.3s ease;
 }
 
-#dove-ci-troviamo .mappa:hover {
-  box-shadow: 0 8px 20px rgb(255 153 0 / 0.4); /* ombra arancio potenziata */
-  transform: scale(1.03);
+#info-e-mappa .contenitore-mappa:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Effetto fade-in on scroll */
-.fade-in-section {
-  opacity: 0;
-  transform: translateY(25px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+/* Lista servizi e card (per "Servizi Disponibili") */
+#info-e-mappa .sezione-servizi-disponibili .servizi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonne uguali */
+  gap: 20px; /* spazio tra le celle */
 }
 
-.fade-in-section.visible {
-  opacity: 1;
-  transform: translateY(0);
+#info-e-mappa .sezione-servizi-disponibili .servizio {
+  max-width: 140px;      /* leggermente più largo */
+  min-width: 140px;      /* fissa larghezza uguale per tutti */
+  min-height: 120px;     /* altezza minima uniforme */
+  font-size: 1rem;       /* testo un po’ più grande */
+  padding: 20px 15px;    /* un po’ più di padding */
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  user-select: none;
+  cursor: default;
+  transition: background-color 0.3s ease;
+  display: flex;         /* per centrare verticalmente */
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Responsive */
-@media (max-width: 720px) {
-  #dove-ci-troviamo .container {
-    flex-direction: column;
-    gap: 25px;
-    padding: 30px 0; /* ridotto un po' su mobile */
-  }
-
-  #dove-ci-troviamo .mappa {
-    order: 0;
-    width: 100%;
-    height: 280px;
-  }
-
-  #dove-ci-troviamo .info {
-    order: 1;
-    width: 100%;
-  }
-
-  #dove-ci-troviamo h2 {
-    justify-content: center;
-  }
+#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
+  background-color: #ffefc1;
 }
-
 
 /* Riga grigia */
 .section-divider {
@@ -211,26 +301,164 @@ body {
   border: 3px solid #198754;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    justify-content: center;
+/* ------------------------------------- */
+/* RECENSIONI SCROLLING - STILE BASE - FUORI MEDIA QUERY! */
+/* Serve che funzioni su desktop e mobile */
+/* ------------------------------------- */
+#recensioni-scrolling {
+  background-color: #232f3e;
+  color: #ff9900;
+  padding: 12px 0;
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.25);
+  margin: 40px 20px;
+}
+
+.recensioni-track {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  animation: scrollRecensioni 25s linear infinite;
+}
+
+.recensione {
+  display: inline-block;
+  margin-right: 60px;
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+}
+
+@keyframes scrollRecensioni {
+  from {
+    transform: translateX(0);
   }
-  .search-form {
-    max-width: 100%;
+  to {
+    transform: translateX(-50%);
   }
-  .location-section {
-    flex-direction: column;
-    padding: 20px 12px;
+}
+
+/* ------------------------------------- */
+/* RECENSIONI - ADATTAMENTI MOBILE       */
+/* Dentro media query per schermi piccoli */
+/* ------------------------------------- */
+@media (max-width: 720px) {
+  #recensioni-scrolling {
+    margin: 30px 10px;
   }
-  .catalog-grid {
-    flex-direction: column;
-    gap: 24px;
+  .recensione {
+    font-size: 1rem;
+    margin-right: 40px;
   }
-  .catalog-card {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-  
+}
+
+/* Pulsante torna su */
+.scroll-container {
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: 200vh;
+}
+
+h1 {
+  font-size: 12vw;
+}
+
+.progress-wrap {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+  background-color: #ff9900; /* sfondo arancio */
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 200ms ease-in-out;
+}
+
+.progress-wrap.active-progress {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.progress-wrap::after {
+  position: absolute;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: '\f062'; /* freccia su */
+  text-align: center;
+  line-height: 46px;
+  font-size: 18px;
+  color: white; /* testo bianco */
+  left: 0;
+  top: 0;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  z-index: 1;
+  transition: all 200ms linear;
+}
+
+.lightScrollIcon::after {
+  color: #ecedf3 !important;
+}
+
+.progress-wrap:hover::after {
+  opacity: 0;
+}
+
+.progress-wrap::before {
+  position: absolute;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: '\f062';
+  text-align: center;
+  line-height: 46px;
+  font-size: 18px;
+  opacity: 0;
+  background-image: linear-gradient(298deg, #da2c4d, #f8ab37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  left: 0;
+  top: 0;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  z-index: 2;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.progress-wrap:hover::before {
+  opacity: 1;
+}
+
+.progress-wrap svg path {
+  fill: none;
+}
+
+.progress-wrap svg.progress-circle path {
+  stroke: #1f2029;
+  stroke-width: 4;
+  box-sizing: border-box;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.progress-wrap:hover {
+  box-shadow: 0 0 6px 1px rgba(255, 153, 0, 0.5);
+  transform: translateY(-2px);
+  transition: all 200ms ease-in-out;
 }
