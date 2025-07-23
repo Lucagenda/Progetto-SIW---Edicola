@@ -81,7 +81,7 @@ body {
   
 }
 
-/* Sezione Chi siamo, Cosa Offriamo e Dove ci troviamo */
+/* Sezione Chi siamo - Servizi disponibili - Dove ci troviamo */
 #info-e-mappa {
   display: flex;
   gap: 40px;
@@ -91,9 +91,9 @@ body {
   padding: 0 20px;
 }
 
-/* Blocco "Chi siamo" e "Cosa Offriamo" */
+/* Blocco "Chi siamo" e "Servizi Disponibili" */
 #info-e-mappa .sezione-chi-siamo,
-#info-e-mappa .sezione-cosa-offriamo {
+#info-e-mappa .sezione-servizi-disponibili {
   flex: 1 1 300px;
   background: white;
   padding: 25px 30px;
@@ -105,9 +105,9 @@ body {
   user-select: text;
 }
 
-/* Titoli "Chi siamo" e "Cosa Offriamo" */
+/* Titoli "Chi siamo" e "Servizi Disponibili" */
 #info-e-mappa .sezione-chi-siamo h2,
-#info-e-mappa .sezione-cosa-offriamo h2 {
+#info-e-mappa .sezione-servizi-disponibili h2 {
   color: #ff9900;
   font-weight: 700;
   margin-bottom: 20px;
@@ -116,15 +116,15 @@ body {
 }
 
 #info-e-mappa .sezione-chi-siamo h2 span,
-#info-e-mappa .sezione-cosa-offriamo h2 .icon {
+#info-e-mappa .sezione-servizi-disponibili h2 .icon {
   margin-right: 8px;
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizio {
+#info-e-mappa .sezione-servizi-disponibili .servizio {
   transition: box-shadow 0.3s ease;
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -140,7 +140,7 @@ body {
   }
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
   animation: respiro 3s ease infinite;
 }
 
@@ -172,15 +172,15 @@ body {
   height: 280px;
 }
 
-/* Lista servizi e card (per "Cosa Offriamo") */
-#info-e-mappa .sezione-cosa-offriamo .lista-servizi {
+/* Lista servizi e card (per "Servizi Disponibili") */
+#info-e-mappa .sezione-servizi-disponibili .lista-servizi {
   display: flex;
   justify-content: center;
   gap: 15px;
   flex-wrap: wrap;
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizio {
+#info-e-mappa .sezione-servizi-disponibili .servizio {
   max-width: 140px;      /* leggermente più largo */
   min-width: 140px;      /* fissa larghezza uguale per tutti */
   min-height: 120px;     /* altezza minima uniforme */
@@ -198,13 +198,13 @@ body {
   justify-content: center;
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizi-grid {
+#info-e-mappa .sezione-servizi-disponibili .servizi-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 colonne uguali */
   gap: 20px; /* spazio tra le celle */
 }
 
-#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+#info-e-mappa .sezione-servizi-disponibili .servizio:hover {
   background-color: #ffefc1;
 }
 
