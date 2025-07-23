@@ -5,6 +5,18 @@
   font-family: 'Montserrat', sans-serif;
 }
 
+/* Fade in section per effetto apparizione */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 body {
   background-color: #f4f6f9;
   color: #333;
@@ -45,8 +57,32 @@ body {
   text-shadow: 0 0 4px rgba(0,0,0,0.7);
 }
 
-/* Sezione Chi siamo e Dove ci troviamo */
-#chi-siamo-dove-ci-troviamo {
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    justify-content: center;
+  }
+  .search-form {
+    max-width: 100%;
+  }
+  .location-section {
+    flex-direction: column;
+    padding: 20px 12px;
+  }
+  .catalog-grid {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .catalog-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  
+}
+
+/* Sezione Chi siamo, Cosa Offriamo e Dove ci troviamo */
+#info-e-mappa {
   display: flex;
   gap: 40px;
   flex-wrap: wrap;
@@ -55,9 +91,10 @@ body {
   padding: 0 20px;
 }
 
-/* Blocco "Chi siamo" */
-#chi-siamo-dove-ci-troviamo .info {
-  flex: 1 1 500px;
+/* Blocco "Chi siamo" e "Cosa Offriamo" */
+#info-e-mappa .sezione-chi-siamo,
+#info-e-mappa .sezione-cosa-offriamo {
+  flex: 1 1 300px;
   background: white;
   padding: 25px 30px;
   border-radius: 8px;
@@ -68,8 +105,9 @@ body {
   user-select: text;
 }
 
-/* Titolo "Chi siamo" */
-#chi-siamo-dove-ci-troviamo .info h2 {
+/* Titoli "Chi siamo" e "Cosa Offriamo" */
+#info-e-mappa .sezione-chi-siamo h2,
+#info-e-mappa .sezione-cosa-offriamo h2 {
   color: #ff9900;
   font-weight: 700;
   margin-bottom: 20px;
@@ -77,20 +115,49 @@ body {
   align-items: center;
 }
 
-#chi-siamo-dove-ci-troviamo .info h2 span {
+#info-e-mappa .sezione-chi-siamo h2 span,
+#info-e-mappa .sezione-cosa-offriamo h2 .icon {
   margin-right: 8px;
 }
 
-/* Blocco mappa */
-#chi-siamo-dove-ci-troviamo .blocco-mappa {
-  flex: 2 1 400px;
+#info-e-mappa .sezione-cosa-offriamo .servizio {
+  transition: box-shadow 0.3s ease;
+}
+
+#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Definisci l'animazione respiro */
+@keyframes respiro {
+  0%, 100% {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    transform: translateY(-2px);
+  }
+}
+
+#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+  animation: respiro 3s ease infinite;
+}
+
+/* Blocco "Dove ci troviamo" */
+#info-e-mappa .sezione-dove-siamo {
+  flex: 1 1 300px;
   display: flex;
   flex-direction: column;
   gap: 32px;
+  background: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
 }
 
 /* Titolo "Dove ci troviamo" */
-#chi-siamo-dove-ci-troviamo .blocco-mappa h2 {
+#info-e-mappa .sezione-dove-siamo h2 {
   color: #ff9900;
   font-weight: 700;
   margin: 0;
@@ -98,10 +165,55 @@ body {
 }
 
 /* Mappa */
-#chi-siamo-dove-ci-troviamo .mappa {
+#info-e-mappa .contenitore-mappa {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgb(0 0 0 / 0.15);
+  height: 280px;
+}
+
+/* Lista servizi e card (per "Cosa Offriamo") */
+#info-e-mappa .sezione-cosa-offriamo .lista-servizi {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+#info-e-mappa .sezione-cosa-offriamo .servizio {
+  max-width: 140px;      /* leggermente più largo */
+  min-width: 140px;      /* fissa larghezza uguale per tutti */
+  min-height: 120px;     /* altezza minima uniforme */
+  font-size: 1rem;       /* testo un po’ più grande */
+  padding: 20px 15px;    /* un po’ più di padding */
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  user-select: none;
+  cursor: default;
+  transition: background-color 0.3s ease;
+  display: flex;         /* per centrare verticalmente */
+  flex-direction: column;
+  justify-content: center;
+}
+
+#info-e-mappa .sezione-cosa-offriamo .servizi-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonne uguali */
+  gap: 20px; /* spazio tra le celle */
+}
+
+#info-e-mappa .sezione-cosa-offriamo .servizio:hover {
+  background-color: #ffefc1;
+}
+
+#info-e-mappa .contenitore-mappa {
+  transition: box-shadow 0.3s ease;
+}
+
+#info-e-mappa .contenitore-mappa:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -167,29 +279,7 @@ body {
   border: 3px solid #198754;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .navbar {
-    justify-content: center;
-  }
-  .search-form {
-    max-width: 100%;
-  }
-  .location-section {
-    flex-direction: column;
-    padding: 20px 12px;
-  }
-  .catalog-grid {
-    flex-direction: column;
-    gap: 24px;
-  }
-  .catalog-card {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-  }
-  
-}
+
 
 /* ------------------------------------- */
 /* RECENSIONI SCROLLING - STILE BASE - FUORI MEDIA QUERY! */
@@ -245,3 +335,110 @@ body {
   }
 }
 
+/* Pulsante torna su */
+.container{
+  display: flex;
+  justify-content: center;
+  width: auto;
+  height: 200vh;
+}
+
+h1{
+  font-size: 12vw;
+}
+
+.progress-wrap {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.2);
+  background-color: #ff9900; /* sfondo arancio */
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 200ms ease-in-out;
+}
+
+.progress-wrap.active-progress {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.progress-wrap::after {
+  position: absolute;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: '\f062'; /* freccia su */
+  text-align: center;
+  line-height: 46px;
+  font-size: 18px;
+  color: white; /* testo bianco */
+  left: 0;
+  top: 0;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  z-index: 1;
+  transition: all 200ms linear;
+}
+
+.lightScrollIcon::after {
+  color: #ecedf3 !important;
+}
+
+.progress-wrap:hover::after {
+  opacity: 0;
+}
+
+.progress-wrap::before {
+  position: absolute;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  content: '\f062';
+  text-align: center;
+  line-height: 46px;
+  font-size: 18px;
+  opacity: 0;
+  background-image: linear-gradient(298deg, #da2c4d, #f8ab37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  left: 0;
+  top: 0;
+  height: 46px;
+  width: 46px;
+  cursor: pointer;
+  display: block;
+  z-index: 2;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.progress-wrap:hover::before {
+  opacity: 1;
+}
+
+.progress-wrap svg path {
+  fill: none;
+}
+
+.progress-wrap svg.progress-circle path {
+  stroke: #1f2029;
+  stroke-width: 4;
+  box-sizing: border-box;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+.progress-wrap:hover {
+  box-shadow: 0 0 6px 1px rgba(255, 153, 0, 0.5);
+  transform: translateY(-2px);
+  transition: all 200ms ease-in-out;
+}
